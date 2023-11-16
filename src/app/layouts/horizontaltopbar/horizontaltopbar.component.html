@@ -1,0 +1,17 @@
+<div class="topnav">
+  <div class="container-fluid">
+    <nav class="navbar navbar-light navbar-expand-lg topnav-menu active">
+      <div class="collapse navbar-collapse active" id="topnav-menu-content">
+        <ul class="navbar-nav">
+          <ng-container *ngFor="let item of menuItems;let i =index;">
+            <li class="nav-item dropdown" (click)="onTabClicked(item)" [class.underline]="selectedTab === item.id">
+              <a  class="nav-link dropdown-toggle arrow-none" *ngIf="!item.subItems" href="javascript: void(0);" id="topnav-components" [routerLink]="item.link" role="button">
+                <i class="bx {{item.icon}} me-2"></i>{{ item.label | translate }} <div class="arrow-down" *ngIf="hasItems(item)"></div>
+              </a>
+            </li>
+          </ng-container>
+        </ul>
+      </div>
+    </nav>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="819" height="704" fill="none" viewBox="0 0 819 704">
+    <mask id="a" width="820" height="705" x="0" y="0" maskUnits="userSpaceOnUse">
+        <path fill="#C4C4C4" d="M0 0h820v705H0z" transform="scale(.99955)"/>
+    </mask>
+    <g mask="url(#a)">
+        <ellipse cx="513" cy="512.657" fill="#3C63D7" rx="513" ry="512.657" transform="matrix(.99955 0 0 .99955 -206.908 -320.857)"/>
+        <ellipse cx="513" cy="512.657" fill="url(#b)" fill-opacity=".4" rx="513" ry="512.657" transform="matrix(.99955 0 0 .99955 -206.908 -320.857)"/>
+        <ellipse cx="398" cy="397.5" fill="#3C63D7" rx="398" ry="397.5" transform="matrix(.99955 0 0 .99955 -91.959 -205.908)"/>
+    </g>
+    <defs>
+        <linearGradient id="b" x2="1" gradientTransform="matrix(206 -401 403.576 207.323 813.212 810.338)" gradientUnits="userSpaceOnUse">
+            <stop offset=".574" stop-color="#3C63D7"/>
+            <stop offset="1" stop-color="#527DFD"/>
+        </linearGradient>
+    </defs>
+</svg>

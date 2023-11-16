@@ -1,0 +1,27 @@
+.slider-wrapper{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 25vh;
+  img{
+    height: 70px;
+
+  }
+  .lp-button-title{
+    height: 27px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #000;
+  }
+
+  .lp-button-subTitle{
+    width: 219px;
+    height: 61px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    color: #9f9f9f;
+  }
+
+}

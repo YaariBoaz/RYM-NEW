@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1439" height="892" fill="none" viewBox="0 0 1439 892">
+    <mask id="a" width="1439" height="895" x="0" y="-3" maskUnits="userSpaceOnUse">
+        <path fill="#C4C4C4" d="M0 0h1439v895H0z" transform="translate(0 -3)"/>
+    </mask>
+    <g mask="url(#a)">
+        <path fill="url(#b)" d="M0 67.234c800.333-238.431 1439 233.914 1439 233.914l1 564.655H.998L0 67.233z" transform="translate(-1 26.197)"/>
+        <path fill="url(#c)" d="M0 688.836C0-117.249 1553.92 495.376 1934 0v845.656H0v-156.82z" transform="translate(-245 262.344)"/>
+        <path fill="url(#d)" d="M0 1105.07C0 152.424 1857.45 691.768 1934 0v1105.07H0z" transform="translate(-245)"/>
+    </g>
+    <defs>
+        <linearGradient id="b" x2="1" gradientTransform="matrix(0 234.311 -394.739 0 917.868 11.63)" gradientUnits="userSpaceOnUse">
+            <stop offset=".127" stop-color="#F7F8FA"/>
+            <stop offset=".568" stop-color="#F7F8FA" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="c" x2="1" gradientTransform="matrix(706.448 1044.98 -2508.04 249.084 1797.96 -200.754)" gradientUnits="userSpaceOnUse">
+            <stop offset=".168" stop-color="#3C63D7" stop-opacity="0"/>
+            <stop offset=".757" stop-color="#3C63D7"/>
+        </linearGradient>
+        <linearGradient id="d" x2="1" gradientTransform="matrix(907.907 1373.28 -3273.52 286.884 2180.69 -13.003)" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#3C63D7" stop-opacity="0"/>
+            <stop offset=".6" stop-color="#3C63D7"/>
+        </linearGradient>
+    </defs>
+</svg>
