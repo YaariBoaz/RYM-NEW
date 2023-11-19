@@ -12,8 +12,15 @@ import {selectMetersData} from "../../../store/meters/meters.selector";
 import {ClientMeterState, MeterData} from "../../../store/meters/meters.reducer";
 import {fetchClientMetersData} from "../../../store/meters/meters.action";
 import {selectCardsData} from "../../../store/cards/cards.selector";
-import {CardsData, CardsState} from "../../../store/cards/cards.reducer";
+import {CardsState} from "../../../store/cards/cards.reducer";
 import {fetchCardsData} from "../../../store/cards/cards.action";
+import {selectAlertsData} from "../../../store/alerts/alerts.selector";
+import {AlertsData} from "../../../store/alerts/alerts.reducer";
+import {fetchClientAlertsData} from "../../../store/alerts/alerts.action";
+import {DateHelper} from "./shared/utils/date-helper";
+import {updateMonthsConsumptionData} from "../../../store/consumption/consumption.action";
+
+
 
 @Component({
   selector: 'app-saas',
@@ -41,10 +48,14 @@ export class SaasComponent implements OnInit, AfterViewInit {
 
   // Form submit
   chatSubmit: boolean;
-  userData: Observable<PageTitleState>;
-  metersData:Observable<MeterData[]>;
-  cardsData: Observable<CardsState>;
-
+  userData$: Observable<PageTitleState>;
+  metersData$:Observable<MeterData[]>;
+  cardsData$: Observable<CardsState>;
+  activeTab = 0;
+  alerts$: Observable<AlertsData[]>;
+  fromDate: string;
+  toDate:string;
+  isMonthly = true;
   constructor(public formBuilder: UntypedFormBuilder, private configService: ConfigService,private store:Store) { }
 
   /**
@@ -69,11 +80,16 @@ export class SaasComponent implements OnInit, AfterViewInit {
 
     });
 
-    this.userData = this.store.select(selectUserData);
     this.store.dispatch(fetchClientMetersData());
     this.store.dispatch(fetchCardsData());
-    this.metersData = this.store.select(selectMetersData);
-    this.cardsData = this.store.select(selectCardsData);
+    this.store.dispatch(fetchClientAlertsData());
+    this.userData$ = this.store.select(selectUserData);
+    this.metersData$ = this.store.select(selectMetersData);
+    this.cardsData$ = this.store.select(selectCardsData);
+    this.alerts$ = this.store.select(selectAlertsData);
+
+    this.initDates();
+
   }
 
   /**
@@ -348,4 +364,27 @@ export class SaasComponent implements OnInit, AfterViewInit {
     }
   }
 
+  onOpenCalendar(container) {
+    if(this.isMonthly){
+      container.monthSelectHandler = (event: any): void => {
+        container._store.dispatch(container._actions.select(event.date));
+      };
+      container.setViewMode('month');
+    }
+  }
+
+  initDates() {
+    const dates = DateHelper.GetInitialDatesForPicker();
+    this.toDate = dates.to;
+    this.fromDate = dates.from;
+  }
+
+  onDateValueChange(newDate: Date, fromOrTo: number) {
+    if(fromOrTo === 0){
+      const months = DateHelper.GetMonthsSetFromNewMonth(newDate);
+      this.store.dispatch(updateMonthsConsumptionData({months:{months}}));
+    }else{
+
+    }
+  }
 }

@@ -18,6 +18,8 @@ import { MailReducer, MailState } from "./Email/email.reducer";
 import {PageTitleReducer, PageTitleState} from "../shared/ui/pagetitle/page-title.reducer";
 import {ClientMeterReducer, ClientMeterState} from "./meters/meters.reducer";
 import {CardsReducer, CardsState} from "./cards/cards.reducer";
+import {AlertsReducer, AlertsState} from "./alerts/alerts.reducer";
+import {ConsumptionReducer, ConsumptionState} from "./consumption/consumption.reducer";
 
 
 export interface RootReducerState {
@@ -40,6 +42,8 @@ export interface RootReducerState {
     pageTitle:PageTitleState
   clientMeters:ClientMeterState
     cardsState:CardsState
+  alertsState:AlertsState
+  consumptionState:ConsumptionState
 }
 
 export const rootReducer: ActionReducerMap<RootReducerState> = {
@@ -61,5 +65,8 @@ export const rootReducer: ActionReducerMap<RootReducerState> = {
   Customer: CustomerReducer,
   Maillist: MailReducer,
   pageTitle:PageTitleReducer,
-  clientMeters:ClientMeterReducer
+  clientMeters:ClientMeterReducer,
+  alertsState:AlertsReducer,
+  consumptionState:ConsumptionReducer
+
 }

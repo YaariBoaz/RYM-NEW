@@ -1,11 +1,15 @@
 import {Action, createReducer, on} from "@ngrx/store";
 import {fetchCardsData, fetchCardsDataFail, fetchCardsDataSuccess} from "./cards.action";
-
+export interface UOM {
+  id:number;
+  unit:string
+  unitShortName:string
+}
 export interface CardsData{
   currentMeterReading:number;
   currentMonthConsumption:number;
   endOfMonthForecast:number;
-  uom:string;
+  uom:UOM;
   monthlyLowRate:number;
 }
 export interface CardsState{
@@ -15,7 +19,7 @@ export const initialState: CardsState = { data: {
     currentMeterReading:0,
     currentMonthConsumption:0,
     endOfMonthForecast:0,
-    uom:'',
+    uom:null,
     monthlyLowRate:0
 }
 }

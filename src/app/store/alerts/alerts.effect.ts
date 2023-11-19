@@ -5,21 +5,21 @@ import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, map, mergeMap} from "rxjs/operators";
 import {of} from "rxjs";
 import {ApiService} from "../../shared/api.service";
-import {fetchClientMetersData, fetchClientMetersDataFail, fetchClientMetersDataSuccess} from "./meters.action";
-import { MeterData} from "./meters.reducer";
+import {fetchClientAlertsData, fetchClientAlertsDataFail, fetchClientAlertsDataSuccess} from "./alerts.action";
+import {AlertsData} from "./alerts.reducer";
 
 @Injectable()
-export class MetersListEffects {
+export class AlertsEffects {
 
 
   fetchData$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(fetchClientMetersData),
+      ofType(fetchClientAlertsData),
       mergeMap(() =>
-        this.apiService.getConsumerMeters().pipe(
-          map((meters:MeterData[]) => fetchClientMetersDataSuccess({meters})),
+        this.apiService.getMyAlerts().pipe(
+          map((alerts:AlertsData[]) => fetchClientAlertsDataSuccess({alerts})),
           catchError((error) =>
-            of(fetchClientMetersDataFail({ error }))
+            of(fetchClientAlertsDataFail({ error }))
           )
         )
       ),

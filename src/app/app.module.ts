@@ -54,6 +54,10 @@ import { MailEffects } from './store/Email/email.effects';
 import {PageTitleEffect} from "./shared/ui/pagetitle/page-title.effect";
 import {MetersListEffects} from "./store/meters/meter.effect";
 import {CardsEffects} from "./store/cards/cards.effect";
+import {AlertsEffects} from "./store/alerts/alerts.effect";
+import {NgxEchartsModule} from "ngx-echarts";
+import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
+import {NgToggleModule} from "ngx-toggle-button";
 
 if (environment.defaultauth === 'firebase') {
   initFirebaseBackend(environment.firebaseConfig);
@@ -93,6 +97,7 @@ export function createTranslateLoader(http: HttpClient): any {
     SharedModule,
     ScrollToModule.forRoot(),
     SlickCarouselModule,
+    NgToggleModule,
     ToastrModule.forRoot(),
     StoreModule.forRoot(rootReducer),
     StoreDevtoolsModule.instrument({
@@ -117,8 +122,18 @@ export function createTranslateLoader(http: HttpClient): any {
       MailEffects,
       PageTitleEffect,
       MetersListEffects,
-      CardsEffects
+      CardsEffects,
+      AlertsEffects
     ]),
+    NgxEchartsModule.forRoot({
+      /**
+       * This will import all modules from echarts.
+       * If you only need custom modules,
+       * please refer to [Custom Build] section.
+       */
+      echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
+    }),
+
   ],
   bootstrap: [AppComponent],
   providers: [

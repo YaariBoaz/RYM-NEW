@@ -76,7 +76,6 @@ export class ApiService {
   getMyAlerts() {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumer/myalerts');
   }
-
   getMessagesFromMunicipal() {
     return this.http.get(this.API_BASE_HREF_CTM + 'municipality/1982/messages');
   }
