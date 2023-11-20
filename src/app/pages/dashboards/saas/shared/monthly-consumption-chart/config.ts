@@ -1,7 +1,8 @@
 import {EChartsOption} from "echarts";
 
 const  monthlyConsumptionConfig: EChartsOption = {
-
+  responsive: true,
+  maintainAspectRatio: false,
   tooltip: {
     trigger: 'axis',
     axisPointer: {

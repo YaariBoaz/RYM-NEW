@@ -58,6 +58,7 @@ import {AlertsEffects} from "./store/alerts/alerts.effect";
 import {NgxEchartsModule} from "ngx-echarts";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {NgToggleModule} from "ngx-toggle-button";
+import {DateHelperService} from "./pages/dashboards/saas/shared/utils/date-helper";
 
 if (environment.defaultauth === 'firebase') {
   initFirebaseBackend(environment.firebaseConfig);
@@ -140,6 +141,7 @@ export function createTranslateLoader(http: HttpClient): any {
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
+    DateHelperService
   ],
 })
 export class AppModule { }

@@ -2,14 +2,14 @@ import {Action, createReducer, on} from "@ngrx/store";
 import {
   fetchConsumptionData,
   fetchConsumptionDataFail,
-  fetchConsumptionDataSuccess,
-  updateMonthsConsumptionData
+  fetchConsumptionDataSuccess, getMonthsConsumptionFromToData, updateDailyConsumptionFromToData,
+  updateMonthsConsumptionData, updateMonthsConsumptionFromToData
 } from "./consumption.action";
 import {ClientMeterState} from "../meters/meters.reducer";
 import {UOM} from "../cards/cards.reducer";
 
 
-export interface ConsumptionData{
+export interface ConsumptionData {
   meterCount: string,
   consDate: Date,
   cons: number,
@@ -18,31 +18,48 @@ export interface ConsumptionData{
   meterStatusDesc: string
 
 }
-export interface MonthsSet{
-  months:string[];
+
+export interface MonthsSet {
+  months: string[];
+}
+
+export interface FromToSet {
+  from: string;
+  to: string;
 }
 
 export interface ConsumptionState {
   data: ConsumptionData[];
-  lowRead:number;
-  uom:UOM;
-  months:MonthsSet;
+  lowRead: number;
+  uom: UOM;
+  months: MonthsSet;
+  fromToMonths: FromToSet;
+  fromToDaily: FromToSet;
 }
 
-export const initialState: ConsumptionState = { data: [],lowRead:null,uom:null,months:null}
+export const initialState: ConsumptionState = {data: [], lowRead: null, uom: null, months: null,fromToMonths:null,fromToDaily:null}
 
 
 export const ConsumptionReducer = createReducer(initialState,
   on(fetchConsumptionData, (state) => {
-    return { ...state, loading: true, error: null };
+    return {...state, loading: true, error: null};
   }), on(fetchConsumptionDataSuccess, (state) => {
-    return { ...state, loading: false };
+    return {...state, loading: false};
   }),
   on(updateMonthsConsumptionData, (state, months) => {
-    return { ...state, ...months,loading: false };
+    return {...state, ...months, loading: false};
   }),
-  on(fetchConsumptionDataFail, (state, { error }) => {
-    return { ...state, error, loading: false };
+  on(updateMonthsConsumptionFromToData, (state, fromToMonths) => {
+    return {...state, ...fromToMonths, loading: false};
+  }),
+  on(updateDailyConsumptionFromToData, (state, fromToDaily) => {
+    return {...state, ...fromToDaily, loading: false};
+  }),
+  on(getMonthsConsumptionFromToData, (state) => {
+    return {...state, loading: false};
+  }),
+  on(fetchConsumptionDataFail, (state, {error}) => {
+    return {...state, error, loading: false};
   }));
 
 

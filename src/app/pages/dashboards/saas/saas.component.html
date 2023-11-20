@@ -140,27 +140,27 @@
                  [class.visible]="activeTab ===0">
               <div class="chart-header d-flex">
                 <ul class="nav nav-pills bg-light rounded width-fit-content" role="tablist">
-                  <li role="button" class="nav-item" (click)="isMonthly = !isMonthly">
+                  <li role="button" class="nav-item" (click)="isMonthly = !isMonthly;periodChange(true)">
                     <a class="nav-link" [class.active]="isMonthly">Monthly</a>
                   </li>
-                  <li role="button" class="nav-item" (click)="isMonthly = !isMonthly">
+                  <li role="button" class="nav-item" (click)="isMonthly = !isMonthly;periodChange(false)" >
                     <a class="nav-link active" [class.active]="!isMonthly">Daily</a>
                   </li>
                 </ul>
                 <div class="date-pickers ml-3">
                   <div bsDatepicker class="picker-wrapper" (bsValueChange)="onDateValueChange($event,0)" (onShown)="onOpenCalendar($event)" [bsConfig]="{dateInputFormat: 'MM/YYYY'}">
                     <i class="far fa-calendar-alt"></i>
-                    <span>{{fromDate}}</span>
+                    <span>{{(fromTo$ | async)?.to}}</span>
                   </div>
                   <div class="picker-wrapper" bsDatepicker [bsConfig]="{dateInputFormat: 'MM/YYYY'}"
                        (onShown)="onOpenCalendar($event)" (bsValueChange)="onDateValueChange($event,1)">
-                    <i class="far fa-calendar-alt"></i>
-                    <span>{{toDate}}</span>
+                    <i class="far fa-calendar-alt"></i> `11
+                    <span>{{(fromTo$ | async)?.from}}</span>
                   </div>
                 </div>
               </div>
               <div class="chart-body">
-                <app-monthly-consumption-chart></app-monthly-consumption-chart>
+                <app-monthly-consumption-chart [months]="fromToMonthly.months"></app-monthly-consumption-chart>
               </div>
             </div>
             <div class="tab-pane" role="tabpanel" [class.hidden]="activeTab ===0" [class.visible]="activeTab ===1">

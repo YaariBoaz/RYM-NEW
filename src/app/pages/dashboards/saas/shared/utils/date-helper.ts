@@ -1,31 +1,75 @@
 import * as moment from "moment";
+import {Injectable} from "@angular/core";
+import {Store} from "@ngrx/store";
+import {
+  updateDailyConsumptionFromToData,
+  updateMonthsConsumptionFromToData
+} from "../../../../../store/consumption/consumption.action";
 
- export class DateHelper{
-   static InitialDatesForChart(isForDatePicker?:boolean): string[] {
-    const start = moment().startOf('month')
-    return  DateHelper.GenerateMonthsSet(start,isForDatePicker);
+@Injectable({
+  providedIn: 'root'
+})
+export class DateHelperService {
+  constructor(private store: Store) {
   }
 
-   static GenerateMonthsSet(startDate:moment.Moment,isForDatePicker?:boolean){
+  initialDatesForChart(isForDatePicker?: boolean): ConsumptionFromToMonthlyObject {
+    const start = moment().startOf('month')
+    const months = this.generateMonthsSet(start, isForDatePicker);
+    return {
+      fromTo: {from: months[0], to: months[months.length - 1]},
+      months: months
+    }
+  }
+
+  generateMonthsSet(startDate: moment.Moment, isForDatePicker?: boolean): string[] {
+    const startCopy = startDate.clone();
     const months: string[] = [];
-    const today = moment().subtract(11, 'months').format('MM-DD-YYYY');
+    const today = startCopy.subtract(11, 'months').format('MM-DD-YYYY');
     const end = moment(today);
     while (end.isSameOrBefore(startDate, 'month')) {
-      if(isForDatePicker){
+      if (isForDatePicker) {
         months.push(startDate.format('MMM YYYY'))
-      }else{
+      } else {
         months.push(startDate.format('MMM YYYY'))
       }
       startDate.subtract(1, 'month')
     }
     return months;
   }
-  static GetMonthsSetFromNewMonth(month:Date){
-    const momentDate  = moment(month).startOf('month');
-    return DateHelper.GenerateMonthsSet(momentDate);
+
+  getMonthsSetFromNewMonth(date: number): ConsumptionFromToMonthlyObject {
+    const momentDate = moment(date).startOf('month');
+    const months = this.generateMonthsSet(momentDate);
+    return {
+      fromTo: {from: months[0], to: months[months.length - 1]},
+      months: months
+    }
   }
-  static GetInitialDatesForPicker(){
-     const arr =  DateHelper.InitialDatesForChart(true)
-     return {from:arr[0], to: arr[arr.length-1]};
+
+  getInitialDatesForPicker() {
+    return this.initialDatesForChart(true)
   }
+
+  getFromToDaily(from: number, to: number):ConsumptionFromToObject {
+    const fromStr = moment(from).format('YYYY, MMM, DD');
+    const toStr = moment(to).format('YYYY, MMM, DD');
+    return {from: fromStr, to: toStr};
+  }
+
+  getInitialDatesForDailyPicker(): ConsumptionFromToObject {
+    const today = moment().format('YYYY, MMM, DD');
+    return {from: today, to: today};
+  }
+}
+
+
+export interface ConsumptionFromToObject {
+  from: string,
+  to: string,
+}
+
+export interface ConsumptionFromToMonthlyObject {
+  fromTo: ConsumptionFromToObject
+  months: string[]
 }

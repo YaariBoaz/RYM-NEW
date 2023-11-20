@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {
   selectConsumptionChartData,
   selectConsumptionMonths
@@ -13,21 +13,9 @@ import {monthlyConsumptionConfig} from "./config";
   templateUrl: './monthly-consumption-chart.component.html',
   styleUrls: ['./monthly-consumption-chart.component.css']
 })
-export class MonthlyConsumptionChartComponent implements OnInit {
+export class MonthlyConsumptionChartComponent implements OnInit,OnChanges {
+  @Input() months:string[];
   monthlyConsumptionConfig = monthlyConsumptionConfig
-
-  /*
-    {
-        name: 'Consumption at low rate',
-        type: 'bar',
-        data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2]
-      },
-      {
-        name: 'Consumption at high rate',
-        type: 'bar',
-        data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2]
-      },
-  */
   private echartsInstance: any;
 
   constructor(private store: Store,private  cdr:ChangeDetectorRef) {
@@ -38,12 +26,17 @@ export class MonthlyConsumptionChartComponent implements OnInit {
     this.store.select(selectConsumptionChartData).subscribe(consumptionState => {
       this.echartsInstance?.setOption(monthlyConsumptionConfig);
     })
-    this.store.select(selectConsumptionMonths).subscribe(months =>{
-      debugger
-    })
   }
 
   onChartInit(ec: any) {
     this.echartsInstance = ec;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes && changes.months && changes.months.currentValue){
+      this.months = changes.months.currentValue;
+      (monthlyConsumptionConfig.xAxis as any)[0].data = this.months.reverse();
+      this.echartsInstance?.setOption(monthlyConsumptionConfig);
+    }
   }
 }

@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
+import {Component, OnInit, ViewChild, AfterViewInit} from '@angular/core';
+import {UntypedFormBuilder, Validators, UntypedFormGroup} from '@angular/forms';
 
-import { earningLineChart, salesAnalyticsDonutChart, ChatData } from './data';
-import { ChartType, ChatMessage } from './saas.model';
-import { ConfigService } from '../../../core/services/config.service';
+import {earningLineChart, salesAnalyticsDonutChart, ChatData} from './data';
+import {ChartType, ChatMessage} from './saas.model';
+import {ConfigService} from '../../../core/services/config.service';
 import {Store} from "@ngrx/store";
 import {selectUserData} from "../../../shared/ui/pagetitle/page-title.selector";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {PageTitleState} from "../../../shared/ui/pagetitle/page-title.reducer";
 import {selectMetersData} from "../../../store/meters/meters.selector";
 import {ClientMeterState, MeterData} from "../../../store/meters/meters.reducer";
@@ -17,9 +17,17 @@ import {fetchCardsData} from "../../../store/cards/cards.action";
 import {selectAlertsData} from "../../../store/alerts/alerts.selector";
 import {AlertsData} from "../../../store/alerts/alerts.reducer";
 import {fetchClientAlertsData} from "../../../store/alerts/alerts.action";
-import {DateHelper} from "./shared/utils/date-helper";
-import {updateMonthsConsumptionData} from "../../../store/consumption/consumption.action";
-
+import {
+  getMonthsConsumptionFromToData,
+  updateMonthsConsumptionData
+} from "../../../store/consumption/consumption.action";
+import {ConsumptionFromToMonthlyObject, ConsumptionFromToObject, DateHelperService} from "./shared/utils/date-helper";
+import {
+  selectConsumptionDataState,
+  selectConsumptionFromToDaily,
+  selectConsumptionFromToMonths
+} from "../../../store/consumption/consumption.selector";
+import {FromToSet} from "../../../store/consumption/consumption.reducer";
 
 
 @Component({
@@ -49,14 +57,18 @@ export class SaasComponent implements OnInit, AfterViewInit {
   // Form submit
   chatSubmit: boolean;
   userData$: Observable<PageTitleState>;
-  metersData$:Observable<MeterData[]>;
+  metersData$: Observable<MeterData[]>;
   cardsData$: Observable<CardsState>;
   activeTab = 0;
   alerts$: Observable<AlertsData[]>;
-  fromDate: string;
-  toDate:string;
   isMonthly = true;
-  constructor(public formBuilder: UntypedFormBuilder, private configService: ConfigService,private store:Store) { }
+  fromToMonthly: ConsumptionFromToMonthlyObject;
+  fromToDaily: ConsumptionFromToObject;
+  months: string[];
+  fromTo$: Observable<{ from: string; to: string }>;
+
+  constructor(public formBuilder: UntypedFormBuilder, private configService: ConfigService, private store: Store, private dateHelperService: DateHelperService) {
+  }
 
   /**
    * Returns form
@@ -66,7 +78,7 @@ export class SaasComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.breadCrumbItems = [{ label: 'Dashboards' }, { label: 'Saas', active: true }];
+    this.breadCrumbItems = [{label: 'Dashboards'}, {label: 'Saas', active: true}];
 
     this._fetchData();
 
@@ -365,7 +377,7 @@ export class SaasComponent implements OnInit, AfterViewInit {
   }
 
   onOpenCalendar(container) {
-    if(this.isMonthly){
+    if (this.isMonthly) {
       container.monthSelectHandler = (event: any): void => {
         container._store.dispatch(container._actions.select(event.date));
       };
@@ -374,17 +386,27 @@ export class SaasComponent implements OnInit, AfterViewInit {
   }
 
   initDates() {
-    const dates = DateHelper.GetInitialDatesForPicker();
-    this.toDate = dates.to;
-    this.fromDate = dates.from;
+    this.fromToMonthly = this.dateHelperService.getInitialDatesForPicker();
+    this.fromTo$ = of({from: this.fromToMonthly.fromTo.from, to: this.fromToMonthly.fromTo.to})
   }
 
-  onDateValueChange(newDate: Date, fromOrTo: number) {
-    if(fromOrTo === 0){
-      const months = DateHelper.GetMonthsSetFromNewMonth(newDate);
-      this.store.dispatch(updateMonthsConsumptionData({months:{months}}));
-    }else{
+  onDateValueChange(fromDate: Date, fromOrTo: number, toDate?: Date) {
+    if (fromOrTo === 0) {
+      this.fromToMonthly = this.dateHelperService.getMonthsSetFromNewMonth(fromDate.getTime());
+      this.fromTo$ = of({from: this.fromToMonthly.fromTo.from, to: this.fromToMonthly.fromTo.to})
+    } else {
+      this.fromTo$ = of(this.dateHelperService.getFromToDaily(fromDate.getTime(), toDate.getTime()));
+    }
+  }
 
+  periodChange(isMonthly: boolean) {
+    if (isMonthly) {
+      this.fromTo$ = of({from: this.fromToMonthly.fromTo.from, to: this.fromToMonthly.fromTo.to});
+    } else {
+      if (!this.fromToDaily) {
+        this.fromToDaily = this.dateHelperService.getInitialDatesForDailyPicker()
+      }else{}
+      this.fromTo$ = of({from: this.fromToDaily.from, to: this.fromToDaily.to})
     }
   }
 }

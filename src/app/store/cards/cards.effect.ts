@@ -12,7 +12,7 @@ import {AlertsData} from "../alerts/alerts.reducer";
 import {ConsumptionData} from "../consumption/consumption.reducer";
 import * as moment from "moment/moment";
 import {monthlyConsumptionConfig} from "../../pages/dashboards/saas/shared/monthly-consumption-chart/config";
-import {DateHelper} from "../../pages/dashboards/saas/shared/utils/date-helper";
+import {ConsumptionFromToMonthlyObject, DateHelperService} from "../../pages/dashboards/saas/shared/utils/date-helper";
 
 @Injectable()
 export class CardsEffects {
@@ -54,7 +54,7 @@ export class CardsEffects {
 
       const highRate: number[] = [];
       const lowRate: number[] = [];
-      const months:string[] = DateHelper.InitialDatesForChart();
+      const months:ConsumptionFromToMonthlyObject = this.dateHelper.initialDatesForChart();
       lastMonthlyRead.map(item => {
         const roundedAndSubstracted = Math.round(((item.cons - monthlyLowRate) + Number.EPSILON) * 100) / 100;
         highRate.push(roundedAndSubstracted)
@@ -77,7 +77,7 @@ export class CardsEffects {
         name:'Consumption at high rate'
       });
 
-      (monthlyConsumptionConfig.xAxis as any)[0].data = months.reverse();
+      (monthlyConsumptionConfig.xAxis as any)[0].data = months.months.reverse();
       (monthlyConsumptionConfig.yAxis as any)[0].name  = uom.unit;
 
 
@@ -87,7 +87,8 @@ export class CardsEffects {
   constructor(
     private actions$: Actions,
     private apiService: ApiService,
-    private store:Store
+    private store:Store,
+    private dateHelper:DateHelperService
   ) {
   }
 }
