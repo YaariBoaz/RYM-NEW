@@ -59,6 +59,7 @@ import {NgxEchartsModule} from "ngx-echarts";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {NgToggleModule} from "ngx-toggle-button";
 import {DateHelperService} from "./pages/dashboards/saas/shared/utils/date-helper";
+import {ConsumptionEffects} from "./store/consumption/consumption.effect";
 
 if (environment.defaultauth === 'firebase') {
   initFirebaseBackend(environment.firebaseConfig);
@@ -124,7 +125,8 @@ export function createTranslateLoader(http: HttpClient): any {
       PageTitleEffect,
       MetersListEffects,
       CardsEffects,
-      AlertsEffects
+      AlertsEffects,
+      ConsumptionEffects
     ]),
     NgxEchartsModule.forRoot({
       /**

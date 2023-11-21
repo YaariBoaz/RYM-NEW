@@ -18,8 +18,9 @@ import {selectAlertsData} from "../../../store/alerts/alerts.selector";
 import {AlertsData} from "../../../store/alerts/alerts.reducer";
 import {fetchClientAlertsData} from "../../../store/alerts/alerts.action";
 import {
+  fetchConsumptionChartData,
   getMonthsConsumptionFromToData,
-  updateMonthsConsumptionData
+  updateMonthsConsumptionData, updateMonthsConsumptionFromToData
 } from "../../../store/consumption/consumption.action";
 import {ConsumptionFromToMonthlyObject, ConsumptionFromToObject, DateHelperService} from "./shared/utils/date-helper";
 import {
@@ -28,6 +29,8 @@ import {
   selectConsumptionFromToMonths
 } from "../../../store/consumption/consumption.selector";
 import {FromToSet} from "../../../store/consumption/consumption.reducer";
+import {BsDatepickerViewMode} from "ngx-bootstrap/datepicker";
+import * as moment from "moment";
 
 
 @Component({
@@ -64,8 +67,18 @@ export class SaasComponent implements OnInit, AfterViewInit {
   isMonthly = true;
   fromToMonthly: ConsumptionFromToMonthlyObject;
   fromToDaily: ConsumptionFromToObject;
+  minMode: BsDatepickerViewMode = 'month';
   months: string[];
   fromTo$: Observable<{ from: string; to: string }>;
+  dateRangeConfig = {
+    dateInputFormat: 'MM/YYYY',
+    maxDateRange: 365,
+    minMode: this.minMode
+  };
+  dateRangePickerValue ?: (Date | undefined)[];
+  range1: Date = new Date(2020, 5);
+  range2: Date = new Date(2020, 8);
+  currentDateFormat = "MMM,yyyy";
 
   constructor(public formBuilder: UntypedFormBuilder, private configService: ConfigService, private store: Store, private dateHelperService: DateHelperService) {
   }
@@ -79,7 +92,7 @@ export class SaasComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Dashboards'}, {label: 'Saas', active: true}];
-
+    this.dateRangePickerValue = [this.range1, this.range2];
     this._fetchData();
 
     this.formData = this.formBuilder.group({
@@ -378,10 +391,11 @@ export class SaasComponent implements OnInit, AfterViewInit {
 
   onOpenCalendar(container) {
     if (this.isMonthly) {
-      container.monthSelectHandler = (event: any): void => {
-        container._store.dispatch(container._actions.select(event.date));
-      };
-      container.setViewMode('month');
+      this.dateRangeConfig.minMode = "month";
+      this.dateRangeConfig.maxDateRange = 365;
+    } else {
+      this.dateRangeConfig.minMode = "day";
+      this.dateRangeConfig.maxDateRange = 30;
     }
   }
 
@@ -390,23 +404,40 @@ export class SaasComponent implements OnInit, AfterViewInit {
     this.fromTo$ = of({from: this.fromToMonthly.fromTo.from, to: this.fromToMonthly.fromTo.to})
   }
 
-  onDateValueChange(fromDate: Date, fromOrTo: number, toDate?: Date) {
-    if (fromOrTo === 0) {
-      this.fromToMonthly = this.dateHelperService.getMonthsSetFromNewMonth(fromDate.getTime());
-      this.fromTo$ = of({from: this.fromToMonthly.fromTo.from, to: this.fromToMonthly.fromTo.to})
-    } else {
-      this.fromTo$ = of(this.dateHelperService.getFromToDaily(fromDate.getTime(), toDate.getTime()));
-    }
+  onDateValueChange(event) {
+    this.range1 = event[0];
+    this.range2 = event[1];
+    this.store.dispatch(fetchConsumptionChartData({
+        from: moment(this.range1).format('MMM YYYY'),
+        to: moment(this.range2).format('MMM YYYY')
+    }))
+
+    // if (fromOrTo === 0) {
+    //   if (this.isMonthly) {
+    //     this.fromToMonthly = this.dateHelperService.ma(fromDate.getTime());
+    //     this.fromTo$ = of({from: this.fromToMonthly.fromTo.from, to: this.fromToMonthly.fromTo.to});
+    //   } else {
+    //     this.fromToDaily = this.dateHelperService.getFromToDaily(fromDate.getTime(), new Date(this.fromToDaily.to).getTime());
+    //     this.fromTo$ = of({from: this.fromToDaily.from, to: this.fromToDaily.to});
+    //   }
+    // } else {
+    //   if (this.isMonthly) {
+    //     this.fromTo$ = of({from: this.fromToMonthly.fromTo.from, to: this.fromToMonthly.fromTo.to});
+    //   } else {
+    //     this.fromToDaily = this.dateHelperService.getFromToDaily(new Date(this.fromToDaily.from).getTime(), toDate.getTime());
+    //     this.fromTo$ = of({from: this.fromToDaily.from, to: this.fromToDaily.to});
+    //   }
+    // }
   }
 
   periodChange(isMonthly: boolean) {
     if (isMonthly) {
-      this.fromTo$ = of({from: this.fromToMonthly.fromTo.from, to: this.fromToMonthly.fromTo.to});
+      this.dateRangeConfig.minMode = "month";
+      this.dateRangeConfig.maxDateRange = 365;
     } else {
-      if (!this.fromToDaily) {
-        this.fromToDaily = this.dateHelperService.getInitialDatesForDailyPicker()
-      }else{}
-      this.fromTo$ = of({from: this.fromToDaily.from, to: this.fromToDaily.to})
+
     }
+    this.dateRangeConfig.minMode = "day";
+    this.dateRangeConfig.maxDateRange = 30;
   }
 }

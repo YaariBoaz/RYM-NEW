@@ -1,8 +1,7 @@
 import {EChartsOption} from "echarts";
 
-const  monthlyConsumptionConfig: EChartsOption = {
-  responsive: true,
-  maintainAspectRatio: false,
+const monthlyConsumptionConfig: EChartsOption = {
+  renderer:'svg',
   tooltip: {
     trigger: 'axis',
     axisPointer: {
@@ -15,8 +14,8 @@ const  monthlyConsumptionConfig: EChartsOption = {
   color: ['#4074f8', '#ff541e'],
   legend: {
     data: ['Consumption at low rate', 'Consumption at high rate'],
-    textStyle: { color: '#8791af' },
-    bottom:'right',
+    textStyle: {color: '#8791af'},
+    bottom: 'right',
 
   },
   xAxis: [
@@ -39,4 +38,4 @@ const  monthlyConsumptionConfig: EChartsOption = {
   ],
   series: []
 };
-export  {monthlyConsumptionConfig}
+export {monthlyConsumptionConfig}

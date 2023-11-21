@@ -17,7 +17,7 @@ export class DateHelperService {
     const start = moment().startOf('month')
     const months = this.generateMonthsSet(start, isForDatePicker);
     return {
-      fromTo: {from: months[0], to: months[months.length - 1]},
+      fromTo: {from: months[months.length - 1], to: months[0]},
       months: months
     }
   }
@@ -42,7 +42,7 @@ export class DateHelperService {
     const momentDate = moment(date).startOf('month');
     const months = this.generateMonthsSet(momentDate);
     return {
-      fromTo: {from: months[0], to: months[months.length - 1]},
+      fromTo: {from: months[months.length - 1], to: months[0]},
       months: months
     }
   }
@@ -51,7 +51,7 @@ export class DateHelperService {
     return this.initialDatesForChart(true)
   }
 
-  getFromToDaily(from: number, to: number):ConsumptionFromToObject {
+  getFromToDaily(from: number, to: number): ConsumptionFromToObject {
     const fromStr = moment(from).format('YYYY, MMM, DD');
     const toStr = moment(to).format('YYYY, MMM, DD');
     return {from: fromStr, to: toStr};
