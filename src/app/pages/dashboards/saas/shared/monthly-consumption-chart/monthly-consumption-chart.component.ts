@@ -7,6 +7,10 @@ import {Store} from "@ngrx/store";
 import * as moment from 'moment';
 import {EChartsOption} from "echarts";
 import {monthlyConsumptionConfig} from "./config";
+import {
+  selectLastBillingCycleChartData
+} from "../../../../../store/last-billing-cycle-chart/lastBillingCycleChart.selector";
+import {ConsumptionFromToMonthlyObject} from "../utils/date-helper";
 
 @Component({
   selector: 'app-monthly-consumption-chart',
@@ -27,6 +31,11 @@ export class MonthlyConsumptionChartComponent implements OnInit,OnChanges {
       if(monthlyConsumptionConfig.series && (monthlyConsumptionConfig.series as any).length>0){
         this.echartsInstance?.setOption(monthlyConsumptionConfig);
       }
+    });
+    this.store.select(selectLastBillingCycleChartData).subscribe(data=>{
+      if(monthlyConsumptionConfig.series && (monthlyConsumptionConfig.series as any).length>0){
+        this.echartsInstance?.setOption(monthlyConsumptionConfig);
+      }
     })
   }
 
@@ -40,5 +49,12 @@ export class MonthlyConsumptionChartComponent implements OnInit,OnChanges {
       (monthlyConsumptionConfig.xAxis as any)[0].data = this.months.reverse();
       this.echartsInstance?.setOption(monthlyConsumptionConfig);
     }
+  }
+
+
+
+
+  private getDaysSetFromNewRange(from, to) {
+    return undefined;
   }
 }

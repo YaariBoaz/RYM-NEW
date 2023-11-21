@@ -60,6 +60,7 @@ import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {NgToggleModule} from "ngx-toggle-button";
 import {DateHelperService} from "./pages/dashboards/saas/shared/utils/date-helper";
 import {ConsumptionEffects} from "./store/consumption/consumption.effect";
+import {LastBillingCycleChartStateEffects} from "./store/last-billing-cycle-chart/lastBillingCycleChart.effect";
 
 if (environment.defaultauth === 'firebase') {
   initFirebaseBackend(environment.firebaseConfig);
@@ -126,7 +127,8 @@ export function createTranslateLoader(http: HttpClient): any {
       MetersListEffects,
       CardsEffects,
       AlertsEffects,
-      ConsumptionEffects
+      ConsumptionEffects,
+      LastBillingCycleChartStateEffects
     ]),
     NgxEchartsModule.forRoot({
       /**

@@ -20,6 +20,10 @@ import {ClientMeterReducer, ClientMeterState} from "./meters/meters.reducer";
 import {CardsReducer, CardsState} from "./cards/cards.reducer";
 import {AlertsReducer, AlertsState} from "./alerts/alerts.reducer";
 import {ConsumptionReducer, ConsumptionState} from "./consumption/consumption.reducer";
+import {
+  LastBillingCycleChartState,
+  LastBillingCycleChartStateReducer
+} from "./last-billing-cycle-chart/lastBillingCycleChart.reducer";
 
 
 export interface RootReducerState {
@@ -44,6 +48,7 @@ export interface RootReducerState {
     cardsState:CardsState
   alertsState:AlertsState
   consumptionState:ConsumptionState
+  lastBillingCycleChartState:LastBillingCycleChartState
 }
 
 export const rootReducer: ActionReducerMap<RootReducerState> = {
@@ -67,6 +72,7 @@ export const rootReducer: ActionReducerMap<RootReducerState> = {
   pageTitle:PageTitleReducer,
   clientMeters:ClientMeterReducer,
   alertsState:AlertsReducer,
-  consumptionState:ConsumptionReducer
+  consumptionState:ConsumptionReducer,
+  lastBillingCycleChartState:LastBillingCycleChartStateReducer
 
 }

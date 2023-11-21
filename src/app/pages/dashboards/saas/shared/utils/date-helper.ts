@@ -63,6 +63,16 @@ export class DateHelperService {
     const today = moment().format('YYYY, MMM, DD');
     return {from: today, to: today};
   }
+
+  dagetDaysSetFromNewRange(from, to):number[] {
+    const fromMoment = moment(from);
+    const toMoment = moment(to);
+    const days:number[] = [];
+    for (var m = moment(fromMoment); m.isBefore(toMoment); m.add(1, 'days')) {
+      days.push(m.day());
+    }
+    return days;
+  }
 }
 
 

@@ -79,9 +79,6 @@ export class CardsEffects {
 
       (monthlyConsumptionConfig.xAxis as any)[0].data = months.months.reverse();
       (monthlyConsumptionConfig.yAxis as any)[0].name  = uom.unit;
-
-
-
   }
 
   constructor(
