@@ -24,7 +24,9 @@ export class MonthlyConsumptionChartComponent implements OnInit,OnChanges {
 
   ngOnInit(): void {
     this.store.select(selectConsumptionChartData).subscribe(consumptionState => {
-      this.echartsInstance?.setOption(monthlyConsumptionConfig);
+      if(monthlyConsumptionConfig.series && (monthlyConsumptionConfig.series as any).length>0){
+        this.echartsInstance?.setOption(monthlyConsumptionConfig);
+      }
     })
   }
 

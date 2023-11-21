@@ -21,7 +21,7 @@ export class CardsEffects {
   fetchData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchCardsData),
-      tap(() => {
+      tap((fetchCardsData) => {
           const lastRead$ = this.apiService.getLastRead();
           const uom$ = this.apiService.getMeasurmentUnitsByMunicipal();
           const forecast$ = this.apiService.getConsumptionForecast();
@@ -42,7 +42,7 @@ export class CardsEffects {
                 monthlyLowRate:(monthlyLowRate as number)
               }
             }));
-            this.prepareDataForCharts(lastMonthlyRead,monthlyLowRate,uom);
+            this.prepareDataForCharts(lastMonthlyRead,monthlyLowRate,uom,new Date(fetchCardsData.from).getTime(),new Date(fetchCardsData.to).getTime());
             this.store.dispatch(fetchConsumptionDataSuccess())
           })
         }
@@ -50,11 +50,11 @@ export class CardsEffects {
     ),{dispatch:false}
   )
 
-  private prepareDataForCharts(lastMonthlyRead: any, monthlyLowRate: any, uom: any) {
+  private prepareDataForCharts(lastMonthlyRead: any, monthlyLowRate: any, uom: any,from,to) {
 
       const highRate: number[] = [];
       const lowRate: number[] = [];
-      const months:ConsumptionFromToMonthlyObject = this.dateHelper.initialDatesForChart();
+      const months:ConsumptionFromToMonthlyObject = this.dateHelper.getMonthsSetFromNewMonth(from,to);
       lastMonthlyRead.map(item => {
         const roundedAndSubstracted = Math.round(((item.cons - monthlyLowRate) + Number.EPSILON) * 100) / 100;
         highRate.push(roundedAndSubstracted)

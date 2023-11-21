@@ -46,8 +46,6 @@ export const ConsumptionReducer = createReducer(initialState,
     return {...state, loading: true, error: null};
   }), on(fetchConsumptionDataSuccess, (state) => {
     return {...state, loading: false};
-  }),on(fetchConsumptionChartDataSuccess, (data) => {
-    return {...data, loading: false};
   }),
   on(updateMonthsConsumptionData, (state, months) => {
     return {...state, ...months, loading: false};

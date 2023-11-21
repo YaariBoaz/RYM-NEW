@@ -14,42 +14,44 @@ export class DateHelperService {
   }
 
   initialDatesForChart(isForDatePicker?: boolean): ConsumptionFromToMonthlyObject {
-    const start = moment().startOf('month')
-    const months = this.generateMonthsSet(start, isForDatePicker);
+    const start = moment().startOf('month');
+    const end =start.subtract(1,'year');
+    const months = this.generateMonthsSet(start, end, isForDatePicker);
     return {
-      fromTo: {from: months[months.length - 1], to: months[0]},
+      fromTo: {from: moment(months[months.length - 1]).format('YYYY-MM'), to: moment(months[0]).format('YYYY-MM')},
       months: months
     }
   }
 
-  generateMonthsSet(startDate: moment.Moment, isForDatePicker?: boolean): string[] {
+  generateMonthsSet(startDate: moment.Moment, endDate: moment.Moment, isForDatePicker?: boolean): string[] {
     const startCopy = startDate.clone();
     const months: string[] = [];
-    const today = startCopy.subtract(11, 'months').format('MM-DD-YYYY');
-    const end = moment(today);
-    while (end.isSameOrBefore(startDate, 'month')) {
+    if (startDate.diff(endDate, 'days') > 365) {
+      endDate = startDate.add(1, 'year');
+    }
+    const end = moment(startDate);
+    while (end.isSameOrBefore(endDate, 'month')) {
       if (isForDatePicker) {
-        months.push(startDate.format('MMM YYYY'))
+        months.push(endDate.format('MMM YYYY'))
       } else {
-        months.push(startDate.format('MMM YYYY'))
+        months.push(endDate.format('MMM YYYY'))
       }
-      startDate.subtract(1, 'month')
+      endDate.subtract(1, 'month')
     }
     return months;
   }
 
-  getMonthsSetFromNewMonth(date: number): ConsumptionFromToMonthlyObject {
-    const momentDate = moment(date).startOf('month');
-    const months = this.generateMonthsSet(momentDate);
+  getMonthsSetFromNewMonth(from: number, to: number): ConsumptionFromToMonthlyObject {
+    const momentFrom = moment(from).startOf('month');
+    const momentTo = moment(to).startOf('month');
+    const months = this.generateMonthsSet(momentFrom, momentTo, true);
     return {
       fromTo: {from: months[months.length - 1], to: months[0]},
       months: months
     }
   }
 
-  getInitialDatesForPicker() {
-    return this.initialDatesForChart(true)
-  }
+
 
   getFromToDaily(from: number, to: number): ConsumptionFromToObject {
     const fromStr = moment(from).format('YYYY, MMM, DD');

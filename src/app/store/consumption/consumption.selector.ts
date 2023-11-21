@@ -6,7 +6,7 @@ export const selectConsumptionDataState = createFeatureSelector<ConsumptionState
 
 export const selectConsumptionChartData = createSelector(
   selectConsumptionDataState,
-  (state: ConsumptionState) => state
+  (state: ConsumptionState) =>state
 );
 
 export const selectConsumptionMonths = createSelector(
@@ -18,6 +18,8 @@ export const selectConsumptionFromToMonths = createSelector(
   selectConsumptionDataState,
   (state: ConsumptionState) => state.fromToMonths
 );
+
+
 
 export const selectConsumptionFromToDaily = createSelector(
   selectConsumptionDataState,

@@ -43,7 +43,6 @@ import * as moment from "moment";
  */
 export class SaasComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('scrollRef') scrollRef;
 
   // bread crumb items
   breadCrumbItems: Array<{}>;
@@ -76,11 +75,18 @@ export class SaasComponent implements OnInit, AfterViewInit {
     minMode: this.minMode
   };
   dateRangePickerValue ?: (Date | undefined)[];
-  range1: Date = new Date(2020, 5);
-  range2: Date = new Date(2020, 8);
+  range1: Date;
+  range2: Date;
   currentDateFormat = "MMM,yyyy";
+  fromMonthValue;
+  toMonthValue;
+  fromDailyValue;
+  toDailyValue;
 
   constructor(public formBuilder: UntypedFormBuilder, private configService: ConfigService, private store: Store, private dateHelperService: DateHelperService) {
+    this.range1 = new Date();
+    this.range2 = new Date();
+    this.range1.setFullYear(this.range1.getFullYear() - 1);
   }
 
   /**
@@ -93,7 +99,6 @@ export class SaasComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Dashboards'}, {label: 'Saas', active: true}];
     this.dateRangePickerValue = [this.range1, this.range2];
-    this._fetchData();
 
     this.formData = this.formBuilder.group({
       message: ['', [Validators.required]],
@@ -106,288 +111,21 @@ export class SaasComponent implements OnInit, AfterViewInit {
     });
 
     this.store.dispatch(fetchClientMetersData());
-    this.store.dispatch(fetchCardsData());
+    const a: ConsumptionFromToMonthlyObject = this.dateHelperService.getMonthsSetFromNewMonth(this.range1.getTime(), this.range2.getTime());
+    this.fromToMonthly = a;
+    this.store.dispatch(fetchCardsData({from: a.fromTo.from, to: a.fromTo.to}));
     this.store.dispatch(fetchClientAlertsData());
     this.userData$ = this.store.select(selectUserData);
     this.metersData$ = this.store.select(selectMetersData);
     this.cardsData$ = this.store.select(selectCardsData);
     this.alerts$ = this.store.select(selectAlertsData);
 
-    this.initDates();
 
-  }
-
-  /**
-   * Save the message in chat
-   */
-  messageSave() {
-    const message = this.formData.get('message').value;
-    const currentDate = new Date();
-    if (this.formData.valid && message) {
-      // Message Push in Chat
-      this.ChatData.push({
-        align: 'right',
-        name: 'Henry Wells',
-        message,
-        time: currentDate.getHours() + ':' + currentDate.getMinutes()
-      });
-      this.onListScroll();
-      // Set Form Data Reset
-      this.formData = this.formBuilder.group({
-        message: null
-      });
-    }
-
-    this.chatSubmit = true;
-  }
-
-  private _fetchData() {
-    this.earningLineChart = earningLineChart;
-    this.salesAnalyticsDonutChart = salesAnalyticsDonutChart;
-    this.ChatData = ChatData;
   }
 
   ngAfterViewInit() {
-    this.scrollRef.SimpleBar.getScrollElement().scrollTop = 500;
   }
 
-  onListScroll() {
-    if (this.scrollRef !== undefined) {
-      setTimeout(() => {
-        this.scrollRef.SimpleBar.getScrollElement().scrollTop =
-          this.scrollRef.SimpleBar.getScrollElement().scrollHeight + 1500;
-      }, 500);
-    }
-  }
-
-  selectMonth(value: any) {
-    let data = value.target.value
-    switch (data) {
-      case "january":
-        this.sassEarning = [
-          {
-            name: "This month",
-            amount: "$2007.35",
-            revenue: "0.2",
-            time: "From previous period",
-            month: "Last month",
-            previousamount: "$784.04",
-            series: [
-              {
-                name: "series1",
-                data: [22, 35, 20, 41, 51, 42, 49, 45, 58, 42, 75, 48],
-              },
-            ],
-          },
-        ];
-        break;
-      case "december":
-        this.sassEarning = [
-          {
-            name: "This month",
-            amount: "$2007.35",
-            revenue: "0.2",
-            time: "From previous period",
-            month: "Last month",
-            previousamount: "$784.04",
-            series: [
-              {
-                name: "series1",
-                data: [22, 28, 31, 34, 40, 52, 29, 45, 68, 60, 47, 12],
-              },
-            ],
-          },
-        ];
-        break;
-      case "november":
-        this.sassEarning = [
-          {
-            name: "This month",
-            amount: "$2887.35",
-            revenue: "0.4",
-            time: "From previous period",
-            month: "Last month",
-            previousamount: "$684.04",
-            series: [
-              {
-                name: "series1",
-                data: [28, 30, 48, 50, 47, 40, 35, 48, 56, 42, 65, 41],
-              },
-            ],
-          },
-        ];
-        break;
-      case "october":
-        this.sassEarning = [
-          {
-            name: "This month",
-            amount: "$2100.35",
-            revenue: "0.4",
-            time: "From previous period",
-            month: "Last month",
-            previousamount: "$674.04",
-            series: [
-              {
-                name: "series1",
-                data: [28, 48, 39, 47, 48, 41, 28, 46, 25, 32, 24, 28],
-              },
-            ],
-          },
-        ];
-        break;
-    }
-  }
-
-  sellingProduct(event) {
-    let month = event.target.value;
-    switch (month) {
-      case "january":
-        this.sassTopSelling = [
-          {
-            title: "Product B",
-            amount: "$ 7842",
-            revenue: "0.4",
-            list: [
-              {
-                name: "Product D",
-                text: "Neque quis est",
-                sales: 41,
-                chartVariant: "#34c38f"
-              },
-              {
-                name: "Product E",
-                text: "Quis autem iure",
-                sales: 14,
-                chartVariant: "#556ee6"
-              },
-              {
-                name: "Product F",
-                text: "Sed aliquam mauris.",
-                sales: 85,
-                chartVariant: "#f46a6a"
-              },
-            ],
-          },
-        ];
-        break;
-      case "december":
-        this.sassTopSelling = [
-          {
-            title: "Product A",
-            amount: "$ 6385",
-            revenue: "0.6",
-            list: [
-              {
-                name: "Product A",
-                text: "Neque quis est",
-                sales: 37,
-                chartVariant: "#556ee6"
-              },
-              {
-                name: "Product B",
-                text: "Quis autem iure",
-                sales: 72,
-                chartVariant: "#f46a6a"
-              },
-              {
-                name: "Product C",
-                text: "Sed aliquam mauris.",
-                sales: 54,
-                chartVariant: "#34c38f"
-              },
-            ],
-          },
-        ];
-        break;
-      case "november":
-        this.sassTopSelling = [
-          {
-            title: "Product C",
-            amount: "$ 4745",
-            revenue: "0.8",
-            list: [
-              {
-                name: "Product G",
-                text: "Neque quis est",
-                sales: 37,
-                chartVariant: "#34c38f"
-              },
-              {
-                name: "Product H",
-                text: "Quis autem iure",
-                sales: 42,
-                chartVariant: "#556ee6"
-              },
-              {
-                name: "Product I",
-                text: "Sed aliquam mauris.",
-                sales: 63,
-                chartVariant: "#f46a6a"
-              },
-            ],
-          },
-        ];
-        break;
-      case "october":
-        this.sassTopSelling = [
-          {
-            title: "Product A",
-            amount: "$ 6385",
-            revenue: "0.6",
-            list: [
-              {
-                name: "Product A",
-                text: "Neque quis est",
-                sales: 37,
-                chartVariant: "#f46a6a"
-              },
-              {
-                name: "Product B",
-                text: "Quis autem iure",
-                sales: 72,
-                chartVariant: "#556ee6"
-              },
-              {
-                name: "Product C",
-                text: "Sed aliquam mauris.",
-                sales: 54,
-                chartVariant: "#34c38f"
-              },
-            ],
-          },
-        ];
-        break;
-      default:
-        this.sassTopSelling = [
-          {
-            title: "Product A",
-            amount: "$ 6385",
-            revenue: "0.6",
-            list: [
-              {
-                name: "Product A",
-                text: "Neque quis est",
-                sales: 37,
-                chartVariant: "#556ee6"
-              },
-              {
-                name: "Product B",
-                text: "Quis autem iure",
-                sales: 72,
-                chartVariant: "#34c38f"
-              },
-              {
-                name: "Product C",
-                text: "Sed aliquam mauris.",
-                sales: 54,
-                chartVariant: "#f46a6a"
-              }
-            ]
-          }
-        ];
-        break;
-    }
-  }
 
   onOpenCalendar(container) {
     if (this.isMonthly) {
@@ -399,18 +137,19 @@ export class SaasComponent implements OnInit, AfterViewInit {
     }
   }
 
-  initDates() {
-    this.fromToMonthly = this.dateHelperService.getInitialDatesForPicker();
-    this.fromTo$ = of({from: this.fromToMonthly.fromTo.from, to: this.fromToMonthly.fromTo.to})
-  }
+
 
   onDateValueChange(event) {
-    this.range1 = event[0];
-    this.range2 = event[1];
-    this.store.dispatch(fetchConsumptionChartData({
-        from: moment(this.range1).format('MMM YYYY'),
-        to: moment(this.range2).format('MMM YYYY')
-    }))
+    if (this.isMonthly) {
+      this.range1 = event[0];
+      this.range2 = event[1];
+      this.store.dispatch(fetchCardsData({
+        from: moment(this.range1).format('MMM-yyyy'),
+        to: moment(this.range2).format('MMM-yyyy')
+      }));
+    } else {
+
+    }
 
     // if (fromOrTo === 0) {
     //   if (this.isMonthly) {

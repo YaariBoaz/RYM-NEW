@@ -25,11 +25,12 @@ export class ConsumptionEffects {
         )
       ),
     ),
-  )
+    )
   )
 
 
   constructor(private actions$: Actions,private apiService:ApiService) { }
+
 
 
 }
