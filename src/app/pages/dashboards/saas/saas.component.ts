@@ -3,8 +3,8 @@ import {UntypedFormBuilder, Validators, UntypedFormGroup} from '@angular/forms';
 import {ChartType, ChatMessage} from './saas.model';
 import {ConfigService} from '../../../core/services/config.service';
 import {Store} from "@ngrx/store";
-import {selectUserData} from "../../../shared/ui/pagetitle/page-title.selector";
-import {Observable} from "rxjs";
+import {selectUserData, selectUserName} from "../../../shared/ui/pagetitle/page-title.selector";
+import {Observable, of} from "rxjs";
 import {PageTitleState} from "../../../shared/ui/pagetitle/page-title.reducer";
 import {selectMetersData} from "../../../store/meters/meters.selector";
 import {MeterData} from "../../../store/meters/meters.reducer";
@@ -70,6 +70,7 @@ export class SaasComponent implements OnInit, AfterViewInit {
   toMonthValue;
   fromDailyValue;
   toDailyValue;
+  userInfo$: Observable<{ firstName: string; lastName: string }>;
 
   constructor(public formBuilder: UntypedFormBuilder, private configService: ConfigService, private store: Store, private dateHelperService: DateHelperService) {
     this.range1 = new Date();
@@ -106,7 +107,12 @@ export class SaasComponent implements OnInit, AfterViewInit {
     this.store.dispatch(fetchCardsData({from: a.fromTo.from, to: a.fromTo.to}));
     this.store.dispatch(fetchClientAlertsData());
     this.userData$ = this.store.select(selectUserData);
-    this.metersData$ = this.store.select(selectMetersData);
+    this.userInfo$ = this.store.select(selectUserName);
+    this.store.select(selectMetersData).subscribe(data => {
+      if (data && data.meters && data.meters.length) {
+        this.metersData$ = of(data.meters);
+      }
+    });
     this.cardsData$ = this.store.select(selectCardsData);
     this.alerts$ = this.store.select(selectAlertsData);
 
@@ -128,7 +134,6 @@ export class SaasComponent implements OnInit, AfterViewInit {
   }
 
 
-
   onDateValueChange(event) {
     if (this.isMonthly) {
       this.range1 = event[0];
@@ -147,16 +152,27 @@ export class SaasComponent implements OnInit, AfterViewInit {
       this.dateRangeConfig.minMode = "month";
       this.dateRangeConfig.maxDateRange = 365;
     } else {
+      this.dateRangeConfig.minMode = "day";
+      this.dateRangeConfig.maxDateRange = 30;
+      if (!this.fromDailyValue || !this.toDailyValue) {
+        this.setInitialDailyDate();
+      }
+      //2023-10-27
+      this.currentDateFormat = "YYYY , MMM , dd"
+      this.store.dispatch(fetchLastBillingCycleData({
+        from: moment(this.range1).format('YYYY-MM-D'),
+        to: moment(this.range2).format('YYYY-MM-D')
+      }))
+    }
 
-    }
-    this.dateRangeConfig.minMode = "day";
-    this.dateRangeConfig.maxDateRange = 30;
-    if(!this.fromDailyValue || !this.toDailyValue){
-      this.range1 = new Date();
-      this.range2 = new Date();
-    }
-    //2023-10-27
-    this.currentDateFormat = "YYYY , MMM , dd"
-    this.store.dispatch(fetchLastBillingCycleData({from:moment(this.range1).format('YYYY-MM-D'),to:moment(this.range2).format('YYYY-MM-D')}))
+  }
+
+  private setInitialDailyDate() {
+    const from = moment(new Date());
+    from.subtract(1, 'month');
+    const fromStr = from.format('YYYY-MM-D');
+    const toStr = moment(new Date()).format('YYYY-MM-D');
+    this.range1 = new Date(fromStr);
+    this.range2 = new Date(toStr);
   }
 }

@@ -20,54 +20,63 @@ export class LastBillingCycleChartStateEffects {
     this.actions$.pipe(
       ofType(fetchLastBillingCycleData),
       mergeMap((fetchLastBillingCycleData) =>
-        this.apiService.getConsumptionLastBillingCycleBetweenDates(fetchLastBillingCycleData.from,fetchLastBillingCycleData.to).pipe(
-          map((data:LastBillingCycleChartData[]) => {
-            this.prepareDataForCharts(data,fetchLastBillingCycleData.from,fetchLastBillingCycleData.to);
+        this.apiService.getConsumptionLastBillingCycleBetweenDates(fetchLastBillingCycleData.from, fetchLastBillingCycleData.to).pipe(
+          map((data: LastBillingCycleChartData[]) => {
+            this.prepareDataForCharts(data, fetchLastBillingCycleData.from, fetchLastBillingCycleData.to);
             return fetchLastBillingCycleDataSuccess({data});
           }),
           catchError((error) =>
-            of(fetchLastBillingCycleFail({ error }))
+            of(fetchLastBillingCycleFail({error}))
           ),
         )
       ),
     ),
   )
 
-  private prepareDataForCharts(data,from,to) {
+  private prepareDataForCharts(data, from, to) {
 
-    const real: number[] = [];
+    const real: any[] = [];
     const estimate: number[] = [];
-    const days:number[]= this.dateHelper.dagetDaysSetFromNewRange(from,to);
+    const days: number[] = this.dateHelper.dagetDaysSetFromNewRange(from, to);
     data.map(item => {
-      if(item.estimationType === 0){
-        real.push( Math.round((item.cons + Number.EPSILON) * 100) / 100)
-      }else{
-        estimate.push( Math.round((item.cons + Number.EPSILON) * 100) / 100)
+      if (item.estimationType === 0) {
+         real.push({
+          value: (Math.round((item.cons + Number.EPSILON) * 100) / 100),
+          itemStyle: {
+            color: '#1cd3d2'
+          }
+        })
+      } else {
+        real.push({
+          value: (Math.round((item.cons + Number.EPSILON) * 100) / 100),
+          itemStyle: {
+            color: '#3daefa'
+          }
+        })
       }
     })
-    monthlyConsumptionConfig.series = [
-      {
-        data: real,
-        type: 'bar',
-        stack: 'x',
-        name:'Real'
-      }
-    ]
+
+    monthlyConsumptionConfig.series = [];
+    monthlyConsumptionConfig.series.push({
+      data: real,
+      type: 'bar',
+    })
+
+
     monthlyConsumptionConfig.series.push({
       data: estimate,
       type: 'bar',
-      stack: 'x',
-      name:'Estimation'
     });
 
-    (monthlyConsumptionConfig.xAxis as any)[0].data = days.reverse();
+    (monthlyConsumptionConfig.xAxis as any)[0].data = days;
   }
 
 
   constructor(
     private actions$: Actions,
-    private apiService:ApiService,
-    private dateHelper:DateHelperService
-  ) { }
+    private apiService: ApiService,
+    private dateHelper: DateHelperService
+  ) {
+  }
 
 }

@@ -6,5 +6,5 @@ export const selectMetersDataState = createFeatureSelector<ClientMeterState>('cl
 
 export const selectMetersData = createSelector(
   selectMetersDataState,
-  (state: ClientMeterState) => state.meters
+  (state: ClientMeterState) => state
 );

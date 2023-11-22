@@ -46,7 +46,7 @@ export class ApiService {
   }
 
   getConsumptionLastBillingCycleBetweenDates(date1, date2) {
-    return this.http.get(this.API_BASE_HREF_CTM + 'consumption/daily/lastbillingCycle/2023-10-09/2023-11-09');
+    return this.http.get(this.API_BASE_HREF_CTM + 'consumption/daily/lastbillingCycle/' + date1 + '/' + date2);
   }
 
   getConsumptionLowRateLimit() {
@@ -76,6 +76,7 @@ export class ApiService {
   getMyAlerts() {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumer/myalerts');
   }
+
   getMessagesFromMunicipal() {
     return this.http.get(this.API_BASE_HREF_CTM + 'municipality/1982/messages');
   }
