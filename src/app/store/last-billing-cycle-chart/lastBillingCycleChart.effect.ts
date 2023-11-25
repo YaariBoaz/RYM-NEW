@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, map, mergeMap} from "rxjs/operators";
-import {of, pipe} from "rxjs";
+import {of} from "rxjs";
 import {ApiService} from "../../shared/api.service";
 import {
   fetchLastBillingCycleData,
@@ -9,8 +9,10 @@ import {
   fetchLastBillingCycleFail
 } from "./lastBillingCycleChart.action";
 import {LastBillingCycleChartData} from "./lastBillingCycleChart.reducer";
-import {ConsumptionFromToMonthlyObject, DateHelperService} from "../../pages/dashboards/saas/shared/utils/date-helper";
-import {monthlyConsumptionConfig} from "../../pages/dashboards/saas/shared/monthly-consumption-chart/config";
+import {DateHelperService} from "../../pages/dashboards/saas/shared/utils/date-helper";
+import {
+  dailyConsumptionConfig,
+} from "../../pages/dashboards/saas/shared/monthly-consumption-chart/config";
 
 @Injectable()
 export class LastBillingCycleChartStateEffects {
@@ -36,39 +38,25 @@ export class LastBillingCycleChartStateEffects {
   private prepareDataForCharts(data, from, to) {
 
     const real: any[] = [];
-    const estimate: number[] = [];
+    const estimate: any[] = [];
     const days: number[] = this.dateHelper.dagetDaysSetFromNewRange(from, to);
     data.map(item => {
-      if (item.estimationType === 0) {
-         real.push({
-          value: (Math.round((item.cons + Number.EPSILON) * 100) / 100),
-          itemStyle: {
-            color: '#1cd3d2'
-          }
-        })
+      if (item.estimationType=== 0) {
+          real.push((Math.round((item.cons + Number.EPSILON) * 100) / 100));
       } else {
-        real.push({
-          value: (Math.round((item.cons + Number.EPSILON) * 100) / 100),
-          itemStyle: {
-            color: '#3daefa'
-          }
-        })
+        estimate.push(Math.round((item.cons + Number.EPSILON) * 100) / 100)
       }
     })
-
-    monthlyConsumptionConfig.series = [];
-    monthlyConsumptionConfig.series.push({
+    dailyConsumptionConfig.datasets = [];
+    dailyConsumptionConfig.datasets.push({
       data: real,
-      type: 'bar',
-    })
-
-
-    monthlyConsumptionConfig.series.push({
-      data: estimate,
-      type: 'bar',
+      label: 'Real',
     });
-
-    (monthlyConsumptionConfig.xAxis as any)[0].data = days;
+    dailyConsumptionConfig.datasets.push({
+      data: estimate,
+      label: 'Estimate',
+    });
+    dailyConsumptionConfig.labels = days;
   }
 
 

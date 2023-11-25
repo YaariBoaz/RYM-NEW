@@ -151,6 +151,7 @@ export class SaasComponent implements OnInit, AfterViewInit {
     if (isMonthly) {
       this.dateRangeConfig.minMode = "month";
       this.dateRangeConfig.maxDateRange = 365;
+      this.store.dispatch(fetchCardsData({from: this.fromMonthValue.from, to: this.toMonthValue}));
     } else {
       this.dateRangeConfig.minMode = "day";
       this.dateRangeConfig.maxDateRange = 30;

@@ -59,26 +59,28 @@ export class CardsEffects {
         const roundedAndSubstracted = Math.round(((item.cons - monthlyLowRate) + Number.EPSILON) * 100) / 100;
         highRate.push(roundedAndSubstracted)
       })
-      monthlyConsumptionConfig.series = [
-        {
-          data: highRate,
-          type: 'bar',
-          stack: 'x',
-          name:'Consumption at low rate'
-        }
-      ]
+      monthlyConsumptionConfig.labels = months.months.reverse();
+
       highRate.forEach(item => {
         lowRate.push(monthlyLowRate);
       });
-      monthlyConsumptionConfig.series.push({
+      monthlyConsumptionConfig.datasets.push({
         data: lowRate,
-        type: 'bar',
         stack: 'x',
-        name:'Consumption at high rate'
-      });
+        label:'Consumption at low rate',
+        backgroundColor: '#2271b1',
+        uom:uom
+      } as any);
+    monthlyConsumptionConfig.datasets.push({
+      data: highRate,
+      stack: 'x',
+      label:'Consumption at high rate',
+      backgroundColor:'#F46A6A',
+      uom:uom
+    } as any);
 
-      (monthlyConsumptionConfig.xAxis as any)[0].data = months.months.reverse();
-      (monthlyConsumptionConfig.yAxis as any)[0].name  = uom.unit;
+      // (monthlyConsumptionConfig.xAxis as any)[0].data = months.months.reverse();
+      // (monthlyConsumptionConfig.yAxis as any)[0].name  = uom.unit;
   }
 
   constructor(

@@ -1,1 +1,10 @@
-<div echarts [options]="monthlyConsumptionConfig"  (chartInit)="onChartInit($event)" class="demo-chart"></div>
+<div >
+<canvas baseChart
+        style="height: 27vh;width:100%"
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [type]="'bar'">
+</canvas>
+</div>
