@@ -40,21 +40,32 @@ export class LastBillingCycleChartStateEffects {
     const real: any[] = [];
     const estimate: any[] = [];
     const days: number[] = this.dateHelper.dagetDaysSetFromNewRange(from, to);
-    data.map(item => {
-      if (item.estimationType=== 0) {
-          real.push((Math.round((item.cons + Number.EPSILON) * 100) / 100));
+    const dataTemp = []
+    data.map((item, index) => {
+      if (item.estimationType === 0) {
+        real.push({
+          x: new Date(days[index]),
+          y: (Math.round((item.cons + Number.EPSILON) * 100) / 100),
+
+        })
       } else {
-        estimate.push(Math.round((item.cons + Number.EPSILON) * 100) / 100)
+        estimate.push({
+          x: new Date(days[index]),
+          y: (Math.round((item.cons + Number.EPSILON) * 100) / 100),
+
+        })
       }
     })
     dailyConsumptionConfig.datasets = [];
     dailyConsumptionConfig.datasets.push({
       data: real,
       label: 'Real',
+      backgroundColor:'#1cd3d2'
     });
     dailyConsumptionConfig.datasets.push({
       data: estimate,
       label: 'Estimate',
+      backgroundColor:'#3daefa'
     });
     dailyConsumptionConfig.labels = days;
   }

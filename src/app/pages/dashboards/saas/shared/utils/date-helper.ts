@@ -30,7 +30,7 @@ export class DateHelperService {
       endDate = startDate.add(1, 'year');
     }
     const end = moment(startDate);
-    while (end.isBefore(endDate, 'month')) {
+    while (!end.isAfter(endDate, 'month')) {
       if (isForDatePicker) {
         months.push(endDate.format('MMM YYYY'))
       } else {
@@ -65,13 +65,15 @@ export class DateHelperService {
 
   dagetDaysSetFromNewRange(from, to): number[] {
     const fromMoment = moment(from).add();
-    const toMoment = moment(to).add(1,'day');
+    const toMoment = moment(to).add(1, 'day');
     const days = [];
     for (var m = moment(fromMoment); m.isBefore(toMoment); m.add(1, 'days')) {
       days.push(m.format('DD MMM YYYY'));
     }
     return days;
   }
+
+
 }
 
 

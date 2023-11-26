@@ -26,11 +26,7 @@ export class ApiService {
   }
 
   getConsumptionMonthly(from, to, meterCount?) {
-    //20529/2022-12/2023-11
-    from = '2022-12';
-    to = '2023-11'
-    meterCount = 148199;
-    return this.http.get(this.API_BASE_HREF_CTM + 'consumption/monthly/' + meterCount + '/' + from + '/' + to);
+    return this.http.get(this.API_BASE_HREF_CTM + 'consumption/monthly/' + from + '/' + to);
   }
 
   getConsumptionForecast() {

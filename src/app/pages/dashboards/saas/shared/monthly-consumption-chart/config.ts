@@ -10,5 +10,10 @@ const dailyConsumptionConfig: ChartConfiguration<'bar'>['data'] = {
   datasets: []
 };
 
+const compareToPreviousConfig: ChartConfiguration<'bar'>['data'] = {
+  labels: [],
+  datasets: []
+};
 
-export {monthlyConsumptionConfig,dailyConsumptionConfig}
+
+export {monthlyConsumptionConfig,dailyConsumptionConfig,compareToPreviousConfig}

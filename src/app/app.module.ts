@@ -61,6 +61,9 @@ import {NgToggleModule} from "ngx-toggle-button";
 import {DateHelperService} from "./pages/dashboards/saas/shared/utils/date-helper";
 import {ConsumptionEffects} from "./store/consumption/consumption.effect";
 import {LastBillingCycleChartStateEffects} from "./store/last-billing-cycle-chart/lastBillingCycleChart.effect";
+import {
+  CompareToPreviousYearChartEffect
+} from "./store/comapre-to-previous-year-chart/comapre-to-previous-year-chart.effect";
 
 if (environment.defaultauth === 'firebase') {
   initFirebaseBackend(environment.firebaseConfig);
@@ -128,6 +131,7 @@ export function createTranslateLoader(http: HttpClient): any {
       CardsEffects,
       AlertsEffects,
       ConsumptionEffects,
+      CompareToPreviousYearChartEffect,
       LastBillingCycleChartStateEffects
     ]),
     NgxEchartsModule.forRoot({

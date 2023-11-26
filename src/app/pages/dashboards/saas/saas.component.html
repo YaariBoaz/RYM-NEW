@@ -121,8 +121,8 @@
   </div>
 
   <div class="row">
-    <div class="col-xl-8">
-      <div class="card">
+    <div class="col-xl-8 ">
+      <div class="card card-height">
         <div class="card-body">
           <ul class="nav nav-tabs nav-tabs-custom nav-justified" role="tablist">
             <li class="nav-item tab" role="presentation" (click)="activeTab =0">
@@ -141,7 +141,6 @@
             </li>
           </ul>
           <div class="tab-content p-3 text-muted">
-
             <div class="tab-pane active" role="tabpanel" [class.hidden]="activeTab ===1"
                  [class.visible]="activeTab ===0">
               <div class="chart-header d-flex">
@@ -172,22 +171,14 @@
               </div>
             </div>
             <div class="tab-pane" role="tabpanel" [class.hidden]="activeTab ===0" [class.visible]="activeTab ===1">
-              <p class="mb-0">
-                Food truck fixie locavore, accusamus mcsweeney's marfa nulla
-                single-origin coffee squid. Exercitation +1 labore velit, blog
-                sartorial PBR leggings next level wes anderson artisan four loko
-                farm-to-table craft beer twee. Qui photo booth letterpress,
-                commodo enim craft beer mlkshk aliquip jean shorts ullamco ad
-                vinyl cillum PBR. Homo nostrud organic, assumenda labore
-                aesthetic magna delectus.
-              </p>
+             <app-comapre-to-previous-year-chart></app-comapre-to-previous-year-chart>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-xl-4">
-      <div class="card">
+    <div class="col-xl-4 ">
+      <div class="card card-height">
         <div class="card-body">
           <div class="card-title">
             <h5>Alerts</h5>

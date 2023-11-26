@@ -135,15 +135,24 @@ export class SaasComponent implements OnInit, AfterViewInit {
 
 
   onDateValueChange(event) {
+    this.range1 = event[0];
+    this.range2 = event[1];
     if (this.isMonthly) {
-      this.range1 = event[0];
-      this.range2 = event[1];
+      this.fromMonthValue = moment(this.range1).format('MMM-yyyy');
+      this.toMonthValue = moment(this.range2).format('MMM-yyyy');
+      this.currentDateFormat = "YYYY , MMM"
       this.store.dispatch(fetchCardsData({
-        from: moment(this.range1).format('MMM-yyyy'),
-        to: moment(this.range2).format('MMM-yyyy')
+        from: this.fromMonthValue,
+        to: this.toMonthValue
       }));
     } else {
-
+      this.fromDailyValue = this.range1;
+      this.toDailyValue = this.range2;
+      this.currentDateFormat = "YYYY , MMM , dd"
+      this.store.dispatch(fetchLastBillingCycleData({
+        from: moment(this.range1).format('YYYY-MM-D'),
+        to: moment(this.range2).format('YYYY-MM-D')
+      }))
     }
   }
 
@@ -151,18 +160,17 @@ export class SaasComponent implements OnInit, AfterViewInit {
     if (isMonthly) {
       this.dateRangeConfig.minMode = "month";
       this.dateRangeConfig.maxDateRange = 365;
-      this.store.dispatch(fetchCardsData({from: this.fromMonthValue.from, to: this.toMonthValue}));
+      this.store.dispatch(fetchCardsData({from: this.fromMonthValue, to: this.toMonthValue}));
     } else {
       this.dateRangeConfig.minMode = "day";
       this.dateRangeConfig.maxDateRange = 30;
       if (!this.fromDailyValue || !this.toDailyValue) {
         this.setInitialDailyDate();
       }
-      //2023-10-27
       this.currentDateFormat = "YYYY , MMM , dd"
       this.store.dispatch(fetchLastBillingCycleData({
-        from: moment(this.range1).format('YYYY-MM-D'),
-        to: moment(this.range2).format('YYYY-MM-D')
+        from: this.fromDailyValue,
+        to: this.toDailyValue
       }))
     }
 
@@ -175,5 +183,7 @@ export class SaasComponent implements OnInit, AfterViewInit {
     const toStr = moment(new Date()).format('YYYY-MM-D');
     this.range1 = new Date(fromStr);
     this.range2 = new Date(toStr);
+    this.fromDailyValue = moment(this.range1).format('YYYY-MM-D');
+    this.toDailyValue = moment(this.range2).format('YYYY-MM-D')
   }
 }
