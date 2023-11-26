@@ -171,7 +171,7 @@
               </div>
             </div>
             <div class="tab-pane" role="tabpanel" [class.hidden]="activeTab ===0" [class.visible]="activeTab ===1">
-             <app-comapre-to-previous-year-chart></app-comapre-to-previous-year-chart>
+              <app-comapre-to-previous-year-chart></app-comapre-to-previous-year-chart>
             </div>
           </div>
         </div>
@@ -183,9 +183,9 @@
           <div class="card-title">
             <h5>Alerts</h5>
           </div>
-          <div *ngFor="let alert of alerts$ | async; index as i" class="card border border-danger">
-            <div class="card-body row alert-row">
-              <div class="col-xl-8 alert-row-desc-and-icon">
+          <div *ngFor="let alert of alerts$ | async; index as i" class="">
+            <div class="row alert-row align-items-center">
+              <div class="col-xl-7 alert-row-desc-and-icon">
                 <div class="alert-icon">
                   <img *ngIf="alert.alertTypeId == 16" src="assets/images/alerts/leak_in_meter.png"/>
                   <img *ngIf="alert.alertTypeId == '35'" src="assets/images/alerts/meter-leak.svg"/>
@@ -194,8 +194,8 @@
                   {{alert.alertTypeName}}
                 </div>
               </div>
-              <div class="col-xl-4">
-                {{alert.alertTime}}
+              <div class="col-xl-5">
+                {{alert.alertTime | date:'MMM dd, YYYY, hh:mm'}}
               </div>
             </div>
           </div>
