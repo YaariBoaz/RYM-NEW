@@ -19,6 +19,8 @@ import {ConsumptionFromToMonthlyObject, ConsumptionFromToObject, DateHelperServi
 import {BsDatepickerViewMode} from "ngx-bootstrap/datepicker";
 import * as moment from "moment";
 import {fetchLastBillingCycleData} from "../../../store/last-billing-cycle-chart/lastBillingCycleChart.action";
+import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
+import {AlertDetailsModalComponent} from "./shared/alert-details-modal/alert-details-modal.component";
 
 
 @Component({
@@ -71,8 +73,10 @@ export class SaasComponent implements OnInit, AfterViewInit {
   fromDailyValue;
   toDailyValue;
   userInfo$: Observable<{ firstName: string; lastName: string }>;
+  private bsModalRef: BsModalRef<unknown>;
+  currentMeter: any;
 
-  constructor(public formBuilder: UntypedFormBuilder, private configService: ConfigService, private store: Store, private dateHelperService: DateHelperService) {
+  constructor(public formBuilder: UntypedFormBuilder,private modalService: BsModalService, private configService: ConfigService, private store: Store, private dateHelperService: DateHelperService) {
     this.range1 = new Date();
     this.range2 = new Date();
     this.range1.setFullYear(this.range1.getFullYear() - 1);
@@ -111,6 +115,7 @@ export class SaasComponent implements OnInit, AfterViewInit {
     this.store.select(selectMetersData).subscribe(data => {
       if (data && data.meters && data.meters.length) {
         this.metersData$ = of(data.meters);
+        this.currentMeter = (data.meters[0] as any)
       }
     });
     this.cardsData$ = this.store.select(selectCardsData);
@@ -185,5 +190,15 @@ export class SaasComponent implements OnInit, AfterViewInit {
     this.range2 = new Date(toStr);
     this.fromDailyValue = moment(this.range1).format('YYYY-MM-D');
     this.toDailyValue = moment(this.range2).format('YYYY-MM-D')
+  }
+
+  openAlertDetails(alert: AlertsData) {
+    const initialState: ModalOptions = {
+      initialState: {
+        data:alert,
+        meter:this.currentMeter
+      }
+    };
+    this.bsModalRef = this.modalService.show(AlertDetailsModalComponent, initialState);
   }
 }

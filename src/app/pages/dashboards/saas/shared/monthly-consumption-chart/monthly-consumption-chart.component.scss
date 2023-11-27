@@ -1,1 +1,25 @@
+header{
+  display: flex;
+  justify-content: flex-end;
+  i{
+    font-size: 25px;
+  }
+}
+table {
+  width: 100%;
+}
+thead, tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+tbody {
+  display: block;
+  overflow-y: auto;
+  table-layout: fixed;
+  max-height: 200px;
+}
 
+.active-icon{
+  color:#0d6efd;
+}

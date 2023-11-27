@@ -184,7 +184,7 @@
         </div>
         <div class="card-body">
           <ul class="list-group list-group-flush">
-            <li class="list-group-item" *ngFor="let alert of alerts$ | async; index as i">
+            <li class="list-group-item" *ngFor="let alert of alerts$ | async; index as i" (click)="openAlertDetails(alert)">
               <div class="d-flex align-items-center">
                 <div class="me-3">
                   <img class="alert-icon" *ngIf="alert.alertTypeId == 16" src="assets/images/alerts/leak_in_meter.png"/>

@@ -1,4 +1,9 @@
-<div *ngIf="isUpdate" >
+<section>
+  <header>
+    <i [class.active-icon]="isChart" class='bx bx-bar-chart-alt-2' (click)="isChart = true"></i>
+    <i [class.active-icon]="!isChart"  class='bx bx-table ' (click)="isChart = false"></i>
+  </header>
+<div *ngIf="isUpdate && isChart" >
 <canvas baseChart
         style="height: 27vh;width:100%"
         [data]="barChartData"
@@ -8,3 +13,27 @@
         [type]="'bar'">
 </canvas>
 </div>
+<div *ngIf="isUpdate && !isChart" class="table-responsive">
+  <table class="table mb-0 table-fixed">
+    <thead class="table-light">
+     <tr>
+       <td *ngFor="let header of headers" class="text-center">{{header}}</td>
+     </tr>
+    </thead>
+    <tbody *ngIf="!isDaily">
+    <tr *ngFor="let tableItem of currentTableData">
+      <td class="text-center">{{tableItem.date}}</td>
+      <td class="text-center">{{tableItem.chr}}</td>
+      <td class="text-center">{{tableItem.clr}}</td>
+    </tr>
+    </tbody>
+    <tbody *ngIf="isDaily">
+    <tr *ngFor="let tableItem of currentTableData">
+      <td class="text-center">{{tableItem.date | date:'shortDate'}}</td>
+      <td class="text-center">{{tableItem.consumption}}</td>
+      <td class="text-center">{{tableItem.alertName}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+</section>

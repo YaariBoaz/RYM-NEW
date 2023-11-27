@@ -1,0 +1,29 @@
+<div class="modal-header">
+  <div class="alert-modal-header">
+    <img class="alert-modal-icon" *ngIf="data.alertTypeId == 16" src="assets/images/alerts/leak_in_meter.png"/>
+    <img class="alert-modal-icon" *ngIf="data.alertTypeId == '35'" src="assets/images/alerts/meter-leak.svg"/>
+    <h6>{{data.alertTypeName}}</h6>
+  </div>
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div>
+    <p><b>Meter SN:</b> {{meter.meterSn}}</p>
+    <p><b>Address:</b>{{meter.fullAddress}}</p>
+    <p><b>Date:</b>{{data.alertTime | date:'MMM dd, YYYY, hh:mm'}}</p>
+  </div>
+  <div class="auto-message">
+    The automatic reading system of the utility has detected a "{{data.alertTypeName}}" alert.
+    This alert is detected when the usage of water is significantly higher than that in the same month last year.
+    The reason for high water usage can be either a genuine usage or a problem in one of the water devices (such as leak
+    from the cistern, open valve, etc).
+    Please review the issue and if a problem exist, fix it
+  </div>
+
+</div>
+<div class="modal-footer justify-content-start">
+  <h5>Contact Us:</h5>
+  <h5>0546576565</h5>
+</div>

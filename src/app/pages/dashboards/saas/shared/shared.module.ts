@@ -7,9 +7,10 @@ import { MonthlyConsumptionChartComponent } from './monthly-consumption-chart/mo
 import {NgxEchartsModule} from "ngx-echarts";
 import {NgChartsModule} from "ng2-charts";
 import { ComapreToPreviousYearChartComponent } from './comapre-to-previous-year-chart/comapre-to-previous-year-chart.component';
+import { AlertDetailsModalComponent } from './alert-details-modal/alert-details-modal.component';
 
 @NgModule({
-  declarations: [SellingchartComponent,MonthlyConsumptionChartComponent, ComapreToPreviousYearChartComponent],
+  declarations: [SellingchartComponent,MonthlyConsumptionChartComponent, ComapreToPreviousYearChartComponent, AlertDetailsModalComponent],
     imports: [
         CommonModule,
         NgApexchartsModule,
