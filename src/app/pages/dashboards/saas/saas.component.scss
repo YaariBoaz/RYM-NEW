@@ -1,45 +1,18 @@
 .informed-div {
   text-align: center;
 }
-
 .border-right {
   border-right: 2px solid rgb(0 0 0 / 13%);
 }
-
 .tab {
   cursor: pointer;
 }
-
 .hidden {
   display: none;
 }
-
 .visible {
   display: block;
 }
-
-.alert-row {
-  .alert-row-desc-and-icon {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    .alert-icon {
-      width: fit-content;
-
-      img {
-        width: 45px;
-      }
-    }
-
-    .alert-description {
-      font-size: 16px;
-      padding-left: 10px;
-    }
-  }
-
-}
-
 .picker-wrapper {
   display: flex;
   align-items: center;
@@ -61,10 +34,12 @@
     }
   }
 }
-
 .width-fit-content {
   width: fit-content;
 }
 .card-height{
   height: 95%;
+}
+.alert-icon{
+  height: 45px;
 }

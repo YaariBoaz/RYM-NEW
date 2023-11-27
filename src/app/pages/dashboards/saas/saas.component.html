@@ -179,26 +179,29 @@
     </div>
     <div class="col-xl-4 ">
       <div class="card card-height">
+        <div class="card-header bg-danger text-white">
+          <h5>Alerts</h5>
+        </div>
         <div class="card-body">
-          <div class="card-title">
-            <h5>Alerts</h5>
-          </div>
-          <div *ngFor="let alert of alerts$ | async; index as i" class="">
-            <div class="row alert-row align-items-center">
-              <div class="col-xl-7 alert-row-desc-and-icon">
-                <div class="alert-icon">
-                  <img *ngIf="alert.alertTypeId == 16" src="assets/images/alerts/leak_in_meter.png"/>
-                  <img *ngIf="alert.alertTypeId == '35'" src="assets/images/alerts/meter-leak.svg"/>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let alert of alerts$ | async; index as i">
+              <div class="d-flex align-items-center">
+                <div class="me-3">
+                  <img class="alert-icon" *ngIf="alert.alertTypeId == 16" src="assets/images/alerts/leak_in_meter.png"/>
+                  <img class="alert-icon" *ngIf="alert.alertTypeId == '35'" src="assets/images/alerts/meter-leak.svg"/>
                 </div>
-                <div class="alert-description">
-                  {{alert.alertTypeName}}
+                <div class="align-self-center overflow-hidden me-auto">
+                  <div>
+                    <h5 class="font-size-14 text-truncate"> {{alert.alertTypeName}}</h5>
+                    <p class="text-muted mb-0">{{alert.alertTime | date:'MMM dd, YYYY, hh:mm'}}</p>
+                  </div>
+                </div>
+                <div class="dropdown ms-2">
+                  <button type="button" class="btn btn-light btn-sm">Details</button>
                 </div>
               </div>
-              <div class="col-xl-5">
-                {{alert.alertTime | date:'MMM dd, YYYY, hh:mm'}}
-              </div>
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
