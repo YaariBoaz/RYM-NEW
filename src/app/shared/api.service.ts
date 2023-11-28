@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {VacationsModel} from "../store/vacations/vacations.reducer";
 
 @Injectable({
   providedIn: 'root'
@@ -49,8 +50,8 @@ export class ApiService {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumption/Low-Rate-Limit');
   }
 
-  getConsumerVacations() {
-    return this.http.get(this.API_BASE_HREF_CTM + 'consumer/vacations');
+  postConsumerVacations(vacationsModel: VacationsModel) {
+    return this.http.post(this.API_BASE_HREF_CTM + 'consumer/vacations', vacationsModel);
   }
 
   getConsumerMeters() {

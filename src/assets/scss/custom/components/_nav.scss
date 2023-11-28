@@ -1,6 +1,6 @@
-// 
+//
 // _nav.scss
-// 
+//
 
 .nav-tabs,.nav-pills {
   > li {
@@ -13,8 +13,15 @@
 
 .nav-pills {
   > a {
-      color: var(--#{$prefix}emphasis-color);  
+      color: var(--#{$prefix}emphasis-color);
       font-weight: $font-weight-medium;
+  }
+  .nav-link.active{
+    .nav-pills{
+      .show > .nav-link{
+        background-color: #2271b1;
+      }
+    }
   }
 }
 
@@ -30,7 +37,7 @@
 
       &::after {
         content: "";
-        background: $primary;
+        background: #2271b1;
         height: 2px;
         position: absolute;
         width: 100%;
@@ -41,7 +48,7 @@
       }
 
       &.active{
-        color: $primary;
+        color: #2271b1;
         &:after{
           transform: scale(1);
         }
@@ -66,3 +73,6 @@
       }
   }
 }
+//.nav-link.active{
+//  background-color: red !important;
+//}

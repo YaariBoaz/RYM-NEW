@@ -12,7 +12,6 @@ import { Observable, map } from 'rxjs';
 import { changesLayout } from 'src/app/store/layouts/layout.actions';
 import { getLayoutMode } from 'src/app/store/layouts/layout.selector';
 import { RootReducerState } from 'src/app/store';
-import {selectUserName} from "../../shared/ui/pagetitle/page-title.selector";
 
 @Component({
   selector: 'app-topbar',
@@ -34,7 +33,6 @@ export class TopbarComponent implements OnInit {
   layout: string;
   dataLayout$: Observable<string>;
   // Define layoutMode as a property
-  userInfo: Observable<{ firstName: string; lastName: string }>;
 
   constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthenticationService,
     private authFackservice: AuthfakeauthenticationService,
@@ -45,9 +43,11 @@ export class TopbarComponent implements OnInit {
   }
 
   listLang: any = [
-    { text: 'Hebrew', flag: 'assets/images/flags/israel.png', lang: 'he' },
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
     { text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es' },
+    { text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de' },
+    { text: 'Italian', flag: 'assets/images/flags/italy.jpg', lang: 'it' },
+    { text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru' },
   ];
 
   openMobileMenu: boolean;
@@ -71,8 +71,6 @@ export class TopbarComponent implements OnInit {
     } else {
       this.flagvalue = val.map(element => element.flag);
     }
-
-    this.userInfo = this.store.select(selectUserName);
   }
 
   setLanguage(text: string, lang: string, flag: string) {

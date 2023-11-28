@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h5>Define usage limit</h5>
+</div>
+<div class="modal-body">
+  <div class="daily-usage-limit d-flex">
+    <span><b>Daily Usage Limit</b></span>
+    <input class="form-control" type="text"/>
+  </div>
+  <div>
+    <div class="picker-wrapper" bsDaterangepicker
+         [bsConfig]="dateRangeConfig"
+         [(bsValue)]="dateRangePickerValue"
+         (onShown)="onOpenCalendar($event)" (bsValueChange)="onDateValueChange($event)">
+      <i class="far fa-calendar-alt"></i>
+      <div class="date-range">
+        <span class="date-string">{{this.range1 | date:'dd MMM YYYY'}}</span>
+        <span>-</span>
+        <span class="date-string">{{this.range2 | date:'dd MMM YYYY'}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+
+</div>

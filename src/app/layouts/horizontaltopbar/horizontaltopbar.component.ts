@@ -34,7 +34,6 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
   @Input() isCondensed = false;
   @ViewChild('sideMenu') sideMenu: ElementRef;
   menuItems: MenuItem[] = [];
-  selectedTab = 1;
 
   listLang: any = [
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
@@ -43,6 +42,7 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
     { text: 'Italian', flag: 'assets/images/flags/italy.jpg', lang: 'it' },
     { text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru' },
   ];
+
   // tslint:disable-next-line: max-line-length
   constructor(@Inject(DOCUMENT) private document: any, private router: Router, private eventService: EventService, private authService: AuthenticationService,
     private authFackservice: AuthfakeauthenticationService,
@@ -334,9 +334,5 @@ export class HorizontaltopbarComponent implements OnInit, AfterViewInit {
       }
     }
 
-  }
-
-  onTabClicked(tab) {
-    this.selectedTab = tab.id
   }
 }

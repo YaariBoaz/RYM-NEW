@@ -113,7 +113,7 @@
             <h4 class="text-center">Get informed about water consumption while away from home</h4>
           </div>
           <div class="text-muted mt-2 justify-content-center d-flex">
-            <button class="btn btn-primary btn-lg waves-effect waves-light">DEFINE DATES</button>
+            <button class="btn btn-primary btn-lg waves-effect waves-light" (click)="setVacations()">DEFINE DATES</button>
           </div>
         </div>
       </div>
@@ -149,7 +149,7 @@
                     <a class="nav-link" [class.active]="isMonthly">Monthly</a>
                   </li>
                   <li role="button" class="nav-item" (click)="isMonthly = !isMonthly;periodChange(false)">
-                    <a class="nav-link active" [class.active]="!isMonthly">Daily</a>
+                    <a class="nav-link" [class.active]="!isMonthly">Daily</a>
                   </li>
                 </ul>
                 <div class="date-pickers ml-3">

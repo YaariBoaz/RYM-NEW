@@ -8,14 +8,17 @@ import {NgxEchartsModule} from "ngx-echarts";
 import {NgChartsModule} from "ng2-charts";
 import { ComapreToPreviousYearChartComponent } from './comapre-to-previous-year-chart/comapre-to-previous-year-chart.component';
 import { AlertDetailsModalComponent } from './alert-details-modal/alert-details-modal.component';
+import { VacationsModalComponent } from './vacations-modal/vacations-modal.component';
+import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 
 @NgModule({
-  declarations: [SellingchartComponent,MonthlyConsumptionChartComponent, ComapreToPreviousYearChartComponent, AlertDetailsModalComponent],
+  declarations: [SellingchartComponent,MonthlyConsumptionChartComponent, ComapreToPreviousYearChartComponent, AlertDetailsModalComponent, VacationsModalComponent],
     imports: [
         CommonModule,
         NgApexchartsModule,
         NgxEchartsModule.forChild(),
         NgChartsModule,
+      BsDatepickerModule
     ],
     exports: [SellingchartComponent, MonthlyConsumptionChartComponent, ComapreToPreviousYearChartComponent]
 })

@@ -20,18 +20,11 @@
        <td *ngFor="let header of headers" class="text-center">{{header}}</td>
      </tr>
     </thead>
-    <tbody *ngIf="!isDaily">
-    <tr *ngFor="let tableItem of currentTableData">
-      <td class="text-center">{{tableItem.date}}</td>
-      <td class="text-center">{{tableItem.chr}}</td>
-      <td class="text-center">{{tableItem.clr}}</td>
-    </tr>
-    </tbody>
-    <tbody *ngIf="isDaily">
+    <tbody>
     <tr *ngFor="let tableItem of currentTableData">
       <td class="text-center">{{tableItem.date | date:'shortDate'}}</td>
       <td class="text-center">{{tableItem.consumption}}</td>
-      <td class="text-center">{{tableItem.alertName}}</td>
+      <td class="text-center" *ngIf="tableItem.alertName">{{tableItem.alertName}}</td>
     </tr>
     </tbody>
   </table>

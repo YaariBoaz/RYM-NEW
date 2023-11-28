@@ -85,7 +85,7 @@ a {
 
 //
 // Soft Buttons
-// 
+//
 
 @mixin button-variant-soft($bg) {
     color: $bg;
@@ -117,4 +117,8 @@ $value in $theme-colors {
             }
         }
     }
+}
+.btn-primary{
+  background-color: #2271b1 !important;
+  border: 1px solid #2271b1 !important;
 }

@@ -66,11 +66,11 @@ export class MonthlyConsumptionChartComponent implements OnInit, OnChanges {
   uom: string;
   isUpdate = true;
   isChart = true;
-  monthlyHeaders = ['Date', 'Consumption High Rate', 'Consumption Low  Rate']
+  monthlyHeaders = ['Date', 'Consumption']
   dailyHeaders = ['Date', 'Consumption', 'Alert']
   headers: string[];
-  monthlyTableData: MonthlyTableDataItem[]
-  dailyTableData: DailyTableDataItem[]
+  monthlyTableData: TableDataItem[]
+  dailyTableData: TableDataItem[]
   currentTableData: any[];
   isDaily = false;
 
@@ -87,12 +87,11 @@ export class MonthlyConsumptionChartComponent implements OnInit, OnChanges {
         this.barChartData = monthlyConsumptionConfig;
         this.activeBarChartOptions = this.barChartOptionsMonthly;
         this.headers = this.monthlyHeaders;
-        this.monthlyTableData = new Array<MonthlyTableDataItem>();
+        this.monthlyTableData = new Array<TableDataItem>();
         this.barChartData.labels.forEach((item, index) => {
           this.monthlyTableData.push({
             date: item,
-            clr: this.barChartData.datasets[0].data[index],
-            chr: this.barChartData.datasets[1].data[index],
+            consumption: this.barChartData.datasets[0].data[index] + this.barChartData.datasets[1].data[index],
           })
         });
         this.currentTableData = this.monthlyTableData;
@@ -108,7 +107,7 @@ export class MonthlyConsumptionChartComponent implements OnInit, OnChanges {
         (dailyConsumptionConfig.datasets as any)[1].uom = this.uom;
         this.barChartData = dailyConsumptionConfig;
         this.headers = this.dailyHeaders;
-        this.dailyTableData = new Array<DailyTableDataItem>();
+        this.dailyTableData = new Array<TableDataItem>();
         this.isDaily = true;
         const allDataset = [...this.barChartData.datasets[0].data, ...this.barChartData.datasets[1].data];
         allDataset.sort((a, b) => {
@@ -116,10 +115,14 @@ export class MonthlyConsumptionChartComponent implements OnInit, OnChanges {
         });
 
         allDataset.forEach((item, index) => {
+          let alertName = '-';
+          if(data[index].meterStatusDesc){
+            alertName = data[index].meterStatusDesc;
+          }
           this.dailyTableData.push({
             date: item.x,
             consumption: item.y,
-            alertName: 'Leak Alarm',
+            alertName: alertName,
           })
         });
         this.currentTableData = this.dailyTableData;
@@ -144,14 +147,10 @@ export class MonthlyConsumptionChartComponent implements OnInit, OnChanges {
   }
 }
 
-export interface MonthlyTableDataItem {
-  date: string,
-  chr: number,
-  clr: number
-}
 
-export interface DailyTableDataItem {
+
+export interface TableDataItem {
   date: string,
   consumption: number,
-  alertName: string
+  alertName?: string
 }

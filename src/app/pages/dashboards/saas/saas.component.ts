@@ -21,6 +21,7 @@ import * as moment from "moment";
 import {fetchLastBillingCycleData} from "../../../store/last-billing-cycle-chart/lastBillingCycleChart.action";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {AlertDetailsModalComponent} from "./shared/alert-details-modal/alert-details-modal.component";
+import {VacationsModalComponent} from "./shared/vacations-modal/vacations-modal.component";
 
 
 @Component({
@@ -200,5 +201,9 @@ export class SaasComponent implements OnInit, AfterViewInit {
       }
     };
     this.bsModalRef = this.modalService.show(AlertDetailsModalComponent, initialState);
+  }
+
+  setVacations() {
+    this.modalService.show(VacationsModalComponent);
   }
 }

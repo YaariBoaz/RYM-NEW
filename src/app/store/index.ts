@@ -28,6 +28,7 @@ import {
   CompareToPreviousYearChartReducer,
   CompareToPreviousYearChartState
 } from "./comapre-to-previous-year-chart/comapre-to-previous-year-chart.reducer";
+import {VacationReducer, VacationsModelState} from "./vacations/vacations.reducer";
 
 
 export interface RootReducerState {
@@ -53,7 +54,8 @@ export interface RootReducerState {
   alertsState: AlertsState
   consumptionState: ConsumptionState
   lastBillingCycleChartState: LastBillingCycleChartState,
-  compareToPreviousYearChartState: CompareToPreviousYearChartState
+  compareToPreviousYearChartState: CompareToPreviousYearChartState,
+  vacationsModelState: VacationsModelState
 }
 
 export const rootReducer: ActionReducerMap<RootReducerState> = {
@@ -79,6 +81,7 @@ export const rootReducer: ActionReducerMap<RootReducerState> = {
   alertsState: AlertsReducer,
   consumptionState: ConsumptionReducer,
   lastBillingCycleChartState: LastBillingCycleChartStateReducer,
-  compareToPreviousYearChartState: CompareToPreviousYearChartReducer
+  compareToPreviousYearChartState: CompareToPreviousYearChartReducer,
+  vacationsModelState: VacationReducer
 
 }
