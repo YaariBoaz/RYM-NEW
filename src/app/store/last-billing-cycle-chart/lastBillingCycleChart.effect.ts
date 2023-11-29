@@ -9,10 +9,10 @@ import {
   fetchLastBillingCycleFail
 } from "./lastBillingCycleChart.action";
 import {LastBillingCycleChartData} from "./lastBillingCycleChart.reducer";
-import {DateHelperService} from "../../pages/dashboards/saas/shared/utils/date-helper";
+import {DateHelperService} from "../../features/dashboard/shared/utils/date-helper";
 import {
   dailyConsumptionConfig,
-} from "../../pages/dashboards/saas/shared/monthly-consumption-chart/config";
+} from "../../features/dashboard/shared/monthly-consumption-chart/config";
 
 @Injectable()
 export class LastBillingCycleChartStateEffects {

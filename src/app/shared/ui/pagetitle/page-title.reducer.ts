@@ -1,7 +1,5 @@
 import {Action, createReducer, on} from "@ngrx/store";
-import {fetchmailData, fetchmailFail, fetchmailSuccess} from "../../../store/Email/email.action";
 import {getPageTitleData, getPageTitleDataSuccess} from "./page-title.actions";
-import {MailReducer, MailState} from "../../../store/Email/email.reducer";
 
 export interface PageTitleState {
   firstName: string;

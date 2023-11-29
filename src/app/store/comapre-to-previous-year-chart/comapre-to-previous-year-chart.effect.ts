@@ -3,12 +3,12 @@ import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {catchError, map, mergeMap} from "rxjs/operators";
 import {of} from "rxjs";
 import {ApiService} from "../../shared/api.service";
-import {DateHelperService} from "../../pages/dashboards/saas/shared/utils/date-helper";
+import {DateHelperService} from "../../features/dashboard/shared/utils/date-helper";
 import {
   fetchComparePreviousYearChartData, fetchComparePreviousYearChartDataFail, fetchComparePreviousYearChartDataSuccess
 } from "./comapre-to-previous-year-chart.action";
 import {CompareToPreviousYearChartData} from "./comapre-to-previous-year-chart.reducer";
-import {compareToPreviousConfig} from "../../pages/dashboards/saas/shared/monthly-consumption-chart/config";
+import {compareToPreviousConfig} from "../../features/dashboard/shared/monthly-consumption-chart/config";
 
 @Injectable()
 export class CompareToPreviousYearChartEffect {

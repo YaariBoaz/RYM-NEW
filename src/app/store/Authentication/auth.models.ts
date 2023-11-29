@@ -6,9 +6,4 @@ export class User {
   lastName?: string;
   token?: string;
   email?: string;
-
-  constructor(token?:string) {
-    this.token = token;
-  }
 }
-

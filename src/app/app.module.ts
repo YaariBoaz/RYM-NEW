@@ -12,19 +12,16 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { ToastrModule } from 'ngx-toastr';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
-import { SharedModule } from './cyptolanding/shared/shared.module';
 
 // Store
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 // Page Route
-import { ExtrapagesModule } from './extrapages/extrapages.module';
 import { LayoutsModule } from './layouts/layouts.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { initFirebaseBackend } from './authUtils';
-import { CyptolandingComponent } from './cyptolanding/cyptolanding.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -33,37 +30,22 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 import { ErrorInterceptor } from './core/helpers/error.interceptor';
 import { JwtInterceptor } from './core/helpers/jwt.interceptor';
 import { FakeBackendInterceptor } from './core/helpers/fake-backend';
-import { FilemanagerEffects } from './store/filemanager/filemanager.effects';
 import { rootReducer } from './store';
-import { OrderEffects } from './store/orders/order.effects';
-import { AuthenticationEffects } from './store/Authentication/authentication.effects';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { CartEffects } from './store/Cart/cart.effects';
-import { ProjectEffects } from './store/ProjectsData/project.effects';
-import { usersEffects } from './store/UserGrid/user.effects';
-import { userslistEffects } from './store/UserList/userlist.effect';
-import { JoblistEffects } from './store/Job/job.effects';
-import { CandidateEffects } from './store/Candidate/candidate.effects';
-import { InvoiceDataEffects } from './store/Invoices/invoice.effects';
-import { ChatEffects } from './store/Chat/chat.effect';
-import { tasklistEffects } from './store/Tasks/tasks.effect';
-import { OrdersEffects } from './store/Crypto/crypto.effects';
-import { CustomerEffects } from './store/customer/customer.effects';
-import { MailEffects } from './store/Email/email.effects';
+
 import {PageTitleEffect} from "./shared/ui/pagetitle/page-title.effect";
 import {MetersListEffects} from "./store/meters/meter.effect";
 import {CardsEffects} from "./store/cards/cards.effect";
 import {AlertsEffects} from "./store/alerts/alerts.effect";
 import {NgxEchartsModule} from "ngx-echarts";
-import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {NgToggleModule} from "ngx-toggle-button";
-import {DateHelperService} from "./pages/dashboards/saas/shared/utils/date-helper";
 import {ConsumptionEffects} from "./store/consumption/consumption.effect";
 import {LastBillingCycleChartStateEffects} from "./store/last-billing-cycle-chart/lastBillingCycleChart.effect";
 import {
   CompareToPreviousYearChartEffect
 } from "./store/comapre-to-previous-year-chart/comapre-to-previous-year-chart.effect";
+import {DateHelperService} from "./features/dashboard/shared/utils/date-helper";
 
 if (environment.defaultauth === 'firebase') {
   initFirebaseBackend(environment.firebaseConfig);
@@ -79,7 +61,6 @@ export function createTranslateLoader(http: HttpClient): any {
 @NgModule({
   declarations: [
     AppComponent,
-    CyptolandingComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,11 +77,9 @@ export function createTranslateLoader(http: HttpClient): any {
     }),
     LayoutsModule,
     AppRoutingModule,
-    ExtrapagesModule,
     AccordionModule.forRoot(),
     TabsModule.forRoot(),
     TooltipModule.forRoot(),
-    SharedModule,
     ScrollToModule.forRoot(),
     SlickCarouselModule,
     NgToggleModule,
@@ -111,21 +90,6 @@ export function createTranslateLoader(http: HttpClient): any {
       logOnly: environment.production, // Restrict extension to log-only mode
     }),
     EffectsModule.forRoot([
-      FilemanagerEffects,
-      OrderEffects,
-      AuthenticationEffects,
-      CartEffects,
-      ProjectEffects,
-      usersEffects,
-      userslistEffects,
-      JoblistEffects,
-      CandidateEffects,
-      InvoiceDataEffects,
-      ChatEffects,
-      tasklistEffects,
-      OrdersEffects,
-      CustomerEffects,
-      MailEffects,
       PageTitleEffect,
       MetersListEffects,
       CardsEffects,

@@ -6,8 +6,8 @@ import {fetchCardsData, fetchCardsDataSuccess} from "./cards.action";
 import {Store} from "@ngrx/store";
 import {fetchConsumptionDataSuccess} from "../consumption/consumption.action";
 
-import {monthlyConsumptionConfig} from "../../pages/dashboards/saas/shared/monthly-consumption-chart/config";
-import {ConsumptionFromToMonthlyObject, DateHelperService} from "../../pages/dashboards/saas/shared/utils/date-helper";
+import {monthlyConsumptionConfig} from "../../features/dashboard/shared/monthly-consumption-chart/config";
+import {ConsumptionFromToMonthlyObject, DateHelperService} from "../../features/dashboard/shared/utils/date-helper";
 import {tap} from "rxjs/operators";
 import * as moment from "moment";
 
