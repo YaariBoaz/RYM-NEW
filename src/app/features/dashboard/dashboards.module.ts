@@ -18,6 +18,9 @@ import {NgxEchartsModule} from "ngx-echarts";
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {NgToggleModule} from "ngx-toggle-button";
 import {DashboardComponent} from "./dashboard.component";
+import {
+  MonthlyDailyChatWrapperComponent
+} from "./shared/monthly-daily-chat-wrapper/monthly-daily-chat-wrapper.component";
 
 @NgModule({
   declarations: [DashboardComponent],

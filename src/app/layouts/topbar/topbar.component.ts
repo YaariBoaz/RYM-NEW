@@ -44,7 +44,7 @@ export class TopbarComponent implements OnInit {
 
   listLang: any = [
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
-    { text: 'Spanish', flag: 'assets/images/flags/spain.jpg', lang: 'es' },
+    { text: 'Hebrew', flag: 'assets/images/flags/israel.png', lang: 'il' },
     { text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de' },
     { text: 'Italian', flag: 'assets/images/flags/italy.jpg', lang: 'it' },
     { text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru' },
@@ -78,6 +78,11 @@ export class TopbarComponent implements OnInit {
     this.flagvalue = flag;
     this.cookieValue = lang;
     this.languageService.setLanguage(lang);
+    if(lang === 'il'){
+      document.documentElement.setAttribute("dir", "rtl");
+    }else{
+      document.documentElement.setAttribute("dir", "ltr");
+    }
   }
 
   /**

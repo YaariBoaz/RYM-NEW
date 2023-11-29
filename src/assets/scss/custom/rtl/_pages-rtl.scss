@@ -1,226 +1,238 @@
-// 
+//
 // pages-rtl.scss
 //
 
 
 // message
-
-.message-list{
+html[dir="rtl"] {
+  .message-list {
     padding-right: 0;
-}
+  }
 
-// Auth
+  // Auth
 
-.wrapper .otp-input:not(:last-child){
+  .wrapper .otp-input:not(:last-child) {
     margin-left: 8px;
     margin-right: 0;
-}
+  }
 
-// timeline
+  // timeline
 
-.verti-timeline{
+  .verti-timeline {
     border-left: 0;
     border-right: 3px dashed $gray-300;
-    .event-list{
-        padding: 0 30px 40px 0;
-        .event-timeline-dot{
-            left: auto;
-            right: -9px;
-        }
+
+    .event-list {
+      padding: 0 30px 40px 0;
+
+      .event-timeline-dot {
+        left: auto;
+        right: -9px;
+      }
     }
-}
+  }
 
-// Ecommerce
+  // Ecommerce
 
-.product-ribbon {
+  .product-ribbon {
     left: 0px;
     right: auto;
-}
+  }
 
-.visa-card {
+  .visa-card {
     .visa-pattern {
-        left: 0px;
-        right: auto;
-      }
-}
+      left: 0px;
+      right: auto;
+    }
+  }
 
-// email
+  // email
 
-.email-leftbar{
+  .email-leftbar {
     float: right;
-}
+  }
 
-.email-rightbar {
+  .email-rightbar {
     margin-right: 260px;
     margin-left: 0px;
-}
+  }
 
-.message-list {
+  .message-list {
     li {
-        .col-mail{
-            float: right;
-        }
-        .col-mail-1{
-            .star-toggle, .checkbox-wrapper-mail, .dot{
-                float: right
-            }
-            .checkbox-wrapper-mail {
-                margin: 15px 20px 0 10px;
-            }
-            .star-toggle {
-                margin-right: 5px;
-            }
-            
-            .title {
-                right: 110px;
-                left: 0;
-            }
-        }
-        .col-mail-2{
-            right: 320px;
-            left: 0;
+      .col-mail {
+        float: right;
+      }
 
-            .subject {
-                right: 0;
-                left: 200px;
-            }
-
-            .date {
-                left: 0;
-                right: auto;
-                padding-right: 80px;
-                padding-left: 0px;
-            }
-        
+      .col-mail-1 {
+        .star-toggle, .checkbox-wrapper-mail, .dot {
+          float: right
         }
+
+        .checkbox-wrapper-mail {
+          margin: 15px 20px 0 10px;
+        }
+
+        .star-toggle {
+          margin-right: 5px;
+        }
+
+        .title {
+          right: 110px;
+          left: 0;
+        }
+      }
+
+      .col-mail-2 {
+        right: 320px;
+        left: 0;
+
+        .subject {
+          right: 0;
+          left: 200px;
+        }
+
+        .date {
+          left: 0;
+          right: auto;
+          padding-right: 80px;
+          padding-left: 0px;
+        }
+
+      }
     }
+
     .checkbox-wrapper-mail {
-        label{
-            &:before{
-                right: 4px;
-            }
+      label {
+        &:before {
+          right: 4px;
         }
+      }
     }
-}
+  }
 
-@media (max-width: 767px){
+  @media (max-width: 767px) {
     .email-leftbar {
-        float: none !important;
-        width: 100%;
+      float: none !important;
+      width: 100%;
     }
     .email-rightbar {
-        margin-right: 0;
+      margin-right: 0;
     }
-}
+  }
 
-// authentication
+  // authentication
 
-.home-btn {
+  .home-btn {
     position: absolute;
     left: 25px;
     right: auto;
-}
+  }
 
 
-// file manager
+  // file manager
 
-.categories-list li ul{
+  .categories-list li ul {
     padding-right: 16px;
     padding-left: 0;
-}
+  }
 
 
-// Chat
+  // Chat
 
-.chat-conversation {
+  .chat-conversation {
     .conversation-list {
-        .dropdown{
-            float: left;
-        }
+      .dropdown {
+        float: left;
+      }
 
-        .ctext-wrap{
-            border-radius: 8px 8px 0 8px;
-        }
+      .ctext-wrap {
+        border-radius: 8px 8px 0 8px;
+      }
     }
 
     .right {
-        float: left;
-        .conversation-list {
-            .ctext-wrap{
-                text-align: left;
-                border-radius: 8px 8px 8px 0;
-            }
+      float: left;
 
-            .dropdown{
-                float: right;
-            }
+      .conversation-list {
+        .ctext-wrap {
+          text-align: left;
+          border-radius: 8px 8px 8px 0;
         }
+
+        .dropdown {
+          float: right;
+        }
+      }
     }
 
-    .last-chat .conversation-list:before{
-        right: auto;
-        left: 0;
+    .last-chat .conversation-list:before {
+      right: auto;
+      left: 0;
     }
-}
+  }
 
-.chat-input{
+  .chat-input {
     padding-left: 120px;
     padding-right: 12px;
-}
+  }
 
-.chat-input-links{
+  .chat-input-links {
     right: auto;
     left: 16px;
-}
+  }
 
-@media (min-width: 576px){
-    .currency-value{
-        position: relative;
-        &:after{
-            right: auto;
-            left: -34px;
-        }
+  @media (min-width: 576px) {
+    .currency-value {
+      position: relative;
+
+      &:after {
+        right: auto;
+        left: -34px;
+      }
     }
-}
+  }
 
 
-// datatable icon
-.datatables {
+  // datatable icon
+  .datatables {
     thead {
-        tr {
-            th {
-                position: relative;
-                &:before {
-                    content: "\F0143";
-                    position: absolute;
-                    left: 0;
-                    right: auto;
-                    top: 7px;
-                    font: normal normal normal 24px/1 "Material Design Icons";
-                    opacity: 0.3;
-                }
-                &:after {
-                    content: "\F0140";
-                    position: absolute;
-                    left: 0;
-                    right: auto;
-                    top: 14px;
-                    opacity: 0.3;
-                    font: normal normal normal 24px/1 "Material Design Icons";
-                }
-            }
+      tr {
+        th {
+          position: relative;
 
-            .asc {
-                &:before {
-                    opacity: 1;
-                }
-            }
+          &:before {
+            content: "\F0143";
+            position: absolute;
+            left: 0;
+            right: auto;
+            top: 7px;
+            font: normal normal normal 24px/1 "Material Design Icons";
+            opacity: 0.3;
+          }
 
-            .desc {
-                &:after {
-                    opacity: 1;
-                }
-            }
+          &:after {
+            content: "\F0140";
+            position: absolute;
+            left: 0;
+            right: auto;
+            top: 14px;
+            opacity: 0.3;
+            font: normal normal normal 24px/1 "Material Design Icons";
+          }
         }
+
+        .asc {
+          &:before {
+            opacity: 1;
+          }
+        }
+
+        .desc {
+          &:after {
+            opacity: 1;
+          }
+        }
+      }
     }
+  }
 }

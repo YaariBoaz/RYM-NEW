@@ -141,34 +141,8 @@
             </li>
           </ul>
           <div class="tab-content p-3 text-muted">
-            <div class="tab-pane active" role="tabpanel" [class.hidden]="activeTab ===1"
-                 [class.visible]="activeTab ===0">
-              <div class="chart-header d-flex">
-                <ul class="nav nav-pills bg-light rounded width-fit-content" role="tablist">
-                  <li role="button" class="nav-item" (click)="isMonthly = !isMonthly;periodChange(true)">
-                    <a class="nav-link" [class.active]="isMonthly">Monthly</a>
-                  </li>
-                  <li role="button" class="nav-item" (click)="isMonthly = !isMonthly;periodChange(false)">
-                    <a class="nav-link" [class.active]="!isMonthly">Daily</a>
-                  </li>
-                </ul>
-                <div class="date-pickers ml-3">
-                  <div class="picker-wrapper" bsDaterangepicker
-                       [bsConfig]="dateRangeConfig"
-                       [(bsValue)]="dateRangePickerValue"
-                       (onShown)="onOpenCalendar($event)" (bsValueChange)="onDateValueChange($event)">
-                    <i class="far fa-calendar-alt"></i>
-                    <div class="date-range">
-                      <span>{{this.range1 | date:currentDateFormat}}</span>
-                      <span>-</span>
-                      <span>{{this.range2 | date:currentDateFormat}}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="chart-body">
-                <app-monthly-consumption-chart></app-monthly-consumption-chart>
-              </div>
+            <div class="tab-pane active" role="tabpanel" [class.hidden]="activeTab ===1" [class.visible]="activeTab ===0">
+             <app-monthly-daily-chat-wrapper></app-monthly-daily-chat-wrapper>
             </div>
             <div class="tab-pane" role="tabpanel" [class.hidden]="activeTab ===0" [class.visible]="activeTab ===1">
               <app-comapre-to-previous-year-chart></app-comapre-to-previous-year-chart>
