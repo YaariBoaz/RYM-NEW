@@ -386,7 +386,7 @@ body[data-sidebar="dark"] {
                     }
 
                     &:hover {
-                        color: $sidebar-dark-menu-item-hover-color;
+                        background-color: $sidebar-dark-menu-item-hover-color;
 
                         i {
                             color: $sidebar-dark-menu-item-hover-color;

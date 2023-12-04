@@ -46,13 +46,12 @@ import {
   CompareToPreviousYearChartEffect
 } from "./store/comapre-to-previous-year-chart/comapre-to-previous-year-chart.effect";
 import {DateHelperService} from "./features/dashboard/shared/utils/date-helper";
+import {AuthenticationEffects} from "./store/Authentication/authentication.effects";
+import {SettingsEffect} from "./store/settings/settings.effect";
+import {SettingsModule} from "./features/settings/settings.module";
+import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
 
-if (environment.defaultauth === 'firebase') {
-  initFirebaseBackend(environment.firebaseConfig);
-} else {
-  // tslint:disable-next-line: no-unused-expression
-  FakeBackendInterceptor;
-}
+
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -96,7 +95,9 @@ export function createTranslateLoader(http: HttpClient): any {
       AlertsEffects,
       ConsumptionEffects,
       CompareToPreviousYearChartEffect,
-      LastBillingCycleChartStateEffects
+      LastBillingCycleChartStateEffects,
+      AuthenticationEffects,
+      SettingsEffect
     ]),
     NgxEchartsModule.forRoot({
       /**
@@ -106,13 +107,13 @@ export function createTranslateLoader(http: HttpClient): any {
        */
       echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
     }),
-
+    SettingsModule,
+    NgxIntlTelInputModule
   ],
   bootstrap: [AppComponent],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
     DateHelperService
   ],
 })

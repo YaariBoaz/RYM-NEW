@@ -1,0 +1,19 @@
+.disabled {
+  cursor: not-allowed;
+
+  input {
+    pointer-events: none;
+    background-color: #0d6efd75;
+  }
+}
+
+.user-details {
+  p {
+    display: flex;
+    max-width: 320px;
+    justify-content: space-between;
+    span {
+      padding-right: 10px;
+    }
+  }
+}

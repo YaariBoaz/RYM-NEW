@@ -16,22 +16,12 @@ export class AuthenticationEffects {
     this.actions$.pipe(
       ofType(Register),
       exhaustMap(({ email, username, password }) => {
-        if (environment.defaultauth === 'fakebackend') {
-          return this.userService.register({ email, username, password }).pipe(
-            map((user) => {
-              this.router.navigate(['/auth/login']);
-              return RegisterSuccess({ user })
-            }),
-            catchError((error) => of(RegisterFailure({ error })))
-          );
-        } else {
-          return this.AuthenticationService.register({ email, username, password }).pipe(
+          return this.authenticationService.register({ email, username, password }).pipe(
             map((user) => {
               this.router.navigate(['/auth/login']);
               return RegisterSuccess({ user })
             })
           )
-        }
       })
     )
   );
@@ -42,23 +32,11 @@ export class AuthenticationEffects {
     this.actions$.pipe(
       ofType(login),
       exhaustMap(({ email, password }) => {
-        if (environment.defaultauth === "fakebackend") {
-          return this.AuthfakeService.login(email, password).pipe(
-            map((user) => {
-              if (user) {
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                localStorage.setItem('token', user.token);
-                this.router.navigate(['/']);
-              }
-              return loginSuccess({ user });
-            }),
-            catchError((error) => of(loginFailure({ error })), // Closing parenthesis added here
-            ));
-        } else if (environment.defaultauth === "firebase") {
-          return this.AuthenticationService.login(email, password).pipe(map((user) => {
+          return this.authenticationService.login(email, password).pipe(map((user) => {
+            localStorage.setItem('token',user.token);
+            this.router.navigate(['']);
             return loginSuccess({ user });
           }))
-        }
       })
     )
   );
@@ -76,9 +54,7 @@ export class AuthenticationEffects {
 
   constructor(
     @Inject(Actions) private actions$: Actions,
-    private AuthenticationService: AuthenticationService,
-    private AuthfakeService: AuthfakeauthenticationService,
-    private userService: UserProfileService,
+    private authenticationService: AuthenticationService,
     private router: Router) { }
 
 }

@@ -69,6 +69,9 @@ export class ApiService {
   getConsumerAlertsForSettings() {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumer/alertsForSettings');
   }
+  getConsumerSettings() {
+    return this.http.get(this.API_BASE_HREF + 'consumer/myalerts/settings');
+  }
 
   getMyAlerts() {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumer/myalerts');

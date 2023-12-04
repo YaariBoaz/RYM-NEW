@@ -1,0 +1,72 @@
+<section>
+  <div class="row">
+    <div class="col-xl-8">
+      <div class="card">
+        <div class="card-header">
+          <h5> Alerts Notification Status</h5>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table mb-0">
+              <thead class="table-light">
+              <tr>
+                <th class="text-center">Alert Type</th>
+                <th class="text-center">Email Notification</th>
+                <th class="text-center">SMS Notification</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let alert of alerts; let i = index">
+                <td>{{alert.name}}</td>
+                <td class="d-flex justify-content-center">
+                  <div class="form-check form-switch form-switch-lg" [class.disabled]="alert.alertTypeId == 23">
+                    <input class="form-check-input" type="checkbox" [checked]="alert.statusEmail">
+                  </div>
+                </td>
+                <td>
+                  <div class="form-check form-switch form-switch-lg">
+                    <input class="form-check-input" type="checkbox" [checked]="alert.statusSMS">
+                  </div>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4">
+      <div class="card">
+        <div class="card-header">
+          <h5> User Information</h5>
+        </div>
+        <div class="card-body user-details">
+          <p><span><b>Name:</b> </span><span>{{(userData$ | async)?.firstName}}</span></p>
+          <p><span><b>Account Number:</b> </span><span>{{(userData$ | async)?.accountNumber}}</span></p>
+          <p>
+            <span><b>Phone Number:</b></span>
+            <span>{{(userData$ | async)?.phoneNumber.countryCode}} {{(userData$ | async)?.phoneNumber.phoneNumber}}</span>
+            <span>Edit</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form #f="ngForm" [formGroup]="phoneForm">
+    <ngx-intl-tel-input
+      [cssClass]="'custom'"
+      [preferredCountries]="[CountryISO.UnitedStates, CountryISO.Israel]"
+      [enableAutoCountrySelect]="false"
+      [enablePlaceholder]="true"
+      [searchCountryFlag]="true"
+      [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
+      [selectFirstCountry]="false"
+      [selectedCountryISO]="CountryISO.Israel"
+      [maxLength]="15"
+      [phoneValidation]="true"
+      name="phone"
+      formControlName="phone"
+    ></ngx-intl-tel-input>
+  </form>
+</section>
+
