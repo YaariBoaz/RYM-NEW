@@ -5,6 +5,7 @@ export const MENU: MenuItem[] = [
     id: 2,
     label: 'SIDEMENU.HOME',
     icon: 'bx-home-circle',
+    link:''
   },
   {
     id: 2,
@@ -20,6 +21,6 @@ export const MENU: MenuItem[] = [
     id: 2,
     label: 'SIDEMENU.SETTINGS',
     icon: 'bxs-cog',
-    route:'/settings'
+    link:'settings'
   },
 ];

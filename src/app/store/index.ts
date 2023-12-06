@@ -29,7 +29,7 @@ export interface RootReducerState {
   lastBillingCycleChartState: LastBillingCycleChartState,
   compareToPreviousYearChartState: CompareToPreviousYearChartState,
   vacationsModelState: VacationsModelState,
-  settingsState: SettingsState
+  settingsState:SettingsState
 }
 
 export const rootReducer: ActionReducerMap<RootReducerState> = {
@@ -43,6 +43,6 @@ export const rootReducer: ActionReducerMap<RootReducerState> = {
   lastBillingCycleChartState: LastBillingCycleChartStateReducer,
   compareToPreviousYearChartState: CompareToPreviousYearChartReducer,
   vacationsModelState: VacationReducer,
-  settingsState: SettingsReducer
+  settingsState:SettingsReducer
 
 }

@@ -2,9 +2,7 @@ import {Component, OnInit, AfterViewInit} from '@angular/core';
 import {UntypedFormBuilder, Validators, UntypedFormGroup} from '@angular/forms';
 import {Store} from "@ngrx/store";
 import {Observable, of} from "rxjs";
-import {ConsumptionFromToMonthlyObject, ConsumptionFromToObject, DateHelperService} from "./shared/utils/date-helper";
-import {BsDatepickerViewMode} from "ngx-bootstrap/datepicker";
-import * as moment from "moment";
+import {ConsumptionFromToObject, DateHelperService} from "./shared/utils/date-helper";
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {AlertDetailsModalComponent} from "./shared/alert-details-modal/alert-details-modal.component";
 import {VacationsModalComponent} from "./shared/vacations-modal/vacations-modal.component";
@@ -15,13 +13,11 @@ import {MeterData} from "../../store/meters/meters.reducer";
 import {CardsState} from "../../store/cards/cards.reducer";
 import {AlertsData} from "../../store/alerts/alerts.reducer";
 import {fetchClientMetersData} from "../../store/meters/meters.action";
-import {fetchCardsData} from "../../store/cards/cards.action";
 import {fetchClientAlertsData} from "../../store/alerts/alerts.action";
 import {selectUserData, selectUserName} from "../../shared/ui/pagetitle/page-title.selector";
 import {selectMetersData} from "../../store/meters/meters.selector";
 import {selectCardsData} from "../../store/cards/cards.selector";
 import {selectAlertsData} from "../../store/alerts/alerts.selector";
-import {fetchLastBillingCycleData} from "../../store/last-billing-cycle-chart/lastBillingCycleChart.action";
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

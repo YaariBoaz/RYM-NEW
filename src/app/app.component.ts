@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgxEchartsDirective} from "ngx-echarts";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,9 @@ import {NgxEchartsDirective} from "ngx-echarts";
 })
 export class AppComponent implements OnInit {
 
+  constructor(private router:Router) {
+    this.router.navigate(['']);
+  }
   ngOnInit() {
   }
 }

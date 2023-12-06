@@ -1,6 +1,6 @@
 import {createAction, props} from "@ngrx/store";
-import {SettingsState} from "./settings.reducer";
+import {SettingsData} from "./settings.reducer";
 
 export const fetchSettingsData = createAction('[Data] fetch settings data');
-export const fetchSettingsDataSuccess = createAction('[Data] fetch settings data', props<SettingsState>());
-export const fetchSettingsDataFail = createAction('[Data] fetch settings data', props<{ error: string }>());
+export const fetchSettingsSuccess = createAction('[Data] fetch settings success', props<{ data: SettingsData }>());
+export const fetchSettingsFail = createAction('[Data] fetch settings fail', props<{ error: string }>());

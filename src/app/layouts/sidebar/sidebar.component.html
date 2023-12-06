@@ -10,7 +10,7 @@
       <ng-container *ngFor="let item of menuItems; let i = index">
         <li class="menu-title" *ngIf="item.isTitle">{{ item.label | translate }}</li>
         <li *ngIf="!item.isTitle && !item.isLayout" (click)="currentSelectedTabIndex = i;navigateToFeature(item)">
-          <a *ngIf="hasItems(item)" class="is-parent"
+          <a *ngIf="hasItems(item)" href="javascript:void(0);" class="is-parent"
             [ngClass]="{'has-arrow': !item.badge, 'has-dropdown': item.badge}">
             <i class="bx {{item.icon}}" *ngIf="item.icon"></i>
             <span> {{ item.label | translate }}</span>

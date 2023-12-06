@@ -1,38 +1,43 @@
-import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
+import {fetchCardsData, fetchCardsDataSuccess} from "../cards/cards.action";
+import {tap} from "rxjs/operators";
+import * as moment from "moment/moment";
+import {forkJoin} from "rxjs";
+import {fetchConsumptionDataSuccess} from "../consumption/consumption.action";
+import {Injectable} from "@angular/core";
 import {ApiService} from "../../shared/api.service";
 import {Store} from "@ngrx/store";
-import {DateHelperService} from "../../features/dashboard/shared/utils/date-helper";
-import {fetchSettingsData, fetchSettingsDataSuccess} from "./settings.action";
-import {tap} from "rxjs/operators";
-import {forkJoin} from "rxjs";
-import {SettingsState} from "./settings.reducer";
+import {fetchSettingsData, fetchSettingsSuccess} from "./settings.action";
+import {AlertForSettingsItem, SettingsItem} from "./settings.reducer";
 
 @Injectable()
 export class SettingsEffect {
-
+  fetchData$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fetchSettingsData),
+      tap((fetchCardsData) => {
+          const settings$ = this.apiService.getConsumerSettings();
+          const alertsForSettings$ = this.apiService.getConsumerAlertsForSettings();
+          forkJoin([settings$, alertsForSettings$]).subscribe(([
+                                                                 settings,
+                                                                 alertsForSettings]) => {
+            this.store.dispatch(fetchSettingsSuccess({
+              data: {
+                settings: settings as SettingsItem[],
+                alertsForSettings: alertsForSettings as AlertForSettingsItem[]
+              }
+            }));
+          })
+        }
+      )
+    ), {dispatch: false}
+  )
 
   constructor(
     private actions$: Actions,
     private apiService: ApiService,
     private store: Store,
-    private dateHelper: DateHelperService
   ) {
   }
 
-
-  fetchData$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(fetchSettingsData),
-      tap(() => {
-        const settings$ = this.apiService.getSettings();
-        const alertsForSettings$ = this.apiService.getConsumerAlertsForSettings();
-        forkJoin([settings$, alertsForSettings$]).subscribe(([
-                                                               settings,
-                                                               alertsFroSettings]) => {
-          this.store.dispatch(fetchSettingsDataSuccess({settings, alertsFroSettings} as SettingsState))
-        });
-      })
-    ), {dispatch: false}
-  )
 }

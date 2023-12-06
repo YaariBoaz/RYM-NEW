@@ -99,6 +99,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   navigateToFeature(item: MenuItem) {
-    this.router.navigate(['/settings']);
+    this.router.navigate([item.link]);
   }
 }

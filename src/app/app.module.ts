@@ -1,37 +1,38 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {environment} from '../environments/environment';
+import { environment } from '../environments/environment';
 
 // Swiper Slider
-import {SlickCarouselModule} from 'ngx-slick-carousel';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
 // bootstrap component
-import {TabsModule} from 'ngx-bootstrap/tabs';
-import {TooltipModule} from 'ngx-bootstrap/tooltip';
-import {AccordionModule} from 'ngx-bootstrap/accordion';
-import {ToastrModule} from 'ngx-toastr';
-import {ScrollToModule} from '@nicky-lenaers/ngx-scroll-to';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { ToastrModule } from 'ngx-toastr';
+import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
 // Store
-import {StoreModule} from '@ngrx/store';
-import {StoreDevtoolsModule} from '@ngrx/store-devtools';
-import {EffectsModule} from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 // Page Route
-import {LayoutsModule} from './layouts/layouts.module';
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {initFirebaseBackend} from './authUtils';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { LayoutsModule } from './layouts/layouts.module';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { initFirebaseBackend } from './authUtils';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Auth
-import {HttpClientModule, HTTP_INTERCEPTORS, HttpClient} from '@angular/common/http';
-import {ErrorInterceptor} from './core/helpers/error.interceptor';
-import {JwtInterceptor} from './core/helpers/jwt.interceptor';
-import {rootReducer} from './store';
-import {AngularFireModule} from '@angular/fire/compat';
-import {AngularFireAuthModule} from '@angular/fire/compat/auth';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { ErrorInterceptor } from './core/helpers/error.interceptor';
+import { JwtInterceptor } from './core/helpers/jwt.interceptor';
+import { FakeBackendInterceptor } from './core/helpers/fake-backend';
+import { rootReducer } from './store';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 import {PageTitleEffect} from "./shared/ui/pagetitle/page-title.effect";
 import {MetersListEffects} from "./store/meters/meter.effect";
@@ -45,8 +46,12 @@ import {
   CompareToPreviousYearChartEffect
 } from "./store/comapre-to-previous-year-chart/comapre-to-previous-year-chart.effect";
 import {DateHelperService} from "./features/dashboard/shared/utils/date-helper";
-import {SettingsEffect} from "./store/settings/settings.effect";
 import {AuthenticationEffects} from "./store/Authentication/authentication.effects";
+import {SettingsEffect} from "./store/settings/settings.effect";
+import {SettingsModule} from "./features/settings/settings.module";
+import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
+
+
 
 export function createTranslateLoader(http: HttpClient): any {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -92,7 +97,7 @@ export function createTranslateLoader(http: HttpClient): any {
       CompareToPreviousYearChartEffect,
       LastBillingCycleChartStateEffects,
       AuthenticationEffects,
-      SettingsEffect,
+      SettingsEffect
     ]),
     NgxEchartsModule.forRoot({
       /**
@@ -102,14 +107,14 @@ export function createTranslateLoader(http: HttpClient): any {
        */
       echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
     }),
-
+    SettingsModule,
+    NgxIntlTelInputModule
   ],
   bootstrap: [AppComponent],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     DateHelperService
   ],
 })
-export class AppModule {
-}
+export class AppModule { }
