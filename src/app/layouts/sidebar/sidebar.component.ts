@@ -1,13 +1,19 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, OnChanges } from '@angular/core';
+import {Component, OnInit, AfterViewInit, ElementRef, ViewChild, Input, OnChanges, TemplateRef} from '@angular/core';
 import MetisMenu from 'metismenujs';
-import { EventService } from '../../core/services/event.service';
-import { Router, NavigationEnd } from '@angular/router';
+import {EventService} from '../../core/services/event.service';
+import {Router, NavigationEnd} from '@angular/router';
 
-import { HttpClient } from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 
-import { MENU } from './menu';
-import { MenuItem } from './menu.model';
-import { TranslateService } from '@ngx-translate/core';
+import {MENU} from './menu';
+import {MenuItem} from './menu.model';
+import {TranslateService} from '@ngx-translate/core';
+import {Store} from "@ngrx/store";
+import {selectContactUsData} from "../../store/contact-us/contact-us.selector";
+import {fetchContactUsData} from "../../store/contact-us/contact-us.action";
+import {Observable} from "rxjs";
+import {ContactUsDetails} from "../../store/contact-us/contact-us.reducer";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 
 @Component({
   selector: 'app-sidebar',
@@ -28,8 +34,15 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
   currentSelectedTabIndex = 0;
+  contactUsInfo$: Observable<ContactUsDetails>;
+  modalRef: BsModalRef<unknown>;
 
-  constructor(private eventService: EventService, private router: Router, public translate: TranslateService, private http: HttpClient) {
+  constructor(private eventService: EventService,
+              private router: Router,
+              public translate: TranslateService,
+              private http: HttpClient,
+              private modalService: BsModalService,
+              private store: Store) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         this._scrollElement();
@@ -40,6 +53,8 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   ngOnInit() {
     this.initialize();
     this._scrollElement();
+    this.store.dispatch(fetchContactUsData());
+    this.contactUsInfo$ = this.store.select(selectContactUsData);
   }
 
   ngAfterViewInit() {
@@ -59,6 +74,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
       this.menu.dispose();
     }
   }
+
   _scrollElement() {
     setTimeout(() => {
       if (document.getElementsByClassName("mm-active").length > 0) {
@@ -82,7 +98,6 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
 
-
   /**
    * Initialize
    */
@@ -99,6 +114,10 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   navigateToFeature(item: MenuItem) {
-    this.router.navigate([item.link]);
+    this.router.navigate([item.route]);
+  }
+
+  OpenContactUsDialog(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
 }

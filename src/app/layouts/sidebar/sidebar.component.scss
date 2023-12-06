@@ -2,10 +2,40 @@
   font-size: 16px;
   font-weight: bold;
   background: #7CC9C5;
-  span{
+
+  span {
     color: #FFFFFF;
   }
-  .active-menu-item-icon{
+
+  .active-menu-item-icon {
     color: #FFFFFF !important;
+  }
+}
+
+.contact-us-wrapper {
+  display: flex;
+  position: absolute !important;
+  bottom: 0px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5em;
+  border-top: 1px solid white;
+  height: 61px;
+
+  a {
+    text-decoration: none !important;
+    width: 100%;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      font-size: 20px;
+    }
+
+    i {
+      font-size: 20px;
+    }
   }
 }

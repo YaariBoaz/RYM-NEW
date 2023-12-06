@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {VacationsModel} from "../store/vacations/vacations.reducer";
+import {PhoneNumberItem} from "./models";
 
 @Injectable({
   providedIn: 'root'
@@ -63,12 +64,13 @@ export class ApiService {
   }
 
   getMunicipalCustomerService() {
-    return this.http.get(this.API_BASE_HREF_CTM + 'municipals/municipalCustomerService');
+    return this.http.get(this.API_BASE_HREF + 'municipals/municipalCustomerService');
   }
 
   getConsumerAlertsForSettings() {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumer/alertsForSettings');
   }
+
   getConsumerSettings() {
     return this.http.get(this.API_BASE_HREF + 'consumer/myalerts/settings');
   }
@@ -94,7 +96,11 @@ export class ApiService {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumption/last-read');
   }
 
-  getSettings(){
-    return this.http.get(this.API_BASE_HREF+'consumer/myalerts/settings');
+  getSettings() {
+    return this.http.get(this.API_BASE_HREF + 'consumer/myalerts/settings');
+  }
+
+  updatePhone(phoneNumberItem: PhoneNumberItem) {
+    return this.http.put(this.API_BASE_HREF_CTM + 'consumer/phone', phoneNumberItem);
   }
 }

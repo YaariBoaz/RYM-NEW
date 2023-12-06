@@ -1,4 +1,6 @@
 <section>
+  <header>
+    <h5>Settings</h5></header>
   <div class="row">
     <div class="col-xl-8">
       <div class="card">
@@ -43,30 +45,43 @@
         <div class="card-body user-details">
           <p><span><b>Name:</b> </span><span>{{(userData$ | async)?.firstName}}</span></p>
           <p><span><b>Account Number:</b> </span><span>{{(userData$ | async)?.accountNumber}}</span></p>
-          <p>
+          <p *ngIf="(userData$ | async) as userDetails">
             <span><b>Phone Number:</b></span>
             <span>{{(userData$ | async)?.phoneNumber.countryCode}} {{(userData$ | async)?.phoneNumber.phoneNumber}}</span>
-            <span>Edit</span>
+            <span
+              (click)="editPhone(userDetails?.phoneNumber.countryCode+''+userDetails.phoneNumber.phoneNumber,template)">Edit</span>
           </p>
         </div>
       </div>
     </div>
   </div>
-  <form #f="ngForm" [formGroup]="phoneForm">
-    <ngx-intl-tel-input
-      [cssClass]="'custom'"
-      [preferredCountries]="[CountryISO.UnitedStates, CountryISO.Israel]"
-      [enableAutoCountrySelect]="false"
-      [enablePlaceholder]="true"
-      [searchCountryFlag]="true"
-      [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
-      [selectFirstCountry]="false"
-      [selectedCountryISO]="CountryISO.Israel"
-      [maxLength]="15"
-      [phoneValidation]="true"
-      name="phone"
-      formControlName="phone"
-    ></ngx-intl-tel-input>
-  </form>
 </section>
 
+
+<!-- Change Phone Number Template-->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Update Phone Number</h4>
+    <button type="button" class="close btn-close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #f="ngForm" [formGroup]="phoneForm" class="change-phone-form">
+      <ngx-intl-tel-input
+        [cssClass]="'custom'"
+        [preferredCountries]="['il']"
+        [onlyCountries]="['il', 'us']"
+        [enablePlaceholder]="true"
+        [separateDialCode]="true"
+        [enableAutoCountrySelect]="true"
+        name="phone"
+        formControlName="phone"
+      ></ngx-intl-tel-input>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" [disabled]="phoneForm.controls['phone'].errors">Save changes</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="modalRef?.hide()">Cancel</button>
+  </div>
+</ng-template>
