@@ -90,4 +90,8 @@ export class ApiService {
   getLastRead() {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumption/last-read');
   }
+
+  getSettings(){
+    return this.http.get(this.API_BASE_HREF+'consumer/myalerts/settings');
+  }
 }

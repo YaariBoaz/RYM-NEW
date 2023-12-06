@@ -97,4 +97,8 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   hasItems(item: MenuItem) {
     return item.subItems !== undefined ? item.subItems.length > 0 : false;
   }
+
+  navigateToFeature(item: MenuItem) {
+    this.router.navigate(['/settings']);
+  }
 }

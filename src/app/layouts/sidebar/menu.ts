@@ -20,5 +20,6 @@ export const MENU: MenuItem[] = [
     id: 2,
     label: 'SIDEMENU.SETTINGS',
     icon: 'bxs-cog',
+    route:'/settings'
   },
 ];
