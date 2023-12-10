@@ -15,7 +15,7 @@ export class SettingsEffect {
   fetchData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchSettingsData),
-      tap((fetchCardsData) => {
+      tap((data) => {
           const settings$ = this.apiService.getConsumerSettings();
           const alertsForSettings$ = this.apiService.getConsumerAlertsForSettings();
           forkJoin([settings$, alertsForSettings$]).subscribe(([

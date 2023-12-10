@@ -2,13 +2,13 @@
   <h5>Define usage limit</h5>
 </div>
 <div class="modal-body">
-  <div class="row">
+  <form  [formGroup]="vacationForm" (ngSubmit)="onSubmit()" class="row" >
     <div class="col-xl-5">
       <div class="daily-usage-limit d-flex p-0-5">
         <div>
           <span><b>Daily Usage Limit</b></span>
           <div class="d-flex align-items-center">
-            <input class="form-control" type="text"/>
+            <input class="form-control" type="text"  formControlName="limit"/>
             <span class="ms-1">{{modalService.config.initialState.uom}}</span>
           </div>
         </div>
@@ -31,9 +31,8 @@
         </div>
       </div>
     </div>
-  </div>
+    <button class="btn btn-primary"  type="submit">Save</button>
+    <button class="btn btn-secondary">Cancel</button>
+  </form>
 </div>
-<div class="modal-footer">
-  <button class="btn btn-primary">Save</button>
-  <button class="btn btn-secondary">Cancel</button>
-</div>
+

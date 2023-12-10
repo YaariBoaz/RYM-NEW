@@ -1,5 +1,5 @@
 <div class="chart-header d-flex row">
-  <ul class="col-xl-6 nav nav-pills bg-light rounded width-fit-content" role="tablist">
+  <ul class="col-xl-6 p-0-5 nav nav-pills bg-light rounded width-fit-content" role="tablist">
     <li role="button" class="nav-item" (click)="isMonthly = !isMonthly;periodChange(true)">
       <a class="nav-link" [class.active]="isMonthly">Monthly</a>
     </li>
@@ -7,7 +7,7 @@
       <a class="nav-link" [class.active]="!isMonthly">Daily</a>
     </li>
   </ul>
-  <div class="col-xl-6 date-pickers ml-3">
+  <div class="col-xl-6  p-0-5 date-pickers">
     <div class="picker-wrapper" bsDaterangepicker
          [bsConfig]="dateRangeConfig"
          [(bsValue)]="dateRangePickerValue"

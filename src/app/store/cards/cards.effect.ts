@@ -18,11 +18,11 @@ export class CardsEffects {
   fetchData$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchCardsData),
-      tap((fetchCardsData) => {
+      tap((data) => {
           const lastRead$ = this.apiService.getLastRead();
           const uom$ = this.apiService.getMeasurmentUnitsByMunicipal();
           const forecast$ = this.apiService.getConsumptionForecast();
-          const lastMonthlyRead$ = this.apiService.getConsumptionMonthly(moment(fetchCardsData.from).format('YYYY-MM'), moment(fetchCardsData.to).format('YYYY-MM'), '');
+          const lastMonthlyRead$ = this.apiService.getConsumptionMonthly(moment(data.from).format('YYYY-MM'), moment(data.to).format('YYYY-MM'), '');
           const monthlyLowRate$ = this.apiService.getConsumptionLowRateLimit();
           forkJoin([lastRead$, uom$, forecast$, lastMonthlyRead$, monthlyLowRate$]).subscribe(([
                                                                                                  lastRead,
@@ -39,7 +39,7 @@ export class CardsEffects {
                 monthlyLowRate: (monthlyLowRate as number)
               }
             }));
-            this.prepareDataForCharts(lastMonthlyRead, monthlyLowRate, uom, new Date(fetchCardsData.from).getTime(), new Date(fetchCardsData.to).getTime());
+            this.prepareDataForCharts(lastMonthlyRead, monthlyLowRate, uom, new Date(data.from).getTime(), new Date(data.to).getTime());
             this.store.dispatch(fetchConsumptionDataSuccess())
           })
         }

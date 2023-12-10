@@ -61,7 +61,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
 
     this.store.dispatch(fetchClientMetersData());
-
     this.store.dispatch(fetchClientAlertsData());
     this.userData$ = this.store.select(selectUserData);
     this.userInfo$ = this.store.select(selectUserName);
@@ -95,11 +94,11 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   setVacations() {
-    const dataToPass ={
+    const dataToPass = {
       uom: this.uom
     }
     this.modalService.show(VacationsModalComponent, {
-      initialState:dataToPass,
+      initialState: dataToPass,
       class: 'modal-lg'
     });
   }

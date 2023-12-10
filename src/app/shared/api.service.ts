@@ -52,7 +52,11 @@ export class ApiService {
   }
 
   postConsumerVacations(vacationsModel: VacationsModel) {
-    return this.http.post(this.API_BASE_HREF_CTM + 'consumer/vacations', vacationsModel);
+    return this.http.post(this.API_BASE_HREF + 'consumer/vacations/', vacationsModel);
+  }
+
+  getConsumerVacations() {
+    return this.http.get(this.API_BASE_HREF + 'consumer/vacations/');
   }
 
   getConsumerMeters() {
@@ -99,6 +103,7 @@ export class ApiService {
   getSettings() {
     return this.http.get(this.API_BASE_HREF + 'consumer/myalerts/settings');
   }
+
 
   updatePhone(phoneNumberItem: PhoneNumberItem) {
     return this.http.put(this.API_BASE_HREF_CTM + 'consumer/phone', phoneNumberItem);
