@@ -10,7 +10,7 @@ import {ChartType} from "chart.js";
 import {ChatMessage} from "./dashboard.model";
 import {PageTitleState} from "../../shared/ui/pagetitle/page-title.reducer";
 import {MeterData} from "../../store/meters/meters.reducer";
-import {CardsState} from "../../store/cards/cards.reducer";
+import {CardsState, UOM} from "../../store/cards/cards.reducer";
 import {AlertsData} from "../../store/alerts/alerts.reducer";
 import {fetchClientMetersData} from "../../store/meters/meters.action";
 import {fetchClientAlertsData} from "../../store/alerts/alerts.action";
@@ -18,6 +18,7 @@ import {selectUserData, selectUserName} from "../../shared/ui/pagetitle/page-tit
 import {selectMetersData} from "../../store/meters/meters.selector";
 import {selectCardsData} from "../../store/cards/cards.selector";
 import {selectAlertsData} from "../../store/alerts/alerts.selector";
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -25,40 +26,21 @@ import {selectAlertsData} from "../../store/alerts/alerts.selector";
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
 
-
-  // bread crumb items
   breadCrumbItems: Array<{}>;
-
-  earningLineChart: ChartType;
-  salesAnalyticsDonutChart: ChartType;
-  ChatData: ChatMessage[];
-
-  sassEarning: any;
-  sassTopSelling: any;
-
   formData: UntypedFormGroup;
 
   // Form submit
-  chatSubmit: boolean;
   userData$: Observable<PageTitleState>;
   metersData$: Observable<MeterData[]>;
   cardsData$: Observable<CardsState>;
   activeTab = 0;
   alerts$: Observable<AlertsData[]>;
-  isMonthly = true;
-
-  fromToDaily: ConsumptionFromToObject;
-
-  months: string[];
-  fromTo$: Observable<{ from: string; to: string }>;
-
-
-
+  uom: UOM;
   userInfo$: Observable<{ firstName: string; lastName: string }>;
   private bsModalRef: BsModalRef<unknown>;
   currentMeter: any;
 
-  constructor(public formBuilder: UntypedFormBuilder,private modalService: BsModalService, private store: Store, private dateHelperService: DateHelperService) {
+  constructor(public formBuilder: UntypedFormBuilder, private modalService: BsModalService, private store: Store, private dateHelperService: DateHelperService) {
 
   }
 
@@ -78,7 +60,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     });
 
 
-
     this.store.dispatch(fetchClientMetersData());
 
     this.store.dispatch(fetchClientAlertsData());
@@ -91,6 +72,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     });
     this.cardsData$ = this.store.select(selectCardsData);
+    this.cardsData$.subscribe(data => {
+      this.uom = data.data.uom
+    })
     this.alerts$ = this.store.select(selectAlertsData);
 
 
@@ -103,14 +87,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   openAlertDetails(alert: AlertsData) {
     const initialState: ModalOptions = {
       initialState: {
-        data:alert,
-        meter:this.currentMeter
+        data: alert,
+        meter: this.currentMeter
       }
     };
     this.bsModalRef = this.modalService.show(AlertDetailsModalComponent, initialState);
   }
 
   setVacations() {
-    this.modalService.show(VacationsModalComponent);
+    const dataToPass ={
+      uom: this.uom
+    }
+    this.modalService.show(VacationsModalComponent, {
+      initialState:dataToPass,
+      class: 'modal-lg'
+    });
   }
 }

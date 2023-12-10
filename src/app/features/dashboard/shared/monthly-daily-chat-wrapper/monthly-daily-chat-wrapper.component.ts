@@ -9,7 +9,7 @@ import {ConsumptionFromToMonthlyObject, DateHelperService} from "../utils/date-h
 @Component({
   selector: 'app-monthly-daily-chat-wrapper',
   templateUrl: './monthly-daily-chat-wrapper.component.html',
-  styleUrls: ['./monthly-daily-chat-wrapper.component.css']
+  styleUrls: ['./monthly-daily-chat-wrapper.component.scss']
 })
 export class MonthlyDailyChatWrapperComponent implements OnInit {
   minMode: BsDatepickerViewMode = 'month';

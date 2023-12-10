@@ -1,0 +1,24 @@
+.chart-header {
+  ul {
+    background-color: transparent !important;
+  }
+
+  .date-pickers {
+    .picker-wrapper {
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(0, 0, 0, 0.3098039216);
+      border-radius: 8px;
+      padding: 0.5em;
+      max-width: 250px;
+    }
+
+    i {
+      margin-right: 5px;
+    }
+    span{
+      margin-right: 5px;
+    }
+  }
+}
+

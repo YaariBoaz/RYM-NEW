@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import * as moment from "moment";
+import {BsModalService} from "ngx-bootstrap/modal";
 
 @Component({
   selector: 'app-vacations-modal',
@@ -15,8 +16,9 @@ export class VacationsModalComponent implements OnInit {
   dateRangePickerValue ?: (Date | undefined)[];
   range1;
   range2;
+  uom;
 
-  constructor() {
+  constructor(public modalService: BsModalService) {
 
   }
 
@@ -29,7 +31,9 @@ export class VacationsModalComponent implements OnInit {
   }
 
   onDateValueChange($event: any) {
-
+    console.log($event);
+    this.range1 = $event[0];
+    this.range2 = $event[1];
   }
 
   setInitialDates() {

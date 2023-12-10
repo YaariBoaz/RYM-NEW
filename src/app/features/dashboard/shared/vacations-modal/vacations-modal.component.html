@@ -2,24 +2,38 @@
   <h5>Define usage limit</h5>
 </div>
 <div class="modal-body">
-  <div class="daily-usage-limit d-flex">
-    <span><b>Daily Usage Limit</b></span>
-    <input class="form-control" type="text"/>
-  </div>
-  <div>
-    <div class="picker-wrapper" bsDaterangepicker
-         [bsConfig]="dateRangeConfig"
-         [(bsValue)]="dateRangePickerValue"
-         (onShown)="onOpenCalendar($event)" (bsValueChange)="onDateValueChange($event)">
-      <i class="far fa-calendar-alt"></i>
-      <div class="date-range">
-        <span class="date-string">{{this.range1 | date:'dd MMM YYYY'}}</span>
-        <span>-</span>
-        <span class="date-string">{{this.range2 | date:'dd MMM YYYY'}}</span>
+  <div class="row">
+    <div class="col-xl-5">
+      <div class="daily-usage-limit d-flex p-0-5">
+        <div>
+          <span><b>Daily Usage Limit</b></span>
+          <div class="d-flex align-items-center">
+            <input class="form-control" type="text"/>
+            <span class="ms-1">{{modalService.config.initialState.uom}}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-xl-7">
+      <div class="d-flex flex-column p-0-5">
+        <span class="me-1"> <b>Vacation Days</b></span>
+        <div class="picker-wrapper" bsDaterangepicker
+             [bsConfig]="dateRangeConfig"
+             [(bsValue)]="dateRangePickerValue"
+             (onShown)="onOpenCalendar($event)" (bsValueChange)="onDateValueChange($event)">
+          <i class="far fa-calendar-alt"></i>
+          <div class="date-range">
+            <span class="date-string">{{this.range1 | date:'dd MMM YYYY'}}</span>
+            <span>-</span>
+            <span class="date-string">{{this.range2 | date:'dd MMM YYYY'}}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 <div class="modal-footer">
-
+  <button class="btn btn-primary">Save</button>
+  <button class="btn btn-secondary">Cancel</button>
 </div>
