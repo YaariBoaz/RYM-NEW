@@ -32,11 +32,6 @@ import {JwtInterceptor} from './core/helpers/jwt.interceptor';
 import {rootReducer} from './store';
 import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
-
-import {PageTitleEffect} from "./shared/ui/pagetitle/page-title.effect";
-import {MetersListEffects} from "./store/meters/meter.effect";
-import {CardsEffects} from "./store/cards/cards.effect";
-import {AlertsEffects} from "./store/alerts/alerts.effect";
 import {NgxEchartsModule} from "ngx-echarts";
 import {NgToggleModule} from "ngx-toggle-button";
 import {ConsumptionEffects} from "./store/consumption/consumption.effect";
@@ -50,7 +45,9 @@ import {SettingsEffect} from "./store/settings/settings.effect";
 import {SettingsModule} from "./features/settings/settings.module";
 import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
 import {ContactUsEffect} from "./store/contact-us/contact-us.effect";
-import {VacationsEffect} from "./store/vacations/vacations.effect";
+import {MeterService} from "./shared/services/meter.service";
+import {CardsService} from "./shared/services/cards.service";
+import {UserInfoService} from "./shared/services/user-info.service";
 
 
 export function createTranslateLoader(http: HttpClient): any {
@@ -90,17 +87,12 @@ export function createTranslateLoader(http: HttpClient): any {
       trace:true
     }),
     EffectsModule.forRoot([
-      PageTitleEffect,
-      MetersListEffects,
-      CardsEffects,
-      AlertsEffects,
       ConsumptionEffects,
       CompareToPreviousYearChartEffect,
       LastBillingCycleChartStateEffects,
       AuthenticationEffects,
       SettingsEffect,
       ContactUsEffect,
-      VacationsEffect
     ]),
     NgxEchartsModule.forRoot({
       /**
@@ -117,7 +109,7 @@ export function createTranslateLoader(http: HttpClient): any {
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
-    DateHelperService
+    DateHelperService,
   ],
 })
 export class AppModule {

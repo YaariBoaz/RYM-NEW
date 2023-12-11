@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BsDatepickerViewMode} from "ngx-bootstrap/datepicker";
 import * as moment from "moment/moment";
-import {fetchCardsData} from "../../../../store/cards/cards.action";
 import {fetchLastBillingCycleData} from "../../../../store/last-billing-cycle-chart/lastBillingCycleChart.action";
 import {Store} from "@ngrx/store";
 import {ConsumptionFromToMonthlyObject, DateHelperService} from "../utils/date-helper";
@@ -61,10 +60,10 @@ export class MonthlyDailyChatWrapperComponent implements OnInit {
         this.fromMonthValue = moment(this.range1).format('MMM-yyyy');
         this.toMonthValue = moment(this.range2).format('MMM-yyyy');
         this.currentDateFormat = "YYYY , MMM"
-        this.store.dispatch(fetchCardsData({
-          from: this.fromMonthValue,
-          to: this.toMonthValue
-        }));
+        // this.store.dispatch(fetchCardsData({
+        //   from: this.fromMonthValue,
+        //   to: this.toMonthValue
+        // }));
       } else {
         this.fromDailyValue = this.range1;
         this.toDailyValue = this.range2;
@@ -80,7 +79,7 @@ export class MonthlyDailyChatWrapperComponent implements OnInit {
     if (isMonthly) {
       this.dateRangeConfig.minMode = "month";
       this.dateRangeConfig.maxDateRange = 365;
-      this.store.dispatch(fetchCardsData({from: this.fromMonthValue, to: this.toMonthValue}));
+      // this.store.dispatch(fetchCardsData({from: this.fromMonthValue, to: this.toMonthValue}));
     } else {
       this.dateRangeConfig.minMode = "day";
       this.dateRangeConfig.maxDateRange = 30;

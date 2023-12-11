@@ -1,6 +1,5 @@
 import {createAction, props} from "@ngrx/store";
 import {ConsumptionData, ConsumptionState, FromToSet, MonthsSet} from "./consumption.reducer";
-import {CardsData} from "../cards/cards.reducer";
 
 export const fetchConsumptionData = createAction('[Data] fetch Consumption Data');
 export const fetchConsumptionChartData = createAction('[Data] fetch Consumption Chart Data', props <{from: string, to: string}>());

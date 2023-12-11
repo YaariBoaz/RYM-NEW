@@ -1,52 +1,50 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="metersData && cardsData && userInfo">
   <div class="row">
 
-      <div class="col-lg-4 d-none d-lg-block">
-        <div class="card">
-          <div class="card-body">
+    <div class="col-lg-4 d-none d-lg-block">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-xl-6">
+              <h5>Hello, {{userInfo?.firstName}} {{userInfo?.lastName}}</h5>
+            </div>
+            <div *ngFor="let meter of metersData; index as i" class="d-flex flex-column col-xl-6">
+              <h5>Water Meter: {{meter.meterSn}}</h5>
+              <span class="font-size-16 font-weight-light">{{meter.fullAddress}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex flex-column">
+            <h5>Water Consumption</h5>
+            <span class="font-size-16 font-weight-light">Nov, 2023</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <div class=" mt-4 mt-lg-0">
             <div class="row">
-              <div class="col-xl-6">
-                <h5>Hello, {{(userInfo$ | async).firstName}} {{(userInfo$ | async).lastName}}</h5>
-              </div>
-              <div *ngFor="let meter of metersData$ | async; index as i" class="d-flex flex-column col-xl-6">
-                <h5>Water Meter: {{meter.meterSn}}</h5>
-                <span class="font-size-16 font-weight-light">{{meter.fullAddress}}</span>
+              <div class="col-12 d-flex flex-column">
+                <h5>Monthly Low-Rate Threshold Value</h5>
+                <span class="font-size-16 font-weight-light"> {{cardsData.monthlyLowRate}} {{cardsData.uom}}</span>
               </div>
             </div>
           </div>
         </div>
-
       </div>
 
-      <div class="col-lg-4">
-        <div class="card">
-          <div class="card-body">
-            <div class="d-flex flex-column">
-              <h5>Water Consumption</h5>
-              <span class="font-size-16 font-weight-light">Nov, 2023</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="col-lg-4">
-        <div class="card">
-          <div class="card-body">
-            <div class=" mt-4 mt-lg-0">
-              <div class="row">
-                <div class="col-12 d-flex flex-column">
-                  <h5>Monthly Low-Rate Threshold Value</h5>
-                  <span class="font-size-16 font-weight-light"> {{(cardsData$ | async).data.monthlyLowRate + ' '
-                  + (cardsData$ | async).data.uom}}</span>
-
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
+    </div>
 
   </div>
 
@@ -66,7 +64,7 @@
                 <h5 class="font-size-14 mb-0">Current Meter Reading</h5>
               </div>
               <div class="text-muted mt-4">
-                <h4>{{(cardsData$ | async).data.currentMeterReading | number : '1.2-2'}}</h4>
+                <h4>{{cardsData.currentMeterReading | number : '1.2-2'}}</h4>
               </div>
             </div>
           </div>
@@ -85,7 +83,7 @@
                 <h5 class="font-size-14 mb-0">Current Month Consumption</h5>
               </div>
               <div class="text-muted mt-4">
-                <h4>{{(cardsData$ | async).data.currentMonthConsumption | number : '1.2-2'}}</h4>
+                <h4>{{cardsData.currentMonthConsumption | number : '1.2-2'}}</h4>
               </div>
             </div>
           </div>
@@ -104,7 +102,7 @@
                 <h5 class="font-size-14 mb-0">End of Month Forecast</h5>
               </div>
               <div class="text-muted mt-4">
-                <h4>{{(cardsData$ | async).data.endOfMonthForecast | number : '1.2-2'}}</h4>
+                <h4>{{cardsData.endOfMonthForecast | number : '1.2-2'}}</h4>
               </div>
             </div>
           </div>
@@ -113,13 +111,29 @@
       <!-- end row -->
     </div>
     <div class="col-xl-4">
-      <div class="card">
+      <div class="card" *ngIf="!vacationsData">
         <div class="card-body bg-primary-subtle ">
           <div class="d-flex">
             <h4 class="text-center">Get informed about water consumption while away from home</h4>
           </div>
           <div class="text-muted mt-2 justify-content-center d-flex">
-            <button class="btn btn-primary btn-lg waves-effect waves-light" (click)="setVacations()">DEFINE DATES</button>
+            <button class="btn btn-primary btn-lg waves-effect waves-light" (click)="setVacations()">DEFINE DATES
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card" *ngIf="vacationsData">
+        <div class="card-body bg-primary-subtle ">
+          <div class="d-flex">
+            <h6 class="text-center">Get informed about water consumption while away from home</h6>
+          </div>
+          <div class="text-muted mt-2 justify-content-center d-flex">
+            <h5>{{vacationsData[vacationsData.length - 1].startDate | date:'EEE,MMM d'}}
+              - {{vacationsData[vacationsData.length - 1].endDate| date:'EEE,MMM d'}}</h5>
+          </div>
+          <div class="text-muted mt-2 justify-content-center d-flex">
+            <a class="link me-5" (click)="setVacations()"> Update</a>
+            <a class="link"> Cancel alert</a>
           </div>
         </div>
       </div>
@@ -147,8 +161,9 @@
             </li>
           </ul>
           <div class="tab-content p-3 text-muted">
-            <div class="tab-pane active" role="tabpanel" [class.hidden]="activeTab ===1" [class.visible]="activeTab ===0">
-             <app-monthly-daily-chat-wrapper></app-monthly-daily-chat-wrapper>
+            <div class="tab-pane active" role="tabpanel" [class.hidden]="activeTab ===1"
+                 [class.visible]="activeTab ===0">
+              <app-monthly-daily-chat-wrapper></app-monthly-daily-chat-wrapper>
             </div>
             <div class="tab-pane" role="tabpanel" [class.hidden]="activeTab ===0" [class.visible]="activeTab ===1">
               <app-comapre-to-previous-year-chart></app-comapre-to-previous-year-chart>

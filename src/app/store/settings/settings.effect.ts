@@ -1,9 +1,6 @@
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {fetchCardsData, fetchCardsDataSuccess} from "../cards/cards.action";
 import {tap} from "rxjs/operators";
-import * as moment from "moment/moment";
 import {forkJoin} from "rxjs";
-import {fetchConsumptionDataSuccess} from "../consumption/consumption.action";
 import {Injectable} from "@angular/core";
 import {ApiService} from "../../shared/api.service";
 import {Store} from "@ngrx/store";

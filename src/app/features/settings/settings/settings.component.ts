@@ -3,9 +3,7 @@ import {Store} from "@ngrx/store";
 import {fetchSettingsData} from "../../../store/settings/settings.action";
 import {selectSettingsData} from "../../../store/settings/settings.selector";
 import {SettingsData} from "../../../store/settings/settings.reducer";
-import {selectUserData, selectUserName} from "../../../shared/ui/pagetitle/page-title.selector";
 import {Observable} from "rxjs";
-import {PageTitleState} from "../../../shared/ui/pagetitle/page-title.reducer";
 import {SearchCountryField, CountryISO} from 'ngx-intl-tel-input';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
@@ -17,7 +15,7 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 })
 export class SettingsComponent {
   alerts = [];
-  userData$: Observable<PageTitleState>;
+  userData$: Observable<any>;
   CountryISO = CountryISO;
   preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.UnitedKingdom];
   SearchCountryField = SearchCountryField;
@@ -45,7 +43,7 @@ export class SettingsComponent {
         })
       }
     });
-    this.userData$ = this.store.select(selectUserData);
+   // this.userData$ = this.store.select(selectUserData);
   }
 
   editPhone(phoneNumber: string, template: TemplateRef<any>) {

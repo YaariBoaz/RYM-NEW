@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {selectAlertsData} from "../../../../store/alerts/alerts.selector";
 import {Store} from "@ngrx/store";
 import {Observable} from "rxjs";
-import {AlertsData} from "../../../../store/alerts/alerts.reducer";
+import {BsModalService} from "ngx-bootstrap/modal";
+import {AlertDetailsModalComponent} from "../alert-details-modal/alert-details-modal.component";
 
 @Component({
   selector: 'app-alerts',
@@ -10,17 +10,18 @@ import {AlertsData} from "../../../../store/alerts/alerts.reducer";
   styleUrls: ['./alerts.component.scss']
 })
 export class AlertsComponent implements OnInit {
-  alerts$: Observable<AlertsData[]>;
+  alerts$: Observable<any[]>;
 
-  constructor(private store: Store) {
+  constructor(private store: Store,private modalService:BsModalService) {
   }
 
   ngOnInit(): void {
-    this.alerts$ = this.store.select(selectAlertsData);
+
   }
 
 
-  openAlertDetails(alert: AlertsData) {
-
+  openAlertDetails(alert: any) {
+    const data = {...alert} as any;
+    this.modalService.show(AlertDetailsModalComponent,{initialState:data});
   }
 }

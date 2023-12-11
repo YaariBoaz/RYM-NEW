@@ -6,8 +6,6 @@ import {
   fetchConsumptionDataSuccess, getMonthsConsumptionFromToData, updateDailyConsumptionFromToData,
   updateMonthsConsumptionData, updateMonthsConsumptionFromToData
 } from "./consumption.action";
-import {ClientMeterState} from "../meters/meters.reducer";
-import {UOM} from "../cards/cards.reducer";
 
 
 export interface ConsumptionData {
@@ -32,7 +30,7 @@ export interface FromToSet {
 export interface ConsumptionState {
   data: ConsumptionData[];
   lowRead: number;
-  uom: UOM;
+  uom:any;
   months: MonthsSet;
   fromToMonths: FromToSet;
   fromToDaily: FromToSet;

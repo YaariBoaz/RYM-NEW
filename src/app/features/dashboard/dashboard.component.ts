@@ -6,18 +6,10 @@ import {ConsumptionFromToObject, DateHelperService} from "./shared/utils/date-he
 import {BsModalRef, BsModalService, ModalOptions} from "ngx-bootstrap/modal";
 import {AlertDetailsModalComponent} from "./shared/alert-details-modal/alert-details-modal.component";
 import {VacationsModalComponent} from "./shared/vacations-modal/vacations-modal.component";
-import {ChartType} from "chart.js";
-import {ChatMessage} from "./dashboard.model";
-import {PageTitleState} from "../../shared/ui/pagetitle/page-title.reducer";
-import {MeterData} from "../../store/meters/meters.reducer";
-import {CardsState, UOM} from "../../store/cards/cards.reducer";
-import {AlertsData} from "../../store/alerts/alerts.reducer";
-import {fetchClientMetersData} from "../../store/meters/meters.action";
-import {fetchClientAlertsData} from "../../store/alerts/alerts.action";
-import {selectUserData, selectUserName} from "../../shared/ui/pagetitle/page-title.selector";
-import {selectMetersData} from "../../store/meters/meters.selector";
-import {selectCardsData} from "../../store/cards/cards.selector";
-import {selectAlertsData} from "../../store/alerts/alerts.selector";
+import {VacationModel, VacationsService} from "./shared/vacations-modal/vacations.service";
+import {CardsService} from "../../shared/services/cards.service";
+import {MeterService} from "../../shared/services/meter.service";
+import {UserInfoService} from "../../shared/services/user-info.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -30,17 +22,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   formData: UntypedFormGroup;
 
   // Form submit
-  userData$: Observable<PageTitleState>;
-  metersData$: Observable<MeterData[]>;
-  cardsData$: Observable<CardsState>;
+  cardsData:any;
+  metersData:any;
   activeTab = 0;
-  alerts$: Observable<AlertsData[]>;
-  uom: UOM;
-  userInfo$: Observable<{ firstName: string; lastName: string }>;
+  uom: any;
+  userInfo:any;
   private bsModalRef: BsModalRef<unknown>;
   currentMeter: any;
-
-  constructor(public formBuilder: UntypedFormBuilder, private modalService: BsModalService, private store: Store, private dateHelperService: DateHelperService) {
+  vacationsData: VacationModel[] = null;
+  modalRef:BsModalRef;
+  constructor(public formBuilder: UntypedFormBuilder,
+              private modalService: BsModalService,
+              private cardsService:CardsService,
+              private meterService:MeterService,
+              private userInfoService:UserInfoService,
+              private vacationService: VacationsService) {
 
   }
 
@@ -53,37 +49,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.breadCrumbItems = [{label: 'Dashboards'}, {label: 'Saas', active: true}];
-
-
+    this.getVacations();
     this.formData = this.formBuilder.group({
       message: ['', [Validators.required]],
     });
-
-
-    this.store.dispatch(fetchClientMetersData());
-    this.store.dispatch(fetchClientAlertsData());
-    this.userData$ = this.store.select(selectUserData);
-    this.userInfo$ = this.store.select(selectUserName);
-    this.store.select(selectMetersData).subscribe(data => {
-      if (data && data.meters && data.meters.length) {
-        this.metersData$ = of(data.meters);
-        this.currentMeter = (data.meters[0] as any)
-      }
-    });
-    this.cardsData$ = this.store.select(selectCardsData);
-    this.cardsData$.subscribe(data => {
-      this.uom = data.data.uom
-    })
-    this.alerts$ = this.store.select(selectAlertsData);
-
-
+    this.cardsData = this.cardsService.getCardsData();
+    this.metersData = this.meterService.getMeter();
+    this.userInfo = this.userInfoService.getUserInfo();
   }
 
   ngAfterViewInit() {
   }
 
 
-  openAlertDetails(alert: AlertsData) {
+  openAlertDetails(alert: any) {
     const initialState: ModalOptions = {
       initialState: {
         data: alert,
@@ -95,11 +74,26 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   setVacations() {
     const dataToPass = {
-      uom: this.uom
+      uom: this.uom,
+      vacationsData: {
+        ...this.vacationsData[this.vacationsData.length - 1],
+        vacationID: this.vacationService.vacationID
+      },
     }
-    this.modalService.show(VacationsModalComponent, {
+    this.modalRef = this.modalService.show(VacationsModalComponent, {
       initialState: dataToPass,
       class: 'modal-lg'
     });
+
+    this.modalRef.onHidden.subscribe(()=>{
+     this.getVacations();
+    })
+  }
+
+  private getVacations() {
+    this.vacationService.getConsumerVacations().subscribe((data: VacationModel[]) => {
+      this.vacationsData = data;
+      this.vacationService.vacationID =  this.vacationsData[0].vacationID
+    })
   }
 }
