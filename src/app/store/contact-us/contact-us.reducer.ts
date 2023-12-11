@@ -7,9 +7,13 @@ export interface ContactUsDetails {
   municipalID: number;
   Email: string;
 }
+export interface MessageSubjects{
+  MessageSubjectsID?: number;
+  MessageSubjectsText?: string;
+}
 
 export interface ContactUsDetailsState {
-  data: ContactUsDetails;
+  data: {contactDetails:ContactUsDetails,messageSubject:MessageSubjects[]}
 }
 
 export const initialState: ContactUsDetailsState = {data: null};

@@ -1,0 +1,26 @@
+<div class="card card-height">
+  <div class="card-header bg-danger text-white">
+    <h5>Alerts</h5>
+  </div>
+  <div class="card-body">
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" *ngFor="let alert of alerts$ | async; index as i" (click)="openAlertDetails(alert)" [class.isRead]="alert.isRead==='true'">
+        <div class="d-flex align-items-center">
+          <div class="me-3">
+            <img class="alert-icon" *ngIf="alert.alertTypeId == 16" src="assets/images/alerts/leak_in_meter.png"/>
+            <img class="alert-icon" *ngIf="alert.alertTypeId == '35'" src="assets/images/alerts/meter-leak.svg"/>
+          </div>
+          <div class="align-self-center overflow-hidden me-auto">
+            <div>
+              <h5 class="font-size-14 text-truncate"> {{alert.alertTypeName}}</h5>
+              <p class="text-muted mb-0">{{alert.alertTime | date:'MMM dd, YYYY, hh:mm'}}</p>
+            </div>
+          </div>
+          <div class="dropdown ms-2">
+            <button type="button" class="btn btn-light btn-sm">Details</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

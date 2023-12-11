@@ -12,8 +12,9 @@ import {Store} from "@ngrx/store";
 import {selectContactUsData} from "../../store/contact-us/contact-us.selector";
 import {fetchContactUsData} from "../../store/contact-us/contact-us.action";
 import {Observable} from "rxjs";
-import {ContactUsDetails} from "../../store/contact-us/contact-us.reducer";
+import {ContactUsDetails, MessageSubjects} from "../../store/contact-us/contact-us.reducer";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {FormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-sidebar',
@@ -34,11 +35,18 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
   currentSelectedTabIndex = 0;
-  contactUsInfo$: Observable<ContactUsDetails>;
+  contactUsInfo$: Observable<{ contactDetails: ContactUsDetails; messageSubject: MessageSubjects[] }>;
   modalRef: BsModalRef<unknown>;
+  selectedSubject: MessageSubjects = {MessageSubjectsText: 'Select One'};
+  contactUsForm = this.fb.group({
+    subject: ['', [Validators.required]],
+    message: ['', [Validators.required]],
+  })
+  isSubmitted = false;
 
   constructor(private eventService: EventService,
               private router: Router,
+              public fb: FormBuilder,
               public translate: TranslateService,
               private http: HttpClient,
               private modalService: BsModalService,
@@ -119,5 +127,26 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
 
   OpenContactUsDialog(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
+  }
+
+  changeSubject(subjectName: Event) {
+    this.subject.setValue((subjectName.target as any).value, {
+      onlySelf: true
+    })
+  }
+
+  get subject() {
+    return this.contactUsForm.get('subject');
+  }
+
+  get message() {
+    return this.contactUsForm.get('message');
+  }
+
+  onSubmit() {
+    this.isSubmitted = true;
+    if (!this.contactUsForm.valid) {
+      return false;
+    }
   }
 }

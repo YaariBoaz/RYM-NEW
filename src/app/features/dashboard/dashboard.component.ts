@@ -26,34 +26,13 @@ import {selectAlertsData} from "../../store/alerts/alerts.selector";
 export class DashboardComponent implements OnInit, AfterViewInit {
 
 
-  // bread crumb items
   breadCrumbItems: Array<{}>;
-
-  earningLineChart: ChartType;
-  salesAnalyticsDonutChart: ChartType;
-  ChatData: ChatMessage[];
-
-  sassEarning: any;
-  sassTopSelling: any;
-
   formData: UntypedFormGroup;
-
-  // Form submit
-  chatSubmit: boolean;
   userData$: Observable<PageTitleState>;
   metersData$: Observable<MeterData[]>;
   cardsData$: Observable<CardsState>;
   activeTab = 0;
-  alerts$: Observable<AlertsData[]>;
-  isMonthly = true;
-
-  fromToDaily: ConsumptionFromToObject;
-
   months: string[];
-  fromTo$: Observable<{ from: string; to: string }>;
-
-
-
   userInfo$: Observable<{ firstName: string; lastName: string }>;
   private bsModalRef: BsModalRef<unknown>;
   currentMeter: any;
@@ -91,7 +70,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       }
     });
     this.cardsData$ = this.store.select(selectCardsData);
-    this.alerts$ = this.store.select(selectAlertsData);
 
 
   }

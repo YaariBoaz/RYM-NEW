@@ -17,18 +17,20 @@ import {HorizontaltopbarComponent} from './horizontaltopbar/horizontaltopbar.com
 import {LanguageService} from '../core/services/language.service';
 import {TranslateModule} from '@ngx-translate/core';
 import {BsModalService} from "ngx-bootstrap/modal";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   // tslint:disable-next-line: max-line-length
   declarations: [LayoutComponent, SidebarComponent, TopbarComponent, FooterComponent, RightsidebarComponent, HorizontalComponent, VerticalComponent, HorizontaltopbarComponent],
-  imports: [
-    CommonModule,
-    TranslateModule,
-    RouterModule,
-    BsDropdownModule.forRoot(),
-    UIModule,
-    SimplebarAngularModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        RouterModule,
+        BsDropdownModule.forRoot(),
+        UIModule,
+        SimplebarAngularModule,
+        ReactiveFormsModule
+    ],
   providers: [LanguageService, BsModalService]
 })
 export class LayoutsModule {

@@ -77,19 +77,39 @@
 <!-- Left Sidebar End -->
 
 
-<ng-template #contactUsTemplate >
+<ng-template #contactUsTemplate>
   <div class="modal-header" *ngIf="(contactUsInfo$ | async) as contactUsInfo ">
-    <h4 class="modal-title pull-left">Contact Us - {{contactUsInfo.description}}</h4>
+    <h4 class="modal-title pull-left">Contact Us - {{contactUsInfo.contactDetails.description}}</h4>
     <button type="button" class="close btn-close pull-right" aria-label="Close" (click)="modalRef?.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
   <div class="modal-body" *ngIf="(contactUsInfo$ | async) as contactUsInfo ">
-    <pre>{{contactUsInfo | json }}</pre>
-   <p> Tel: <span>{{contactUsInfo.phoneNumber}}</span></p>
-   <p> Email: <span>{{contactUsInfo.Email}}</span></p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-primary">OK</button>
+    <div> Tel: <span>{{contactUsInfo.contactDetails.phoneNumber}}</span></div>
+    <div> Email: <span>{{contactUsInfo.contactDetails.Email}}</span></div>
+    <form [formGroup]="contactUsForm" class="subject-and-message-wrapper" (ngSubmit)="onSubmit()">
+      <div class="subject-wrapper">
+        <select class="custom-select" (change)="changeSubject($event)" formControlName="subject">
+          <option value="">Choose your city</option>
+          <option *ngFor="let item of (contactUsInfo$ | async)?.messageSubject;index as i"
+                  [ngValue]="item.MessageSubjectsText">{{item.MessageSubjectsText}}</option>
+        </select>
+      </div>
+      <!-- error block -->
+      <div class="text-danger" *ngIf="isSubmitted && subject.errors?.required">
+        <sup>*</sup>Subject is required.
+      </div>
+      <div class="message">
+        <textarea formControlName="message"></textarea>
+        <div class="text-danger" *ngIf="isSubmitted && message.errors?.required">
+          <sup>*</sup>Message Cant Be Empty.
+        </div>
+      </div>
+      <div class="buttons-wrapper">
+        <button type="submit" class="btn btn-primary">Send Message</button>
+        <button type="button" class="btn btn-light" (click)="modalRef.hide()">Cancel</button>
+      </div>
+    </form>
   </div>
 </ng-template>
+

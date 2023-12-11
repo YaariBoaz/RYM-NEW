@@ -9,9 +9,10 @@ import { AlertDetailsModalComponent } from './alert-details-modal/alert-details-
 import { VacationsModalComponent } from './vacations-modal/vacations-modal.component';
 import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import { MonthlyDailyChatWrapperComponent } from './monthly-daily-chat-wrapper/monthly-daily-chat-wrapper.component';
+import { AlertsComponent } from './alerts/alerts.component';
 
 @NgModule({
-  declarations: [MonthlyConsumptionChartComponent, ComapreToPreviousYearChartComponent, AlertDetailsModalComponent, VacationsModalComponent, MonthlyDailyChatWrapperComponent],
+  declarations: [MonthlyConsumptionChartComponent, ComapreToPreviousYearChartComponent, AlertDetailsModalComponent, VacationsModalComponent, MonthlyDailyChatWrapperComponent, AlertsComponent],
     imports: [
         CommonModule,
         NgApexchartsModule,
@@ -19,6 +20,6 @@ import { MonthlyDailyChatWrapperComponent } from './monthly-daily-chat-wrapper/m
         NgChartsModule,
       BsDatepickerModule
     ],
-  exports: [MonthlyConsumptionChartComponent, ComapreToPreviousYearChartComponent, MonthlyDailyChatWrapperComponent, MonthlyDailyChatWrapperComponent]
+    exports: [MonthlyConsumptionChartComponent, ComapreToPreviousYearChartComponent, MonthlyDailyChatWrapperComponent, MonthlyDailyChatWrapperComponent, AlertsComponent]
 })
 export class SharedModule { }

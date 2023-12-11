@@ -11,6 +11,7 @@ export const MENU: MenuItem[] = [
     id: 2,
     label: 'SIDEMENU.MESSAGES',
     icon: 'bxs-message',
+    route:'messages'
   },
   {
     id: 2,

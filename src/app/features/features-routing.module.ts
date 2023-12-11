@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {SettingsComponent} from "./settings/settings/settings.component";
+import {MessagesComponent} from "./messages/messages/messages.component";
 
 const routes: Routes = [
   // { path: '', redirectTo: 'dashboard' },
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: "settings",
     component: SettingsComponent
+  },
+  {
+    path: "messages",
+    component: MessagesComponent
   },
 ];
 
