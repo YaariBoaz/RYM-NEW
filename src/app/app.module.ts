@@ -50,6 +50,7 @@ import {SettingsEffect} from "./store/settings/settings.effect";
 import {SettingsModule} from "./features/settings/settings.module";
 import {NgxIntlTelInputModule} from "ngx-intl-tel-input";
 import {ContactUsEffect} from "./store/contact-us/contact-us.effect";
+import {VacationsEffect} from "./store/vacations/vacations.effect";
 
 
 export function createTranslateLoader(http: HttpClient): any {
@@ -86,6 +87,7 @@ export function createTranslateLoader(http: HttpClient): any {
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode
+      trace:true
     }),
     EffectsModule.forRoot([
       PageTitleEffect,
@@ -97,7 +99,8 @@ export function createTranslateLoader(http: HttpClient): any {
       LastBillingCycleChartStateEffects,
       AuthenticationEffects,
       SettingsEffect,
-      ContactUsEffect
+      ContactUsEffect,
+      VacationsEffect
     ]),
     NgxEchartsModule.forRoot({
       /**

@@ -1,36 +1,49 @@
 import {Injectable} from "@angular/core";
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import {fetchClientAlertsData, fetchClientAlertsDataFail, fetchClientAlertsDataSuccess} from "../alerts/alerts.action";
-import {catchError, map, mergeMap} from "rxjs/operators";
-import {AlertsData} from "../alerts/alerts.reducer";
+import {catchError, map, mergeMap, tap} from "rxjs/operators";
 import {of} from "rxjs";
 import {ApiService} from "../../shared/api.service";
-import {postVacations, postVacationsDataFail, postVacationsSuccess} from "./vacations.action";
+import {getVacationsSuccess, postVacations, postVacationsDataFail, postVacationsSuccess} from "./vacations.action";
 import {VacationsModel} from "./vacations.reducer";
 
 @Injectable()
 export class VacationsEffect {
 
 
-  fetchData$ = createEffect(() =>
+  postVacation$ = createEffect(() =>
     this.actions$.pipe(
       ofType(postVacations),
-      mergeMap(() =>
-        this.apiService.postConsumerVacations().pipe(
-          map((data:VacationsModel) => postVacationsSuccess({data})),
+      mergeMap((data: VacationsModel) =>
+        this.apiService.postConsumerVacations(data).pipe(
+          map((data: VacationsModel) => postVacationsSuccess({data,null})),
           catchError((error) =>
-            of(postVacationsDataFail({ error }))
+            of(postVacationsDataFail({error}))
           )
         )
       ),
-    ),
+    ), {dispatch: false}
+  )
+
+
+  getVacations = createEffect(() =>
+    this.actions$.pipe(
+      ofType(postVacations),
+      mergeMap((data: VacationsModel) =>
+        this.apiService.getConsumerVacations().pipe(
+          map((data: VacationsModel) => getVacationsSuccess({vacations})),
+          catchError((error) =>
+            of(postVacationsDataFail({error}))
+          )
+        )
+      ),
+    ), {dispatch: false}
   )
 
   constructor(
     private actions$: Actions,
-    private apiService:ApiService
-  ) { }
-
+    private apiService: ApiService
+  ) {
+  }
 
 
 }
