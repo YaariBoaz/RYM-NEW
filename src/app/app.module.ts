@@ -34,7 +34,6 @@ import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {NgxEchartsModule} from "ngx-echarts";
 import {NgToggleModule} from "ngx-toggle-button";
-import {ConsumptionEffects} from "./store/consumption/consumption.effect";
 import {LastBillingCycleChartStateEffects} from "./store/last-billing-cycle-chart/lastBillingCycleChart.effect";
 import {
   CompareToPreviousYearChartEffect
@@ -87,7 +86,6 @@ export function createTranslateLoader(http: HttpClient): any {
       trace:true
     }),
     EffectsModule.forRoot([
-      ConsumptionEffects,
       CompareToPreviousYearChartEffect,
       LastBillingCycleChartStateEffects,
       AuthenticationEffects,

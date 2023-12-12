@@ -22,20 +22,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   formData: UntypedFormGroup;
 
   // Form submit
-  cardsData:any;
-  metersData:any;
+  cardsData: any;
+  metersData: any;
   activeTab = 0;
   uom: any;
-  userInfo:any;
+  userInfo: any;
   private bsModalRef: BsModalRef<unknown>;
   currentMeter: any;
   vacationsData: VacationModel[] = null;
-  modalRef:BsModalRef;
+  modalRef: BsModalRef;
+
   constructor(public formBuilder: UntypedFormBuilder,
               private modalService: BsModalService,
-              private cardsService:CardsService,
-              private meterService:MeterService,
-              private userInfoService:UserInfoService,
+              private cardsService: CardsService,
+              private meterService: MeterService,
+              private userInfoService: UserInfoService,
               private vacationService: VacationsService) {
 
   }
@@ -53,9 +54,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.formData = this.formBuilder.group({
       message: ['', [Validators.required]],
     });
-    this.cardsData = this.cardsService.getCardsData();
-    this.metersData = this.meterService.getMeter();
-    this.userInfo = this.userInfoService.getUserInfo();
+    this.cardsService.getCardsDataResult$.subscribe(data => {
+      this.cardsData = data;
+    });
+
+    this.meterService.getMetersResult$.subscribe(data => {
+      this.metersData = data;
+    });
+
+    this.userInfoService.getUserInfoResult$.subscribe(data => {
+      this.userInfo = data;
+    });
   }
 
   ngAfterViewInit() {
@@ -85,15 +94,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       class: 'modal-lg'
     });
 
-    this.modalRef.onHidden.subscribe(()=>{
-     this.getVacations();
+    this.modalRef.onHidden.subscribe(() => {
+      this.getVacations();
     })
   }
 
   private getVacations() {
     this.vacationService.getConsumerVacations().subscribe((data: VacationModel[]) => {
       this.vacationsData = data;
-      this.vacationService.vacationID =  this.vacationsData[0].vacationID
+      this.vacationService.vacationID = this.vacationsData[0].vacationID
     })
   }
 }

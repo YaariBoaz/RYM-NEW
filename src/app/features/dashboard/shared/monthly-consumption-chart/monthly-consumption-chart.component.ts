@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
- import {Store} from "@ngrx/store";
+import {Store} from "@ngrx/store";
 import {dailyConsumptionConfig, monthlyConsumptionConfig} from "./config";
 import {ChartConfiguration, TooltipItem} from "chart.js";
 import 'chartjs-adapter-moment';
@@ -8,7 +8,10 @@ import 'chart.js'
 import {
   selectLastBillingCycleChartData
 } from "../../../../store/last-billing-cycle-chart/lastBillingCycleChart.selector";
-import {selectConsumptionChartData} from "../../../../store/consumption/consumption.selector";
+import {ConsumptionChartService} from "./consumption-chart.service";
+import {combineLatest, combineLatestAll} from "rxjs";
+import {CardsService} from "../../../../shared/services/cards.service";
+import {LastBillingCycleService} from "./last-billing-cycle.service";
 
 @Component({
   selector: 'app-monthly-consumption-chart',
@@ -74,34 +77,40 @@ export class MonthlyConsumptionChartComponent implements OnInit, OnChanges {
   currentTableData: any[];
   isDaily = false;
 
-  constructor(private store: Store, private cdr: ChangeDetectorRef) {
+  constructor(private store: Store,
+              private cdr: ChangeDetectorRef,
+              private consumptionService: ConsumptionChartService,
+              private cardsService: CardsService,
+              private lastBillingCycle: LastBillingCycleService) {
 
   }
 
   ngOnInit(): void {
-    this.store.select(selectConsumptionChartData).subscribe(consumptionState => {
-      if (monthlyConsumptionConfig.datasets && (monthlyConsumptionConfig.datasets as any).length > 0) {
-        console.log(monthlyConsumptionConfig);
-        this.isDaily = false;
-        this.uom = (monthlyConsumptionConfig.datasets as any)[0].uom.unit;
-        this.barChartData = monthlyConsumptionConfig;
-        this.activeBarChartOptions = this.barChartOptionsMonthly;
-        this.headers = this.monthlyHeaders;
-        this.monthlyTableData = new Array<TableDataItem>();
-        this.barChartData.labels.forEach((item, index) => {
-          this.monthlyTableData.push({
-            date: item,
-            consumption: this.barChartData.datasets[0].data[index] + this.barChartData.datasets[1].data[index],
-          })
-        });
-        this.currentTableData = this.monthlyTableData;
-        this.isUpdate = false;
-        setTimeout(() => {
-          this.isUpdate = true;
-        }, 0)
+    this.consumptionService.getChartDataUpdate$.subscribe(data => {
+      if (data) {
+        if (monthlyConsumptionConfig.datasets && (monthlyConsumptionConfig.datasets as any).length > 0) {
+          console.log(monthlyConsumptionConfig);
+          this.isDaily = false;
+          this.uom = (monthlyConsumptionConfig.datasets as any)[0].uom.unit;
+          this.barChartData = monthlyConsumptionConfig;
+          this.activeBarChartOptions = this.barChartOptionsMonthly;
+          this.headers = this.monthlyHeaders;
+          this.monthlyTableData = new Array<TableDataItem>();
+          this.barChartData.labels.forEach((item, index) => {
+            this.monthlyTableData.push({
+              date: item,
+              consumption: this.barChartData.datasets[0].data[index] + this.barChartData.datasets[1].data[index],
+            })
+          });
+          this.currentTableData = this.monthlyTableData;
+          this.isUpdate = false;
+          setTimeout(() => {
+            this.isUpdate = true;
+          }, 0)
+        }
       }
-    });
-    this.store.select(selectLastBillingCycleChartData).subscribe(data => {
+    })
+    this.lastBillingCycle.getLastBullingCycleResult$.subscribe(data => {
       if (dailyConsumptionConfig.datasets && (dailyConsumptionConfig.datasets as any).length > 0) {
         (dailyConsumptionConfig.datasets as any)[0].uom = this.uom;
         (dailyConsumptionConfig.datasets as any)[1].uom = this.uom;
@@ -116,7 +125,7 @@ export class MonthlyConsumptionChartComponent implements OnInit, OnChanges {
 
         allDataset.forEach((item, index) => {
           let alertName = '-';
-          if(data[index].meterStatusDesc){
+          if (data[index].meterStatusDesc) {
             alertName = data[index].meterStatusDesc;
           }
           this.dailyTableData.push({
@@ -131,9 +140,8 @@ export class MonthlyConsumptionChartComponent implements OnInit, OnChanges {
         setTimeout(() => {
           this.isUpdate = true;
         }, 0)
-
       }
-    })
+    });
   }
 
 
@@ -146,7 +154,6 @@ export class MonthlyConsumptionChartComponent implements OnInit, OnChanges {
     return undefined;
   }
 }
-
 
 
 export interface TableDataItem {

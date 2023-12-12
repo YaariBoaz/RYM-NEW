@@ -1,27 +1,30 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ApiService} from "../api.service";
 import {LoggerService} from "./logger.service";
+import {Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MeterService {
-  private meters: any;
+  getMetersResult$= new Subject<any>();
+  meters
 
-  constructor(private apiService:ApiService) {
+  constructor(private apiService: ApiService) {
     this.fetchMeter();
   }
 
 
-  fetchMeter(){
-    this.apiService.getConsumerMeters().subscribe(data =>{
-     this.meters = data;
-      LoggerService.LOG('getConsumerMeters  - ' ,data)
+  fetchMeter() {
+    this.apiService.getConsumerMeters().subscribe(data => {
+      this.meters = data;
+      LoggerService.LOG('getConsumerMeters  - ', data)
+      this.getMetersResult$.next(this.meters);
     })
   }
 
 
-  getMeter(){
+  getMeter() {
     return this.meters;
   }
 }

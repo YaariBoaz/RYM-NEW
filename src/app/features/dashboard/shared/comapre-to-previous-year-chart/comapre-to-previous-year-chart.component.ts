@@ -21,8 +21,9 @@ export class ComapreToPreviousYearChartComponent implements OnInit {
 
   chartData: any;
   chartOptions: ChartConfiguration<'bar'>['options'] = {
-    responsive: true,
+    responsive: false,
     maintainAspectRatio: false,
+    devicePixelRatio: 10,
     plugins: {
       legend: {position: 'bottom'},
       tooltip: {

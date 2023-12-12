@@ -4,6 +4,7 @@ import * as moment from "moment/moment";
 import {fetchLastBillingCycleData} from "../../../../store/last-billing-cycle-chart/lastBillingCycleChart.action";
 import {Store} from "@ngrx/store";
 import {ConsumptionFromToMonthlyObject, DateHelperService} from "../utils/date-helper";
+import {LastBillingCycleService} from "../monthly-consumption-chart/last-billing-cycle.service";
 
 @Component({
   selector: 'app-monthly-daily-chat-wrapper',
@@ -29,7 +30,7 @@ export class MonthlyDailyChatWrapperComponent implements OnInit {
   toDailyValue;
   fromToMonthly: ConsumptionFromToMonthlyObject;
 
-  constructor(private store: Store, private dateHelperService: DateHelperService) {
+  constructor(private store: Store, private dateHelperService: DateHelperService, private lastBillingCycleService: LastBillingCycleService) {
     this.range1 = new Date();
     this.range2 = new Date();
     this.range1.setFullYear(this.range1.getFullYear() - 1);
@@ -54,26 +55,23 @@ export class MonthlyDailyChatWrapperComponent implements OnInit {
   }
 
   onDateValueChange(event) {
-      this.range1 = event[0];
-      this.range2 = event[1];
-      if (this.isMonthly) {
-        this.fromMonthValue = moment(this.range1).format('MMM-yyyy');
-        this.toMonthValue = moment(this.range2).format('MMM-yyyy');
-        this.currentDateFormat = "YYYY , MMM"
-        // this.store.dispatch(fetchCardsData({
-        //   from: this.fromMonthValue,
-        //   to: this.toMonthValue
-        // }));
-      } else {
-        this.fromDailyValue = this.range1;
-        this.toDailyValue = this.range2;
-        this.currentDateFormat = "YYYY , MMM , dd"
-        this.store.dispatch(fetchLastBillingCycleData({
-          from: moment(this.range1).format('YYYY-MM-D'),
-          to: moment(this.range2).format('YYYY-MM-D')
-        }))
-      }
+    this.range1 = event[0];
+    this.range2 = event[1];
+    if (this.isMonthly) {
+      this.fromMonthValue = moment(this.range1).format('MMM-yyyy');
+      this.toMonthValue = moment(this.range2).format('MMM-yyyy');
+      this.currentDateFormat = "YYYY , MMM"
+      // this.store.dispatch(fetchCardsData({
+      //   from: this.fromMonthValue,
+      //   to: this.toMonthValue
+      // }));
+    } else {
+      this.fromDailyValue = this.range1;
+      this.toDailyValue = this.range2;
+      this.currentDateFormat = "YYYY , MMM , dd";
+      this.lastBillingCycleService.getConsumptionLastBillingCycleBetweenDates(moment(this.range1).format('YYYY-MM-D'), moment(this.range2).format('YYYY-MM-D'))
     }
+  }
 
   periodChange(isMonthly: boolean) {
     if (isMonthly) {
@@ -87,10 +85,7 @@ export class MonthlyDailyChatWrapperComponent implements OnInit {
         this.setInitialDailyDate();
       }
       this.currentDateFormat = "YYYY , MMM , dd"
-      this.store.dispatch(fetchLastBillingCycleData({
-        from: this.fromDailyValue,
-        to: this.toDailyValue
-      }))
+      this.lastBillingCycleService.getConsumptionLastBillingCycleBetweenDates(this.fromDailyValue, this.toDailyValue)
     }
 
   }
