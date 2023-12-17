@@ -12,7 +12,7 @@ import {LoggerService} from "./logger.service";
 export class CardsService {
   getCardsDataResult$ = new BehaviorSubject<any>(null);
   private uom: any;
-
+  cardsData:CardsModel;
   constructor(private apiService: ApiService, private dateHelper: DateHelperService) {
     this.fetchCardsData({from: new Date().toString(), to: new Date().toString()})
   }
@@ -29,15 +29,15 @@ export class CardsService {
                                                                                            forecast,
                                                                                            lastMonthlyRead,
                                                                                            monthlyLowRate]) => {
-      const cardsData = {
+      this.cardsData = {
         currentMeterReading: (lastRead as any)[0].read,
         currentMonthConsumption: (lastMonthlyRead as any)[(lastMonthlyRead as any).length - 1].cons,
         endOfMonthForecast: (forecast as any).estimatedConsumption,
         uom: (uom as any).unit,
         monthlyLowRate: (monthlyLowRate as number)
       }
-      this.getCardsDataResult$.next(cardsData)
-      LoggerService.LOG('getUserDetails  - ', cardsData)
+      this.getCardsDataResult$.next(this.cardsData)
+      LoggerService.LOG('getUserDetails  - ', this.cardsData);
     });
   }
 
@@ -48,5 +48,12 @@ export class CardsService {
   }
 }
 
+export interface CardsModel{
+  currentMeterReading:number;
+  currentMonthConsumption:number;
+  endOfMonthForecast:number;
+  monthlyLowRate:number;
+  uom:string;
+}
 
 

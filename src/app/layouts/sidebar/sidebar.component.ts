@@ -5,7 +5,7 @@ import {Router, NavigationEnd} from '@angular/router';
 
 import {HttpClient} from '@angular/common/http';
 
-import {MENU} from './menu';
+import {MENU, MENU_MOBILE} from './menu';
 import {MenuItem} from './menu.model';
 import {TranslateService} from '@ngx-translate/core';
 import {Store} from "@ngrx/store";
@@ -32,6 +32,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   data: any;
 
   menuItems: MenuItem[] = [];
+  menuItemsMobile: MenuItem[] = [];
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
   currentSelectedTabIndex = 0;
@@ -111,6 +112,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
    */
   initialize(): void {
     this.menuItems = MENU;
+    this.menuItemsMobile = MENU_MOBILE;
   }
 
   /**

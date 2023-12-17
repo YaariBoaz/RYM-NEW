@@ -14,14 +14,14 @@ import {
 @Component({
   selector: 'app-comapre-to-previous-year-chart',
   templateUrl: './comapre-to-previous-year-chart.component.html',
-  styleUrls: ['./comapre-to-previous-year-chart.component.css']
+  styleUrls: ['./comapre-to-previous-year-chart.component.scss']
 })
 export class ComapreToPreviousYearChartComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart!: BaseChartDirective;
 
   chartData: any;
   chartOptions: ChartConfiguration<'bar'>['options'] = {
-    responsive: false,
+    responsive: true,
     maintainAspectRatio: false,
     devicePixelRatio: 10,
     plugins: {

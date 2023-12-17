@@ -5,6 +5,7 @@ import {fetchLastBillingCycleData} from "../../../../store/last-billing-cycle-ch
 import {Store} from "@ngrx/store";
 import {ConsumptionFromToMonthlyObject, DateHelperService} from "../utils/date-helper";
 import {LastBillingCycleService} from "../monthly-consumption-chart/last-billing-cycle.service";
+import {ConsumptionChartService} from "../monthly-consumption-chart/consumption-chart.service";
 
 @Component({
   selector: 'app-monthly-daily-chat-wrapper',
@@ -30,7 +31,7 @@ export class MonthlyDailyChatWrapperComponent implements OnInit {
   toDailyValue;
   fromToMonthly: ConsumptionFromToMonthlyObject;
 
-  constructor(private store: Store, private dateHelperService: DateHelperService, private lastBillingCycleService: LastBillingCycleService) {
+  constructor(private store: Store, private dateHelperService: DateHelperService,private consumptionService:ConsumptionChartService, private lastBillingCycleService: LastBillingCycleService) {
     this.range1 = new Date();
     this.range2 = new Date();
     this.range1.setFullYear(this.range1.getFullYear() - 1);
@@ -61,10 +62,7 @@ export class MonthlyDailyChatWrapperComponent implements OnInit {
       this.fromMonthValue = moment(this.range1).format('MMM-yyyy');
       this.toMonthValue = moment(this.range2).format('MMM-yyyy');
       this.currentDateFormat = "YYYY , MMM"
-      // this.store.dispatch(fetchCardsData({
-      //   from: this.fromMonthValue,
-      //   to: this.toMonthValue
-      // }));
+      this.consumptionService.getConsumptionMonthly({from:this.fromMonthValue,to:this.toMonthValue});
     } else {
       this.fromDailyValue = this.range1;
       this.toDailyValue = this.range2;
@@ -77,7 +75,7 @@ export class MonthlyDailyChatWrapperComponent implements OnInit {
     if (isMonthly) {
       this.dateRangeConfig.minMode = "month";
       this.dateRangeConfig.maxDateRange = 365;
-      // this.store.dispatch(fetchCardsData({from: this.fromMonthValue, to: this.toMonthValue}));
+      this.consumptionService.getConsumptionMonthly({from:this.fromMonthValue,to:this.toMonthValue});
     } else {
       this.dateRangeConfig.minMode = "day";
       this.dateRangeConfig.maxDateRange = 30;

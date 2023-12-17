@@ -1,9 +1,9 @@
-<div class="card card-height">
-  <div class="card-header bg-danger text-white">
+<div class="card card-height w-100">
+  <div class="card-header bg-danger text-white w-100">
     <h5>Alerts</h5>
   </div>
-  <div class="card-body">
-    <ul class="list-group list-group-flush">
+  <div class="card-body w-100">
+    <ul class="list-group list-group-flush w-100">
       <li class="list-group-item" *ngFor="let alert of alerts ; index as i" (click)="openAlertDetails(alert)" [class.isRead]="alert.isRead==='true'">
         <div class="d-flex align-items-center">
           <div class="me-3">

@@ -3,7 +3,7 @@ import {Store} from "@ngrx/store";
 import {Observable, of} from "rxjs";
 import {BsModalService} from "ngx-bootstrap/modal";
 import {AlertDetailsModalComponent} from "../alert-details-modal/alert-details-modal.component";
-import {AlertsService} from "./alerts.service";
+import {AlertModel, AlertsService} from "./alerts.service";
 
 @Component({
   selector: 'app-alerts',
@@ -11,7 +11,7 @@ import {AlertsService} from "./alerts.service";
   styleUrls: ['./alerts.component.scss']
 })
 export class AlertsComponent implements OnInit {
-  alerts= [];
+  alerts:AlertModel[];
 
   constructor(private alertService: AlertsService, private modalService: BsModalService) {
   }

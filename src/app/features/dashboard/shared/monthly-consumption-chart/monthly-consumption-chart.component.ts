@@ -5,13 +5,10 @@ import {ChartConfiguration, TooltipItem} from "chart.js";
 import 'chartjs-adapter-moment';
 import {BaseChartDirective} from "ng2-charts";
 import 'chart.js'
-import {
-  selectLastBillingCycleChartData
-} from "../../../../store/last-billing-cycle-chart/lastBillingCycleChart.selector";
 import {ConsumptionChartService} from "./consumption-chart.service";
-import {combineLatest, combineLatestAll} from "rxjs";
 import {CardsService} from "../../../../shared/services/cards.service";
 import {LastBillingCycleService} from "./last-billing-cycle.service";
+import {LoggerService} from "../../../../shared/services/logger.service";
 
 @Component({
   selector: 'app-monthly-consumption-chart',
@@ -89,7 +86,6 @@ export class MonthlyConsumptionChartComponent implements OnInit, OnChanges {
     this.consumptionService.getChartDataUpdate$.subscribe(data => {
       if (data) {
         if (monthlyConsumptionConfig.datasets && (monthlyConsumptionConfig.datasets as any).length > 0) {
-          console.log(monthlyConsumptionConfig);
           this.isDaily = false;
           this.uom = (monthlyConsumptionConfig.datasets as any)[0].uom.unit;
           this.barChartData = monthlyConsumptionConfig;

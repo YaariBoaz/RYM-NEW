@@ -7,18 +7,32 @@ import {Subject} from "rxjs";
   providedIn: 'root'
 })
 export class UserInfoService {
-  private userInfo: Object;
-  getUserInfoResult$=new Subject<any>();
+  userInfo: UserInfoModel;
+  getUserInfoResult$ = new Subject<any>();
 
   constructor(private apiService: ApiService) {
     this.fetchUserInfo();
   }
 
   fetchUserInfo() {
-    this.apiService.getUserDetails().subscribe((data) => {
+    this.apiService.getUserDetails().subscribe(((data: UserInfoModel) => {
       this.userInfo = data;
       LoggerService.LOG('getUserDetails  - ', data)
       this.getUserInfoResult$.next(this.userInfo);
-    })
+    }));
   }
+}
+
+export interface UserInfoModel {
+  accountNumber: string;
+  firstName: string;
+  lastName: string;
+  municipalId: number;
+  phoneNumber: UserInfoPhoneNumber;
+}
+
+export interface UserInfoPhoneNumber {
+  AdditionalPhoneNumber: string;
+  countryCode: string;
+  phoneNumber: string;
 }
