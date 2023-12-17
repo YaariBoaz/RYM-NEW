@@ -7,24 +7,24 @@ import {Subject} from "rxjs";
   providedIn: 'root'
 })
 export class MeterService {
-  getMetersResult$= new Subject<any>();
-  meters
+  getMetersResult$ = new Subject<any>();
+  meters:MeterModel[];
 
   constructor(private apiService: ApiService) {
     this.fetchMeter();
   }
 
-
   fetchMeter() {
-    this.apiService.getConsumerMeters().subscribe(data => {
+    this.apiService.getConsumerMeters().subscribe((data: MeterModel[]) => {
       this.meters = data;
       LoggerService.LOG('getConsumerMeters  - ', data)
       this.getMetersResult$.next(this.meters);
     })
   }
+}
 
-
-  getMeter() {
-    return this.meters;
-  }
+export interface MeterModel {
+  fullAddress: string;
+  meterCount: number;
+  meterSn: string;
 }

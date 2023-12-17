@@ -3,8 +3,8 @@
     <i [class.active-icon]="isChart" class='bx bx-bar-chart-alt-2' (click)="isChart = true"></i>
     <i [class.active-icon]="!isChart"  class='bx bx-table ' (click)="isChart = false"></i>
   </header>
-<div *ngIf="isUpdate && isChart" >
-<canvas baseChart
+<div  >
+<canvas *ngIf="isUpdate && isChart" baseChart
         style="height: 27vh;width:100%"
         [data]="barChartData"
         [options]="activeBarChartOptions"

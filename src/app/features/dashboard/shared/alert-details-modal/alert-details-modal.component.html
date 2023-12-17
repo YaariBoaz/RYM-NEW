@@ -10,8 +10,8 @@
 </div>
 <div class="modal-body">
   <div>
-    <p><b>Meter SN:</b> {{data?.meterSn}}</p>
-    <p><b>Address:</b>{{data.fullAddress}}</p>
+    <p><b>Meter SN:</b> {{meterService.meters[0].meterSn}}</p>
+    <p><b>Address:</b>{{meterService.meters[0].fullAddress}}</p>
     <p><b>Date:</b>{{data?.alertTime | date:'MMM dd, YYYY, hh:mm'}}</p>
   </div>
   <div class="auto-message">

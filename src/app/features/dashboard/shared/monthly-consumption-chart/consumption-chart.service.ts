@@ -29,7 +29,7 @@ export class ConsumptionChartService {
     });
   }
 
-  private getConsumptionMonthly(dateRange: { from: string, to: string }) {
+   getConsumptionMonthly(dateRange: { from: string, to: string }) {
     const from = moment(dateRange.from).format('YYYY-MM');
     const to = moment(dateRange.to).format('YYYY-MM')
     const lastRead$ = this.apiService.getLastRead();

@@ -1,11 +1,10 @@
 <!-- ========== Left Sidebar Start ========== -->
 
 <ng-template #contentTemplate>
-
   <!--- Sidemenu -->
-  <div id="sidebar-menu">
+  <div id="sidebar-menu" class="d-none d-sm-block">
     <!-- Left Menu Start -->
-    <ul class="metismenu list-unstyled" id="side-menu" #sideMenu>
+    <ul class="metismenu list-unstyled" id="side-menu" #sideMenu >
       <!-- {{menuItems}} -->
       <ng-container *ngFor="let item of menuItems; let i = index">
         <li class="menu-title" *ngIf="item.isTitle">{{ item.label | translate }}</li>
@@ -59,7 +58,64 @@
         </a>
       </li>
     </ul>
+  </div>
 
+  <div id="sidebar-menu" class="d-sm-none">
+    <!-- Left Menu Start -->
+    <ul class="metismenu list-unstyled" id="side-menu" #sideMenu >
+      <!-- {{menuItems}} -->
+      <ng-container *ngFor="let item of menuItemsMobile; let i = index">
+        <li class="menu-title" *ngIf="item.isTitle">{{ item.label | translate }}</li>
+        <li *ngIf="!item.isTitle && !item.isLayout" (click)="currentSelectedTabIndex = i;navigateToFeature(item)">
+          <a *ngIf="hasItems(item)" href="javascript:void(0);" class="is-parent"
+             [ngClass]="{'has-arrow': !item.badge, 'has-dropdown': item.badge}">
+            <i class="bx {{item.icon}}" *ngIf="item.icon"></i>
+            <span> {{ item.label | translate }}</span>
+            <span class="badge rounded-pill float-end bg-{{item.badge.variant}}" *ngIf="item.badge">{{item.badge.text |
+              translate}}</span>
+          </a>
+
+          <a routerLink="{{item.link}}" *ngIf="!hasItems(item)" class="side-nav-link-ref" routerLinkActive="active"
+             [class.active-menu-item]="currentSelectedTabIndex === i">
+            <i class="bx {{ item.icon }}" *ngIf="item.icon"
+               [class.active-menu-item-icon]="currentSelectedTabIndex === i"></i>
+            <span> {{ item.label | translate }}</span>
+            <span class="badge rounded-pill bg-{{item.badge.variant}} float-end" *ngIf="item.badge">{{item.badge.text |
+              translate}}</span>
+          </a>
+
+          <ul *ngIf="hasItems(item)" class="sub-menu" aria-expanded="false">
+            <li *ngFor="let subitem of item.subItems">
+              <a routerLink="{{subitem.link}}" *ngIf="!hasItems(subitem)" class="side-nav-link-ref"
+                 [attr.data-parent]="subitem.parentId" routerLinkActive="active">
+                {{ subitem.label | translate}}
+                <span class="badge rounded-pill bg-{{subitem.badge.variant}} float-end"
+                      *ngIf="subitem.badge">{{subitem.badge.text |
+                  translate}}</span>
+              </a>
+              <a *ngIf="hasItems(subitem)" class="side-nav-link-a-ref has-arrow" href="javascript:void(0);"
+                 [attr.data-parent]="subitem.parentId">
+                {{ subitem.label | translate}}
+              </a>
+              <ul *ngIf="hasItems(subitem)" class="sub-menu mm-collapse" aria-expanded="false">
+                <li *ngFor="let subSubitem of subitem.subItems">
+                  <a [attr.data-parent]="subSubitem.parentId" routerLink="{{subSubitem.link}}" routerLinkActive="active"
+                     class="side-nav-link-ref">
+                    {{ subSubitem.label | translate }}
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+      <li class="contact-us-wrapper" (click)="OpenContactUsDialog(contactUsTemplate)">
+        <a class="side-nav-link-ref ">
+          <i class="bx bx-home-circle active-menu-item-icon"></i>
+          <span> CONTACT US</span>
+        </a>
+      </li>
+    </ul>
   </div>
 </ng-template>
 <!-- Sidebar -->

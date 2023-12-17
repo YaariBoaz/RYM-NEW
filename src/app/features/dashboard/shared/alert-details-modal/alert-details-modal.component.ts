@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import {BsModalRef} from "ngx-bootstrap/modal";
+import {MeterService} from "../../../../shared/services/meter.service";
+import {UserInfoService} from "../../../../shared/services/user-info.service";
+import {AlertModel} from "../alerts/alerts.service";
 
 @Component({
   selector: 'app-alert-details-modal',
@@ -7,8 +10,8 @@ import {BsModalRef} from "ngx-bootstrap/modal";
   styleUrls: ['./alert-details-modal.component.scss']
 })
 export class AlertDetailsModalComponent {
-  data: any;
+  data: AlertModel;
   meter: any;
-constructor(public bsModalRef: BsModalRef) {
+constructor(public bsModalRef: BsModalRef,public meterService:MeterService,public userInfoService:UserInfoService) {
 }
 }
