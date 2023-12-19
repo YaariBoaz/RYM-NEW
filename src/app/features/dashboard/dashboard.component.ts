@@ -54,14 +54,15 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.formData = this.formBuilder.group({
       message: ['', [Validators.required]],
     });
+    this.cardsService.fetchCardsData({from: new Date().toString(), to: new Date().toString()})
     this.cardsService.getCardsDataResult$.subscribe(data => {
       this.cardsData = data;
     });
-
+    this.meterService.fetchMeter();
     this.meterService.getMetersResult$.subscribe(data => {
       this.metersData = data;
     });
-
+    this.userInfoService.fetchUserInfo();
     this.userInfoService.getUserInfoResult$.subscribe(data => {
       this.userInfo = data;
     });

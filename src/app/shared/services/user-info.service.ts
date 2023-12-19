@@ -11,7 +11,7 @@ export class UserInfoService {
   getUserInfoResult$ = new Subject<any>();
 
   constructor(private apiService: ApiService) {
-    this.fetchUserInfo();
+
   }
 
   fetchUserInfo() {

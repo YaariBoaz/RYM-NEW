@@ -18,6 +18,10 @@ const routes: Routes = [
     path: "messages",
     component: MessagesComponent
   },
+  {
+    path: "home",
+    component: DashboardComponent
+  },
 ];
 
 @NgModule({

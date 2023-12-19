@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {PhoneNumberItem} from "./models";
 import {VacationModel} from "../features/dashboard/shared/vacations-modal/vacations.service";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -17,81 +18,85 @@ export class ApiService {
   }
 
 
-  login(email: string, password: string) {
+  login(email: string, password: string):Observable<any> {
     return this.http.post(
       this.API_BASE_HREF + 'consumer/login',
       {"email": "jesmine87+RYMNEW@gmail.com", "pw": "abcd1234", "deviceId": "137603020733184952489033337332134674207"})
   }
 
-  getUserDetails() {
+  getUserDetails():Observable<any> {
     return this.http.get(this.API_BASE_HREF + 'consumer/me');
   }
 
-  getConsumptionMonthly(from, to, meterCount?) {
+  getConsumptionMonthly(from, to, meterCount?):Observable<any> {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumption/monthly/' + from + '/' + to);
   }
 
-  getConsumptionForecast() {
+  getConsumptionForecast():Observable<any> {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumption/forecast');
   }
 
-  getConsumptionForecastById() {
+  getConsumptionForecastById():Observable<any> {
     return this.http.get(this.API_BASE_HREF + 'consumption/forecast/7861');
   }
 
-  getConsumptionLastBillingCycle() {
+  getConsumptionLastBillingCycle():Observable<any> {
     return this.http.get(this.API_BASE_HREF + 'consumption/daily/lastbillingCycle/2023-10-09/2023-11-09');
   }
 
-  getConsumptionLastBillingCycleBetweenDates(date1, date2) {
+  getConsumptionLastBillingCycleBetweenDates(date1, date2):Observable<any> {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumption/daily/lastbillingCycle/' + date1 + '/' + date2);
   }
 
-  getConsumptionLowRateLimit() {
+  getConsumptionLowRateLimit():Observable<any> {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumption/Low-Rate-Limit');
   }
 
-  postConsumerVacations(vacationsModel: VacationModel) {
+  postConsumerVacations(vacationsModel: VacationModel):Observable<any> {
     return this.http.post(this.API_BASE_HREF + 'consumer/vacations/', vacationsModel);
   }
 
-  getConsumerVacations() {
+  postConfirmAlert(logId):Observable<any> {
+    return this.http.post(this.API_BASE_HREF_CTM + 'consumer/myalerts/confirm/' + logId, {});
+  }
+
+  getConsumerVacations():Observable<any> {
     return this.http.get(this.API_BASE_HREF + 'consumer/vacations/');
   }
 
-  getConsumerMeters() {
+  getConsumerMeters():Observable<any> {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumer/meters');
   }
 
-  getMeasurmentUnitsByMunicipal() {
+  getMeasurmentUnitsByMunicipal():Observable<any> {
     return this.http.get(this.API_BASE_HREF + 'municipals/h1/measurmentunits');
   }
 
-  getMunicipalCustomerService() {
+  getMunicipalCustomerService():Observable<any> {
     return this.http.get(this.API_BASE_HREF + 'municipals/municipalCustomerService');
   }
 
-  getConsumerAlertsForSettings() {
+  getConsumerAlertsForSettings():Observable<any> {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumer/alertsForSettings');
   }
 
-  getConsumerSettings() {
+  getConsumerSettings():Observable<any> {
     return this.http.get(this.API_BASE_HREF + 'consumer/myalerts/settings');
   }
 
-  getMyAlerts() {
+  getMyAlerts():Observable<any> {
     return this.http.get(this.API_BASE_HREF_CTM + 'consumer/myalerts');
   }
 
-  getMessagesFromMunicipal() {
+  getMessagesFromMunicipal():Observable<any> {
     return this.http.get(this.API_BASE_HREF_CTM + 'municipality/1982/messages');
   }
 
-  getMessagesSubjectsFromMunicipal() {
+  getMessagesSubjectsFromMunicipal():Observable<any> {
     return this.http.get(this.API_BASE_HREF_CTM + 'municipality/1982/messages/message-subjects');
   }
 
-  isMessageToMunicipalAllowed() {
+  isMessageToMunicipalAllowed():Observable<any> {
     return this.http.get(this.API_BASE_HREF_CTM + 'municipality/1982/messages/is-messages-to-municipal-allowed');
   }
 

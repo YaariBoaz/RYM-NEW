@@ -7,19 +7,20 @@
       <div class="col-xl-6">
         <div class="tabs">
           <div>
-            <a class="link-opacity-75">Terms Of Use</a>
+            <a class="link-opacity-75" (click)="openTermsOfUse(termsOfUseTemplate)">Terms Of Use</a>
           </div>
           <div>
-            <a class="link-opacity-75">Privacy Policy</a>
+            <a class="link-opacity-75" (click)="openPrivacyPolicy(privacyTemplate)">Privacy Policy</a>
           </div>
           <div>
-            <a class="link-opacity-75">Technical Support</a>
+            <a class="link-opacity-75" (click)="openTechnicalSupport(technicalSupportTemplate)">Technical Support</a>
           </div>
           <div>
-            <a class="link-opacity-75">Accessibility Statement</a>
+            <a class="link-opacity-75" (click)="openAccessibilityStatement(accessibilityStatementTemplate)">Accessibility
+              Statement</a>
           </div>
           <div>
-            <a class="link-opacity-75">FAQ</a>
+            <a class="link-opacity-75" (click)="openFAQ()">FAQ</a>
           </div>
         </div>
       </div>
@@ -38,17 +39,90 @@
       <div>
         <select>
           <option><a class="link-opacity-75">Terms Of Use</a></option>
-          <option> <a class="link-opacity-75">Privacy Policy</a></option>
-          <option>  <a class="link-opacity-75">Technical Support</a></option>
+          <option><a class="link-opacity-75">Privacy Policy</a></option>
+          <option><a class="link-opacity-75">Technical Support</a></option>
           <option><a class="link-opacity-75">Accessibility Statement</a></option>
-          <option>   <a class="link-opacity-75">FAQ</a></option>
+          <option><a class="link-opacity-75">FAQ</a></option>
         </select>
       </div>
       <div>
         All Rights Reserves ©2023 Read Your Meter Pro
       </div>
-  </div>
+    </div>
   </div>
 </footer>
 
 
+<ng-template #termsOfUseTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'TermsofUse' | translate}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <textarea class="modal-body">
+    {{'TermsOfUseText' | translate}}
+  </textarea>
+</ng-template>
+
+<ng-template #privacyTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'TermsofUse' | translate}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <textarea class="modal-body">
+    {{'PrivacyPolicyText' | translate}}
+  </textarea>
+</ng-template>
+
+<ng-template #privacyTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Privacy' | translate}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <textarea class="modal-body">
+    {{'PrivacyPolicyText' | translate}}
+  </textarea></ng-template>
+
+<ng-template #technicalSupportTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Contact' | translate}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>{{'HappyToAssist' | translate}}</div>
+    <div>{{'InTouch' | translate}}</div>
+    <div>{{'Tel' | translate}} 1-700-50-6565</div>
+    <div>{{'email' | translate}} <a href="mailto: supportarad@arad.co.il">supportarad@arad.co.il</a></div>
+  </div>
+</ng-template>
+
+<ng-template #accessibilityStatementTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'AccessibilityStatement' | translate}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>{{'firstParagraph' | translate}}</div>
+    <p>{{'howAccessibilityWork' | translate}}</p>
+    <div>{{'howAccessibilityWorkFirstRow' | translate}} <a
+      href="https://www.nagich.co.il/" >{{'howAccessibilityWorkFirstRowLink' | translate}} </a>{{'howAccessibilityWorkFirstRowEnd' | translate}}
+    </div>
+    <div>{{'howAccessibilityWorkSecondRow' | translate}}</div>
+    <div>{{'howAccessibilityWorkThirdRow' | translate}} <a
+      href="https://www.nagich.co.il/html5/sbs.py?_id=8684&did=5905&G=8684"  target="_blank">{{'howAccessibilityWorkThirdRowLink' | translate}}</a>
+    </div>
+    <div> {{'howAccessibilityListHeader' | translate}}</div>
+    <ul>
+      <li *ngFor="let row of accessibilityStatementTemplateArray">{{row}}</li>
+    </ul>
+  </div>
+</ng-template>

@@ -2,16 +2,10 @@ import {MenuItem} from './menu.model';
 
 export const MENU: MenuItem[] = [
   {
-    id: 2,
+    id: 1,
     label: 'SIDEMENU.HOME',
     icon: 'bx-home-circle',
-    route:''
-  },
-  {
-    id: 2,
-    label: 'SIDEMENU.MESSAGES',
-    icon: 'bxs-message',
-    route:'messages'
+    route:'home'
   },
   {
     id: 2,
@@ -19,7 +13,7 @@ export const MENU: MenuItem[] = [
     icon: 'bxs-contact',
   },
   {
-    id: 2,
+    id: 3,
     label: 'SIDEMENU.SETTINGS',
     icon: 'bxs-cog',
     route:'settings'

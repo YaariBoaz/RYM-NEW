@@ -14,7 +14,7 @@ export class CardsService {
   private uom: any;
   cardsData:CardsModel;
   constructor(private apiService: ApiService, private dateHelper: DateHelperService) {
-    this.fetchCardsData({from: new Date().toString(), to: new Date().toString()})
+
   }
 
   fetchCardsData(data: { from: string, to: string }) {

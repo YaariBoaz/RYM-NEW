@@ -11,7 +11,7 @@ export class MeterService {
   meters:MeterModel[];
 
   constructor(private apiService: ApiService) {
-    this.fetchMeter();
+
   }
 
   fetchMeter() {

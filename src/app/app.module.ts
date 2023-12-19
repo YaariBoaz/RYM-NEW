@@ -47,6 +47,8 @@ import {ContactUsEffect} from "./store/contact-us/contact-us.effect";
 import {MeterService} from "./shared/services/meter.service";
 import {CardsService} from "./shared/services/cards.service";
 import {UserInfoService} from "./shared/services/user-info.service";
+import {LoaderInterceptorService} from "./core/helpers/loader.interceptor.service";
+import {LoadingService} from "./core/helpers/loading.service";
 
 
 export function createTranslateLoader(http: HttpClient): any {
@@ -107,7 +109,9 @@ export function createTranslateLoader(http: HttpClient): any {
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptorService, multi: true},
     DateHelperService,
+    LoadingService
   ],
 })
 export class AppModule {

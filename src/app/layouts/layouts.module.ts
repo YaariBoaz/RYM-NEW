@@ -22,15 +22,16 @@ import {ReactiveFormsModule} from "@angular/forms";
 @NgModule({
   // tslint:disable-next-line: max-line-length
   declarations: [LayoutComponent, SidebarComponent, TopbarComponent, FooterComponent, RightsidebarComponent, HorizontalComponent, VerticalComponent, HorizontaltopbarComponent],
-    imports: [
-        CommonModule,
-        TranslateModule,
-        RouterModule,
-        BsDropdownModule.forRoot(),
-        UIModule,
-        SimplebarAngularModule,
-        ReactiveFormsModule
-    ],
+  imports: [
+    CommonModule,
+    TranslateModule,
+    RouterModule,
+    BsDropdownModule.forRoot(),
+    UIModule,
+    SimplebarAngularModule,
+    ReactiveFormsModule,
+    TranslateModule
+  ],
   providers: [LanguageService, BsModalService]
 })
 export class LayoutsModule {

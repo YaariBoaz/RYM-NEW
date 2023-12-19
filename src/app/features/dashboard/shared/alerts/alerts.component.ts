@@ -17,6 +17,7 @@ export class AlertsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.alertService.fetchAlerts();
     this.alertService.getAlertsResult$.subscribe((data:[]) => {
       this.alerts = data;
     });
@@ -24,7 +25,7 @@ export class AlertsComponent implements OnInit {
 
 
   openAlertDetails(alert: any) {
-    const data = {...alert} as any;
-    this.modalService.show(AlertDetailsModalComponent, {initialState: data});
+    const alertData = {...alert} as any;
+    this.modalService.show(AlertDetailsModalComponent, {initialState: {data:alertData}});
   }
 }
