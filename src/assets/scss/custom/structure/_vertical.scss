@@ -45,7 +45,7 @@
 }
 
 .main-content {
-  margin-left: $sidebar-width;
+  //margin-left: $sidebar-width;
   background: #e9e9e96e;
   overflow: hidden;
 
@@ -213,8 +213,10 @@
   .logo {
     span.logo-lg {
       display: none;
+      img{
+        height: 60px;
+      }
     }
-
     span.logo-sm {
       display: block;
     }

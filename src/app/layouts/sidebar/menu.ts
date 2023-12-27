@@ -9,17 +9,6 @@ export const MENU: MenuItem[] = [
   },
   {
     id: 2,
-    label: 'SIDEMENU.MESSAGES',
-    icon: 'bxs-message',
-    route:'messages'
-  },
-  {
-    id: 2,
-    label: 'SIDEMENU.CONTACT-US',
-    icon: 'bxs-contact',
-  },
-  {
-    id: 2,
     label: 'SIDEMENU.SETTINGS',
     icon: 'bxs-cog',
     route:'settings'
