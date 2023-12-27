@@ -4,7 +4,7 @@
   <!--- Sidemenu -->
   <div id="sidebar-menu" class="d-none d-sm-block">
     <!-- Left Menu Start -->
-    <ul class="metismenu list-unstyled" id="side-menu" #sideMenu >
+    <ul class="metismenu list-unstyled" id="side-menu" #sideMenu>
       <!-- {{menuItems}} -->
       <ng-container *ngFor="let item of menuItems; let i = index">
         <li class="menu-title" *ngIf="item.isTitle">{{ item.label | translate }}</li>
@@ -62,11 +62,21 @@
 
   <div id="sidebar-menu" class="d-sm-none">
     <!-- Left Menu Start -->
-    <ul class="metismenu list-unstyled" id="side-menu" #sideMenu >
+    <div class="mobile-logo-wrapper">
+      <a routerLink="/" class="logo-light">
+          <span class="logo-sm">
+            <img src="assets/images/rym-icon.png" alt="">
+          </span>
+        <span class="logo-lg d-none">
+            <img src="assets/images/rym-icon.png" alt="">
+          </span>
+      </a>
+      <div class="read-your-meter-text text-light">Read Your Meter Pro</div>
+    </div>
+    <ul class="metismenu list-unstyled" id="side-menu" #sideMenu>
       <!-- {{menuItems}} -->
       <ng-container *ngFor="let item of menuItemsMobile; let i = index">
-        <li class="menu-title" *ngIf="item.isTitle">{{ item.label | translate }}</li>
-        <li *ngIf="!item.isTitle && !item.isLayout" (click)="currentSelectedTabIndex = i;navigateToFeature(item)">
+         <li *ngIf="!item.isTitle && !item.isLayout" (click)="currentSelectedTabIndex = i;menuItemClicked(item)">
           <a *ngIf="hasItems(item)" href="javascript:void(0);" class="is-parent"
              [ngClass]="{'has-arrow': !item.badge, 'has-dropdown': item.badge}">
             <i class="bx {{item.icon}}" *ngIf="item.icon"></i>
@@ -74,7 +84,6 @@
             <span class="badge rounded-pill float-end bg-{{item.badge.variant}}" *ngIf="item.badge">{{item.badge.text |
               translate}}</span>
           </a>
-
           <a routerLink="{{item.link}}" *ngIf="!hasItems(item)" class="side-nav-link-ref" routerLinkActive="active"
              [class.active-menu-item]="currentSelectedTabIndex === i">
             <i class="bx {{ item.icon }}" *ngIf="item.icon"
@@ -83,30 +92,6 @@
             <span class="badge rounded-pill bg-{{item.badge.variant}} float-end" *ngIf="item.badge">{{item.badge.text |
               translate}}</span>
           </a>
-
-          <ul *ngIf="hasItems(item)" class="sub-menu" aria-expanded="false">
-            <li *ngFor="let subitem of item.subItems">
-              <a routerLink="{{subitem.link}}" *ngIf="!hasItems(subitem)" class="side-nav-link-ref"
-                 [attr.data-parent]="subitem.parentId" routerLinkActive="active">
-                {{ subitem.label | translate}}
-                <span class="badge rounded-pill bg-{{subitem.badge.variant}} float-end"
-                      *ngIf="subitem.badge">{{subitem.badge.text |
-                  translate}}</span>
-              </a>
-              <a *ngIf="hasItems(subitem)" class="side-nav-link-a-ref has-arrow" href="javascript:void(0);"
-                 [attr.data-parent]="subitem.parentId">
-                {{ subitem.label | translate}}
-              </a>
-              <ul *ngIf="hasItems(subitem)" class="sub-menu mm-collapse" aria-expanded="false">
-                <li *ngFor="let subSubitem of subitem.subItems">
-                  <a [attr.data-parent]="subSubitem.parentId" routerLink="{{subSubitem.link}}" routerLinkActive="active"
-                     class="side-nav-link-ref">
-                    {{ subSubitem.label | translate }}
-                  </a>
-                </li>
-              </ul>
-            </li>
-          </ul>
         </li>
       </ng-container>
       <li class="contact-us-wrapper" (click)="OpenContactUsDialog(contactUsTemplate)">
@@ -169,3 +154,68 @@
   </div>
 </ng-template>
 
+
+<ng-template #termsOfUseTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'TermsofUse' | translate}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <textarea class="modal-body">
+    {{'TermsOfUseText' | translate}}
+  </textarea>
+</ng-template>
+
+<ng-template #privacyTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'TermsofUse' | translate}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <textarea class="modal-body">
+    {{'PrivacyPolicyText' | translate}}
+  </textarea>
+</ng-template>
+
+
+<ng-template #technicalSupportTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'Contact' | translate}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>{{'HappyToAssist' | translate}}</div>
+    <div>{{'InTouch' | translate}}</div>
+    <div>{{'Tel' | translate}} 1-700-50-6565</div>
+    <div>{{'email' | translate}} <a href="mailto: supportarad@arad.co.il">supportarad@arad.co.il</a></div>
+  </div>
+</ng-template>
+
+<ng-template #accessibilityStatementTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{'AccessibilityStatement' | translate}}</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>{{'firstParagraph' | translate}}</div>
+    <p>{{'howAccessibilityWork' | translate}}</p>
+    <div>{{'howAccessibilityWorkFirstRow' | translate}} <a
+      href="https://www.nagich.co.il/">{{'howAccessibilityWorkFirstRowLink' | translate}} </a>{{'howAccessibilityWorkFirstRowEnd' | translate}}
+    </div>
+    <div>{{'howAccessibilityWorkSecondRow' | translate}}</div>
+    <div>{{'howAccessibilityWorkThirdRow' | translate}} <a
+      href="https://www.nagich.co.il/html5/sbs.py?_id=8684&did=5905&G=8684"
+      target="_blank">{{'howAccessibilityWorkThirdRowLink' | translate}}</a>
+    </div>
+    <div> {{'howAccessibilityListHeader' | translate}}</div>
+    <ul>
+      <li *ngFor="let row of accessibilityStatementTemplateArray">{{row}}</li>
+    </ul>
+  </div>
+</ng-template>

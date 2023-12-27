@@ -37,12 +37,15 @@
   <div class="container-fluid d-none d-md-block">
     <div class="d-flex justify-content-around align-items-center">
       <div>
-        <select>
-          <option><a class="link-opacity-75">Terms Of Use</a></option>
-          <option><a class="link-opacity-75">Privacy Policy</a></option>
-          <option><a class="link-opacity-75">Technical Support</a></option>
-          <option><a class="link-opacity-75">Accessibility Statement</a></option>
-          <option><a class="link-opacity-75">FAQ</a></option>
+        <select (change)="onChange($event.target.value)">
+          <option selected> Select Action</option>
+          <option [value]="mobileFooterOptions.Terms_Of_Use"><a class="link-opacity-75">Terms Of Use</a></option>
+          <option [value]="mobileFooterOptions.Privacy_Policy"><a class="link-opacity-75">Privacy Policy</a></option>
+          <option [value]="mobileFooterOptions.Technical_Support"><a class="link-opacity-75">Technical Support</a>
+          </option>
+          <option [value]="mobileFooterOptions.Accessibility_Statement"><a class="link-opacity-75">Accessibility
+            Statement</a></option>
+          <option [value]="mobileFooterOptions.FAQ"><a class="link-opacity-75">FAQ</a></option>
         </select>
       </div>
       <div>
@@ -51,7 +54,6 @@
     </div>
   </div>
 </footer>
-
 
 <ng-template #termsOfUseTemplate>
   <div class="modal-header">
@@ -77,16 +79,6 @@
   </textarea>
 </ng-template>
 
-<ng-template #privacyTemplate>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">{{'Privacy' | translate}}</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-      <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
-  </div>
-  <textarea class="modal-body">
-    {{'PrivacyPolicyText' | translate}}
-  </textarea></ng-template>
 
 <ng-template #technicalSupportTemplate>
   <div class="modal-header">
@@ -114,11 +106,12 @@
     <div>{{'firstParagraph' | translate}}</div>
     <p>{{'howAccessibilityWork' | translate}}</p>
     <div>{{'howAccessibilityWorkFirstRow' | translate}} <a
-      href="https://www.nagich.co.il/" >{{'howAccessibilityWorkFirstRowLink' | translate}} </a>{{'howAccessibilityWorkFirstRowEnd' | translate}}
+      href="https://www.nagich.co.il/">{{'howAccessibilityWorkFirstRowLink' | translate}} </a>{{'howAccessibilityWorkFirstRowEnd' | translate}}
     </div>
     <div>{{'howAccessibilityWorkSecondRow' | translate}}</div>
     <div>{{'howAccessibilityWorkThirdRow' | translate}} <a
-      href="https://www.nagich.co.il/html5/sbs.py?_id=8684&did=5905&G=8684"  target="_blank">{{'howAccessibilityWorkThirdRowLink' | translate}}</a>
+      href="https://www.nagich.co.il/html5/sbs.py?_id=8684&did=5905&G=8684"
+      target="_blank">{{'howAccessibilityWorkThirdRowLink' | translate}}</a>
     </div>
     <div> {{'howAccessibilityListHeader' | translate}}</div>
     <ul>

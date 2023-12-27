@@ -11,7 +11,12 @@
     "HOME": "HOME",
     "MESSAGES": "MESSAGES",
     "CONTACT-US": "CONTACT US",
-    "SETTINGS": "SETTINGS"
+    "SETTINGS": "SETTINGS",
+    "Terms_Of_Use": "Terms Of Use",
+    "Privacy_Policy": "Privacy Policy",
+    "Technical_Support": "Technical Support",
+    "Accessibility_Statement": "Accessibility Statement",
+    "FAQ": "FAQ"
   },
   "FOOTER": {
   },

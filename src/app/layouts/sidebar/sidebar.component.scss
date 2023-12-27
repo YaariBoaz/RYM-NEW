@@ -1,7 +1,7 @@
 .active-menu-item {
   font-size: 16px;
   font-weight: bold;
-  background: #7CC9C5;
+  background:#00000036;
 
   span {
     color: #FFFFFF;
@@ -53,6 +53,7 @@
       padding: 0.5em;
     }
   }
+
   .message {
     width: 80%;
     padding: 0.5em;
@@ -62,25 +63,44 @@
       min-height: 10vh;
     }
   }
-  .buttons-wrapper{
+
+  .buttons-wrapper {
     display: flex;
     justify-content: end;
-    button:first-child{
+
+    button:first-child {
       margin-right: 15px;
     }
   }
 }
 
-.modal-body{
-  p{
+.modal-body {
+  p {
     padding: 0.5em 0.5em 0px;
     font-weight: bold;
     font-size: 20px;
     margin-bottom: 0px;
-    span{
+
+    span {
       font-weight: lighter;
       font-size: 20px;
     }
   }
 
+}
+
+.mobile-logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 1.5em;
+
+  img {
+    height: 45px;
+
+  }
+}
+a {
+  text-decoration: none !important;
 }

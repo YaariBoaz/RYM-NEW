@@ -15,6 +15,7 @@ import {Observable} from "rxjs";
 import {ContactUsDetails, MessageSubjects} from "../../store/contact-us/contact-us.reducer";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {FormBuilder, Validators} from "@angular/forms";
+import {MobileFooterOptions} from "../footer/footer.component";
 
 @Component({
   selector: 'app-sidebar',
@@ -27,6 +28,10 @@ import {FormBuilder, Validators} from "@angular/forms";
  */
 export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   @ViewChild('componentRef') scrollRef;
+  @ViewChild('termsOfUseTemplate', {read: TemplateRef}) termsOfUseTemplate: TemplateRef<any>;
+  @ViewChild('privacyTemplate', {read: TemplateRef}) privacyTemplate: TemplateRef<any>;
+  @ViewChild('technicalSupportTemplate', {read: TemplateRef}) technicalSupportTemplate: TemplateRef<any>;
+  @ViewChild('accessibilityStatementTemplate', {read: TemplateRef}) accessibilityStatementTemplate: TemplateRef<any>;
   @Input() isCondensed = false;
   menu: any;
   data: any;
@@ -35,7 +40,7 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
   menuItemsMobile: MenuItem[] = [];
 
   @ViewChild('sideMenu') sideMenu: ElementRef;
-  currentSelectedTabIndex = 0;
+  currentSelectedTabIndex = -1;
   contactUsInfo$: Observable<{ contactDetails: ContactUsDetails; messageSubject: MessageSubjects[] }>;
   modalRef: BsModalRef<unknown>;
   selectedSubject: MessageSubjects = {MessageSubjectsText: 'Select One'};
@@ -123,8 +128,45 @@ export class SidebarComponent implements OnInit, AfterViewInit, OnChanges {
     return item.subItems !== undefined ? item.subItems.length > 0 : false;
   }
 
-  navigateToFeature(item: MenuItem) {
-    this.router.navigate([item.route]);
+  openTermsOfUse(template) {
+    this.modalRef = this.modalService.show(template, {class: 'terms-of-use-modal'})
+
+  }
+  openPrivacyPolicy(template) {
+    this.modalRef = this.modalService.show(template, {class: 'terms-of-use-modal'})
+  }
+
+  openTechnicalSupport(template) {
+    this.modalRef = this.modalService.show(template, {class: ''})
+  }
+
+  openAccessibilityStatement(template) {
+    this.modalRef = this.modalService.show(template, {class: 'terms-of-use-modal'})
+  }
+
+  openFAQ() {
+
+  }
+
+
+  menuItemClicked(item: MenuItem) {
+    switch (+item.id) {
+      case MobileFooterOptions.Terms_Of_Use:
+        this.openTermsOfUse(this.termsOfUseTemplate);
+        break
+      case MobileFooterOptions.Accessibility_Statement:
+        this.openAccessibilityStatement(this.accessibilityStatementTemplate);
+        break;
+      case MobileFooterOptions.Privacy_Policy:
+        this.openPrivacyPolicy(this.privacyTemplate);
+        break;
+      case MobileFooterOptions.Technical_Support:
+        this.openTechnicalSupport(this.technicalSupportTemplate);
+        break;
+      case MobileFooterOptions.FAQ:
+        this.openFAQ();
+        break
+    }
   }
 
   OpenContactUsDialog(template: TemplateRef<any>) {

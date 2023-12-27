@@ -1,11 +1,12 @@
 import {MenuItem} from './menu.model';
+import {MobileFooterOptions} from "../footer/footer.component";
 
 export const MENU: MenuItem[] = [
   {
     id: 1,
     label: 'SIDEMENU.HOME',
     icon: 'bx-home-circle',
-    route:'home'
+    route: 'home'
   },
   {
     id: 2,
@@ -16,55 +17,28 @@ export const MENU: MenuItem[] = [
     id: 3,
     label: 'SIDEMENU.SETTINGS',
     icon: 'bxs-cog',
-    route:'settings'
+    route: 'settings'
   },
 ];
 export const MENU_MOBILE: MenuItem[] = [
   {
-    id: 2,
-    label: 'SIDEMENU.HOME',
-    icon: 'bx-home-circle',
-    route:''
+    id: MobileFooterOptions.Terms_Of_Use,
+    label: 'SIDEMENU.Terms_Of_Use',
   },
   {
-    id: 2,
-    label: 'SIDEMENU.MESSAGES',
-    icon: 'bxs-message',
-    route:'messages'
+    id: MobileFooterOptions.Privacy_Policy,
+    label: 'SIDEMENU.Privacy_Policy',
   },
   {
-    id: 2,
-    label: 'SIDEMENU.CONTACT-US',
-    icon: 'bxs-contact',
+    id: MobileFooterOptions.Technical_Support,
+    label: 'SIDEMENU.Technical_Support',
   },
   {
-    id: 2,
-    label: 'SIDEMENU.SETTINGS',
-    icon: 'bxs-cog',
-    route:'settings'
+    id: MobileFooterOptions.Accessibility_Statement,
+    label: 'SIDEMENU.Accessibility_Statement',
   },
   {
-    id: 2,
-    label: '111111',
-    icon: 'bxs-cog',
-    route:'settings'
-  },
-  {
-    id: 2,
-    label: '111111',
-    icon: 'bxs-cog',
-    route:'settings'
-  },
-  {
-    id: 2,
-    label: '111111',
-    icon: 'bxs-cog',
-    route:'settings'
-  },
-  {
-    id: 2,
-    label: '111111',
-    icon: 'bxs-cog',
-    route:'settings'
-  },
+    id: MobileFooterOptions.FAQ,
+    label: 'SIDEMENU.FAQ',
+  }
 ];
