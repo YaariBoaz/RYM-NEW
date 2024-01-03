@@ -9,7 +9,7 @@
               <h5>Hello, {{userInfo?.firstName}} {{userInfo?.lastName}}</h5>
             </div>
             <div *ngFor="let meter of metersData; index as i" class="d-flex flex-column col-xl-6">
-              <h5>Water Meter: {{meter.meterSn}}</h5>
+              <h5>{{'WaterMeter'|translate}}: {{meter.meterSn}}</h5>
               <span class="font-size-16 font-weight-light">{{meter.fullAddress}}</span>
             </div>
           </div>
@@ -22,7 +22,7 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex flex-column">
-            <h5>Water Consumption</h5>
+            <h5>{{'BillingCycle' | translate}}</h5>
             <span class="font-size-16 font-weight-light">Nov, 2023</span>
           </div>
         </div>
@@ -36,7 +36,7 @@
           <div class=" mt-4 mt-lg-0">
             <div class="row">
               <div class="col-12 d-flex flex-column">
-                <h5>Monthly Low-Rate Threshold Value</h5>
+                <h5>{{'Monthly-Low-Rate-Threshold-Value' | translate}}</h5>
                 <span class="font-size-16 font-weight-light"> {{cardsData.monthlyLowRate}} {{cardsData.uom}}</span>
               </div>
             </div>
@@ -61,7 +61,7 @@
                                         <i class="bx bx-copy-alt"></i>
                                     </span>
                 </div>
-                <h5 class="font-size-14 mb-0">Current Meter Reading</h5>
+                <h5 class="font-size-14 mb-0">{{'CurrentMeterReading'|translate}}</h5>
               </div>
               <div class="text-muted mt-4">
                 <h4>{{cardsData.currentMeterReading | number : '1.2-2'}}</h4>
@@ -80,7 +80,7 @@
                                         <i class="bx bx-archive-in"></i>
                                     </span>
                 </div>
-                <h5 class="font-size-14 mb-0">Current Month Consumption</h5>
+                <h5 class="font-size-14 mb-0">{{'CurrentBillingCycle' | translate}}</h5>
               </div>
               <div class="text-muted mt-4">
                 <h4>{{cardsData.currentMonthConsumption | number : '1.2-2'}}</h4>
@@ -99,7 +99,7 @@
                                         <i class="bx bx-purchase-tag-alt"></i>
                                     </span>
                 </div>
-                <h5 class="font-size-14 mb-0">End of Month Forecast</h5>
+                <h5 class="font-size-14 mb-0">{{'EndOfBillingCycleForecast'|translate}}</h5>
               </div>
               <div class="text-muted mt-4">
                 <h4>{{cardsData.endOfMonthForecast | number : '1.2-2'}}</h4>
@@ -125,7 +125,7 @@
       <div class="card" *ngIf="vacationsData">
         <div class="card-body bg-primary-subtle ">
           <div class="d-flex">
-            <h6 class="text-center">Get informed about water consumption while away from home</h6>
+            <h6 class="text-center">{{'getInformed'|translate}}</h6>
           </div>
           <div class="text-muted mt-2 justify-content-center d-flex">
             <h5>{{vacationsData[vacationsData.length - 1].startDate | date:'EEE,MMM d'}}
@@ -149,14 +149,14 @@
               <a class="nav-link active pe-auto" data-bs-toggle="tab" role="tab" aria-selected="true"
                  [class.active]="activeTab ===0">
                 <span class="d-block d-sm-none"><i class="fas fa-home"></i></span>
-                <span class="d-none d-sm-block">WATER CONSUMPTION</span>
+                <span class="d-none d-sm-block">{{'BillingCycle'|translate}}</span>
               </a>
             </li>
             <li class="nav-item tab" role="presentation" (click)="activeTab =1">
               <a class="nav-link pe-auto" data-bs-toggle="tab" role="tab" aria-selected="false" tabindex="-1"
                  [class.active]="activeTab ===1">
                 <span class="d-block d-sm-none"><i class="far fa-user"></i></span>
-                <span class="d-none d-sm-block">COMPARE TO PREVIOUS YEAR</span>
+                <span class="d-none d-sm-block">{{'compareToPreviousYear' | translate}}</span>
               </a>
             </li>
           </ul>

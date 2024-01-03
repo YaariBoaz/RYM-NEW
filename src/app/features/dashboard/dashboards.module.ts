@@ -21,28 +21,30 @@ import {DashboardComponent} from "./dashboard.component";
 import {
   MonthlyDailyChatWrapperComponent
 } from "./shared/monthly-daily-chat-wrapper/monthly-daily-chat-wrapper.component";
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [DashboardComponent],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    DashboardsRoutingModule,
-    UIModule,
-    BsDropdownModule.forRoot(),
-    TooltipModule.forRoot(),
-    TabsModule.forRoot(),
-    CarouselModule.forRoot(),
-    WidgetModule,
-    NgApexchartsModule,
-    SharedModule,
-    SimplebarAngularModule,
-    ModalModule.forRoot(),
-    NgxEchartsModule,
-    BsDatepickerModule,
-    NgToggleModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        DashboardsRoutingModule,
+        UIModule,
+        BsDropdownModule.forRoot(),
+        TooltipModule.forRoot(),
+        TabsModule.forRoot(),
+        CarouselModule.forRoot(),
+        WidgetModule,
+        NgApexchartsModule,
+        SharedModule,
+        SimplebarAngularModule,
+        ModalModule.forRoot(),
+        NgxEchartsModule,
+        BsDatepickerModule,
+        NgToggleModule,
+        TranslateModule
+    ],
   providers: [BsDropdownConfig],
 })
 export class DashboardsModule { }

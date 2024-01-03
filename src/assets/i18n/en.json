@@ -21,6 +21,7 @@
   "FOOTER": {
   },
   "LogIn": "Log In",
+  "Monthly-Low-Rate-Threshold-Value": "Monthly Low-Rate Threshold Value",
   "REGISTERED_EMAIL": "REGISTERED E-MAIL",
   "WATER_ADVISOR_PASSWORD": "PASSWORD",
   "fullName": "Your full name",
@@ -228,7 +229,7 @@
   "accessibilityDate": "Date of updating the statement 1/2/2021",
   "replyInquiry": "Inquiry from",
   "inquiryFrom": "Reply to the inquiry from",
-  "seeDetails": "SEE DETAILS",
+  "seeDetails": "DETAILS",
   "ContactUs": "Contact Us:",
   "Tel": "Tel:",
   "HappyToAssist": "We will be happy to assist you. Get in touch with us:",

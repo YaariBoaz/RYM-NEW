@@ -44,7 +44,7 @@ export class TopbarComponent implements OnInit {
 
   listLang: any = [
     { text: 'English', flag: 'assets/images/flags/us.jpg', lang: 'en' },
-    { text: 'Hebrew', flag: 'assets/images/flags/israel.png', lang: 'il' },
+    { text: 'Hebrew', flag: 'assets/images/flags/israel.png', lang: 'he' },
     { text: 'German', flag: 'assets/images/flags/germany.jpg', lang: 'de' },
     { text: 'Italian', flag: 'assets/images/flags/italy.jpg', lang: 'it' },
     { text: 'Russian', flag: 'assets/images/flags/russia.jpg', lang: 'ru' },

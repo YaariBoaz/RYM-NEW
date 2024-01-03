@@ -7,20 +7,21 @@
       <div class="col-xl-6">
         <div class="tabs">
           <div>
-            <a class="link-opacity-75" (click)="openTermsOfUse(termsOfUseTemplate)">Terms Of Use</a>
+            <a class="link-opacity-75" (click)="openTermsOfUse(termsOfUseTemplate)">{{'TermsofUse' | translate}}</a>
           </div>
           <div>
-            <a class="link-opacity-75" (click)="openPrivacyPolicy(privacyTemplate)">Privacy Policy</a>
+            <a class="link-opacity-75" (click)="openPrivacyPolicy(privacyTemplate)">{{'Privacy' | translate}}</a>
           </div>
           <div>
-            <a class="link-opacity-75" (click)="openTechnicalSupport(technicalSupportTemplate)">Technical Support</a>
+            <a class="link-opacity-75"
+               (click)="openTechnicalSupport(technicalSupportTemplate)">{{'FooterContact' | translate}}</a>
           </div>
           <div>
-            <a class="link-opacity-75" (click)="openAccessibilityStatement(accessibilityStatementTemplate)">Accessibility
-              Statement</a>
+            <a class="link-opacity-75"
+               (click)="openAccessibilityStatement(accessibilityStatementTemplate)">{{'AccessibilityStatement' | translate}}</a>
           </div>
           <div>
-            <a class="link-opacity-75" (click)="openFAQ()">FAQ</a>
+            <a class="link-opacity-75" (click)="openFAQ()">{{'FAQ'|translate}}</a>
           </div>
         </div>
       </div>
@@ -39,13 +40,16 @@
       <div>
         <select (change)="onChange($event.target.value)">
           <option selected> Select Action</option>
-          <option [value]="mobileFooterOptions.Terms_Of_Use"><a class="link-opacity-75">Terms Of Use</a></option>
-          <option [value]="mobileFooterOptions.Privacy_Policy"><a class="link-opacity-75">Privacy Policy</a></option>
-          <option [value]="mobileFooterOptions.Technical_Support"><a class="link-opacity-75">Technical Support</a>
+          <option [value]="mobileFooterOptions.Terms_Of_Use"><a class="link-opacity-75">{{'TermsofUse' | translate}}</a>
           </option>
-          <option [value]="mobileFooterOptions.Accessibility_Statement"><a class="link-opacity-75">Accessibility
-            Statement</a></option>
-          <option [value]="mobileFooterOptions.FAQ"><a class="link-opacity-75">FAQ</a></option>
+          <option [value]="mobileFooterOptions.Privacy_Policy"><a class="link-opacity-75">{{'Privacy' | translate}}</a>
+          </option>
+          <option [value]="mobileFooterOptions.Technical_Support"><a
+            class="link-opacity-75">{{'FooterContact' | translate}}</a>
+          </option>
+          <option [value]="mobileFooterOptions.Accessibility_Statement"><a
+            class="link-opacity-75">{{'AccessibilityStatement'}}</a></option>
+          <option [value]="mobileFooterOptions.FAQ"><a class="link-opacity-75">{{'FAQ' | translate}}</a></option>
         </select>
       </div>
       <div>

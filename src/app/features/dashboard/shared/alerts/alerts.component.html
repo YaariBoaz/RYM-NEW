@@ -1,10 +1,11 @@
 <div class="card card-height w-100">
   <div class="card-header bg-danger text-white w-100">
-    <h5>Alerts</h5>
+    <h5>{{'ALERTS' | translate}}</h5>
   </div>
   <div class="card-body w-100">
     <ul class="list-group list-group-flush w-100">
-      <li class="list-group-item" *ngFor="let alert of alerts ; index as i" (click)="openAlertDetails(alert)" [class.isRead]="alert.isRead==='false'">
+      <li class="list-group-item" *ngFor="let alert of alerts ; index as i" (click)="openAlertDetails(alert)"
+          [class.isRead]="alert.isRead==='false'">
         <div class="d-flex align-items-center">
           <div class="me-3">
             <img class="alert-icon" *ngIf="alert.alertTypeId == 16" src="assets/images/alerts/leak_in_meter.png"/>
@@ -17,7 +18,7 @@
             </div>
           </div>
           <div class="dropdown ms-2">
-            <button type="button" class="btn btn-light btn-sm">Details</button>
+            <button type="button" class="btn btn-light btn-sm">{{'seeDetails' |translate}}</button>
           </div>
         </div>
       </li>

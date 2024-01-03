@@ -13,18 +13,20 @@ import {BsDatepickerModule} from "ngx-bootstrap/datepicker";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { MonthlyDailyChatWrapperComponent } from './monthly-daily-chat-wrapper/monthly-daily-chat-wrapper.component';
 import { AlertsComponent } from './alerts/alerts.component';
+import {TranslateModule} from "@ngx-translate/core";
 
 @NgModule({
   declarations: [MonthlyConsumptionChartComponent, ComapreToPreviousYearChartComponent, AlertDetailsModalComponent, VacationsModalComponent, MonthlyDailyChatWrapperComponent, AlertsComponent],
-  imports: [
-    CommonModule,
-    NgApexchartsModule,
-    NgxEchartsModule.forChild(),
-    NgChartsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    BsDatepickerModule
-  ],
+    imports: [
+        CommonModule,
+        NgApexchartsModule,
+        NgxEchartsModule.forChild(),
+        NgChartsModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BsDatepickerModule,
+        TranslateModule
+    ],
     exports: [MonthlyConsumptionChartComponent, ComapreToPreviousYearChartComponent, MonthlyDailyChatWrapperComponent, MonthlyDailyChatWrapperComponent, AlertsComponent]
 })
 export class SharedModule {
