@@ -10,6 +10,10 @@ import {
 import {
   selectCompareToPreviousYearChartData
 } from "../../../../store/comapre-to-previous-year-chart/comapre-to-previous-year-chart.selector";
+import {
+  CompareToPreviousYearService
+} from "../../../../store/comapre-to-previous-year-chart/compare-to-previous-year.service";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-comapre-to-previous-year-chart',
@@ -18,7 +22,7 @@ import {
 })
 export class ComapreToPreviousYearChartComponent implements OnInit {
   @ViewChild(BaseChartDirective) chart!: BaseChartDirective;
-
+  uom: string;
   chartData: any;
   chartOptions: ChartConfiguration<'bar'>['options'] = {
     responsive: true,
@@ -29,7 +33,7 @@ export class ComapreToPreviousYearChartComponent implements OnInit {
       tooltip: {
         callbacks: {
           label(tooltipItem: TooltipItem<'bar'>): string | string[] | void {
-            const dataLabel = tooltipItem.formattedValue + ' ' + (tooltipItem.dataset as any).uom;
+            const dataLabel = tooltipItem.formattedValue + ' ' + tooltipItem.dataset['uom'];
             return dataLabel;
           }
         }
@@ -43,16 +47,22 @@ export class ComapreToPreviousYearChartComponent implements OnInit {
   };
   chartLegend = true;
 
-  constructor(private store: Store) {
+
+  constructor(private compareToPreviousYearService: CompareToPreviousYearService) {
   }
 
   // 2021-01-01/2023-11-30
   ngOnInit(): void {
-    this.store.dispatch(fetchComparePreviousYearChartData(this.getDatesToCompare()));
-    this.store.select(selectCompareToPreviousYearChartData).subscribe(data => {
-      if (compareToPreviousConfig.datasets && (compareToPreviousConfig.datasets as any).length > 0) {
-        this.chartData = compareToPreviousConfig;
-        this.chart.update()
+    forkJoin([this.compareToPreviousYearService.getMeasurmentUnitsByMunicipal(),
+      this.compareToPreviousYearService.getCompareToPreviousYearData(this.getDatesToCompare())
+    ]).subscribe(data => {
+      if (data) {
+        this.uom = data[0].unit;
+        this.compareToPreviousYearService.prepareDataForCharts(data[1],this.uom);
+        if (compareToPreviousConfig.datasets && (compareToPreviousConfig.datasets as any).length > 0) {
+          this.chartData = compareToPreviousConfig;
+          this.chart.update()
+        }
       }
     })
   }

@@ -1,11 +1,13 @@
- #page-topbar{
-  background-color:  #2271b1;
+#page-topbar {
+  background-color: #2271b1;
 }
-.logo-lg{
-  img{
+
+.logo-lg {
+  img {
     height: 45px;
   }
-  .read-your-meter-text{
+
+  .read-your-meter-text {
     height: 70px;
     display: flex;
     align-items: center;
@@ -13,22 +15,31 @@
   }
 }
 
- .logo-sm{
-   img{
-     height: 30px;
-   }
-   .read-your-meter-text{
-     height: 70px;
-     display: flex;
-     align-items: center;
-     padding-left: 10px;
-   }
- }
+.non-mobile-screen {
+  display: flex;
+  align-items: center;
+  .read-your-meter-text{
+    height: auto;
+  }
+}
 
- .read-your-meter-text{
-   height: 70px;
-   display: flex;
-   align-items: center;
-   padding-left: 3px;
-   color:white;
- }
+.logo-sm {
+  img {
+    height: 30px;
+  }
+
+  .read-your-meter-text {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+  }
+}
+
+.read-your-meter-text {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding-left: 3px;
+  color: white;
+}
